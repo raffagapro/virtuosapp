@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('auth.login');
+})->middleware('user');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['GuestRoleRedirect'])->group(function (){
+    Route::get('/guest', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
+});
+
+Route::middleware(['AdminRoleRedirect'])->group(function (){
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+});
