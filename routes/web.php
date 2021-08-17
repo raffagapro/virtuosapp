@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+//this is just a test coment for a test commit
+
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('user');
