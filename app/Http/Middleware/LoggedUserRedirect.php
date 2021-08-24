@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 
 
@@ -18,8 +19,8 @@ class LoggedUserRedirect
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() === null) {
-            return redirect('/');
+        if (Auth::user() === null) {
+            return $next($request);
             }
         return redirect('/home');
     }
