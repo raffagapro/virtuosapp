@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-body col-sm-8 py-4">
                             <div class="row">
-                                <img class="mx-auto my-4" style="max-width: 50%" src="assets\images\loginBrand.png" alt="">
+                                <img class="mx-auto my-4" style="max-width: 50%" src="assets\images\login_brand.png" alt="">
                             </div>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
