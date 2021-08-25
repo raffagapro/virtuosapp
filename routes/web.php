@@ -29,3 +29,7 @@ Route::middleware(['GuestRoleRedirect'])->group(function (){
 Route::middleware(['AdminRoleRedirect'])->group(function (){
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
 });
+
+Route::middleware(['TeacherRoleRedirect'])->group(function (){
+    Route::get('/maestro', [App\Http\Controllers\TeacherController::class, 'index'])->name('teacher');
+});
