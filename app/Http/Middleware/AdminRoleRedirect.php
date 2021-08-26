@@ -19,11 +19,12 @@ class AdminRoleRedirect
     public function handle(Request $request, Closure $next)
     {
         $admin = Role::where('name', 'admin')->first();
+        $sAdmin = Role::where('name', 'super admin')->first();
 
         if ($request->user() === null) {
             return redirect('/');
             }
-        if ($request->user()->role_id == $admin->id) {
+        if ($request->user()->role_id == $admin->id || $request->user()->role_id == $sAdmin->id) {
         return $next($request);
         }
             return redirect('/');
