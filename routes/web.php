@@ -30,13 +30,18 @@ Route::middleware(['GuestRoleRedirect'])->group(function (){
     Route::get('/guest', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
 });
 
-Route::middleware(['AdminRoleRedirect'])->group(function (){
-    Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
-    Route::get('/estudiantes', [App\Http\Controllers\Admin\StudentListController::class, 'index'])->name('studentList');
-    Route::get('/materias', [App\Http\Controllers\Admin\MateriaController::class, 'index'])->name('materias');
-
+Route::prefix('admin')->group(function(){
+    Route::middleware(['AdminRoleRedirect'])->group(function (){
+        Route::get('/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
+        Route::get('/estudiantes', [App\Http\Controllers\Admin\StudentListController::class, 'index'])->name('studentList');
+        Route::get('/materias', [App\Http\Controllers\Admin\MateriaController::class, 'index'])->name('materias');
+        Route::get('/clases', [App\Http\Controllers\Admin\ClaseController::class, 'index'])->name('clase');
+    });
 });
 
-Route::middleware(['TeacherRoleRedirect'])->group(function (){
-    Route::get('/maestro', [App\Http\Controllers\TeacherController::class, 'index'])->name('teacher');
+Route::prefix('maestro')->group(function(){
+    Route::middleware(['TeacherRoleRedirect'])->group(function (){
+        Route::get('/index', [App\Http\Controllers\TeacherController::class, 'index'])->name('teacher');
+    });
 });
+
