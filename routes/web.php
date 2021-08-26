@@ -34,6 +34,7 @@ Route::middleware(['AdminRoleRedirect'])->group(function (){
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
     Route::get('/estudiantes', [App\Http\Controllers\Admin\StudentListController::class, 'index'])->name('studentList');
     Route::get('/materias', [App\Http\Controllers\Admin\MateriaController::class, 'index'])->name('materias');
+    Route::get('/clases', [App\Http\Controllers\Admin\ClaseController::class, 'index'])->name('clase');
 
 });
 

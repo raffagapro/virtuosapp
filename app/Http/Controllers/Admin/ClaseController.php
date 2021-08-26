@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Clase;
 use App\Models\Materia;
 use App\Models\User;
@@ -18,7 +19,7 @@ class ClaseController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.materias.clase.index');
     }
 
     /**

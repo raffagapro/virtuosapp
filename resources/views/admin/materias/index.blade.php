@@ -18,43 +18,43 @@
           <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th class="col-6 text-start"><h5>Nombre</h4></th>
+                  <th class="col-6 text-left"><h5>Nombre</h4></th>
                   <th><h5>Grado</h4></th>
                   <th><h5>Actualizar</h4></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left"><a href="{{ route('clase') }}">Pendiente</a></td>
                   <td>Pendiente</td>
                   <td><span class="btn btn-primary text-light mr-2"><i class="fas fa-pen"></i></span><span class="btn btn-danger text-light"><i class="far fa-trash-alt"></i></span></td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
                 <tr>
-                  <td class="text-start">Pendiente</td>
+                  <td class="text-left">Pendiente</td>
                   <td>Pendiente</td>
                 </tr>
               </tbody>
