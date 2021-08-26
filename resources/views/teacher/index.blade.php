@@ -32,7 +32,7 @@
                           </tr>
                           <tr>
                             <td>Español</td>
-                            <td><span class="badge bg-info text-light">Complete</span></td>
+                            <td><span class="badge bg-primary text-light">Complete</span></td>
                           </tr>
                           <tr>
                             <td>Ciencias</td>
