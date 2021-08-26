@@ -25,7 +25,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('subjects') }}">
+                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('materias') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Materias</h4>
                             <img class="ml-auto panel-btn-icon" src="assets\images\classes_icon.png" alt="">
@@ -45,7 +45,7 @@
                 <div class="col-6">
                     <a class="btn d-block btn-light border-secondary btn-text-start">
                         <div class="card-body row px-5">
-                            <h4 class="my-auto">Cordinadores</h4>
+                            <h4 class="my-auto">Coordinadores</h4>
                             <img class="ml-auto panel-btn-icon" src="assets\images\staff_icon.png" alt="">
                         </div>
                     </a>
