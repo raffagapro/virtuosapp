@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+//testing route
+Route::resource('test', App\Http\Controllers\MateriaController::class);
+Route::resource('test2', App\Http\Controllers\ClaseController::class);
+
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('user');
