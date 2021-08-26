@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Materia extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function clases()
+    {
+        return $this->hasMany(Clase::class);
+    }
+    
+    public function getNameAttribute($name)
+    {
+      return ucwords($name);
+    }
+    public function setNameAttribute($name)
+    {
+      $this->attributes['name'] = mb_strtolower($name);
+    }
+}
