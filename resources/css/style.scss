@@ -5,7 +5,7 @@
 	}
 
 	.bgVirtuos{
-    	background-color: #052040; 
+    	background-color: #052040;
 	}
 
 	.rounded-pill-start{
@@ -55,6 +55,19 @@
 	font-size: 1.125rem;
 	font-weight: 500;
     line-height: 1.2;
+ }
+
+ .text-start{
+	text-align: start;
+}
+
+ .btn-text-start{
+	text-align: start;
+	height: 100px;
+ }
+
+ .panel-btn-icon{
+	width: 50px;
  }
 
 /* FOOTER-------------------------------- */
