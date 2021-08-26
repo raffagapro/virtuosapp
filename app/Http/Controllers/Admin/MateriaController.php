@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Materia;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,15 @@ class MateriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
     public function index()
     {
         $materias = Materia::paginate(25);
-        return view('test.index')->with(compact('materias'));
+        return view('admin.subjects.index')->with(compact('materias'));
     }
 
     /**
