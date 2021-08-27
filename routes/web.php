@@ -39,6 +39,7 @@ Route::prefix('admin')->group(function(){
         Route::post('materias/mGrabber', [App\Http\Controllers\Admin\MateriaController::class, 'materiaGrabber']);
         Route::resource('clase', App\Http\Controllers\Admin\ClaseController::class, ['except'=>['index']]);
         Route::get('/clase/indv/{materia_id}', [App\Http\Controllers\Admin\ClaseController::class, 'index'])->name('clase.index');
+        Route::post('clase/indv/cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
     });
 });
 

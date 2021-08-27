@@ -16,12 +16,14 @@
             </div>
           </div>
           <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th class="col-9 text-left"><h5>Nombre</h5></th>
-                <th><h5>Actualizar</h5></th>
-              </tr>
-            </thead>
+            @if (count($materias) > 0)
+              <thead>
+                <tr>
+                  <th class="col-9 text-left"><h5>Nombre</h5></th>
+                  <th><h5>Actualizar</h5></th>
+                </tr>
+              </thead>  
+            @endif
             <tbody>
               @forelse ($materias as $m)
                 <tr>
@@ -31,7 +33,22 @@
                     <a
                     href="javascript:void(0);"
                     class="btn btn-danger text-light"
-                    onclick="event.preventDefault(); document.getElementById('{{ 'delMateria'.$m->id }}').submit();">
+                    onclick="
+                        event.preventDefault();
+                        swal.fire({
+                          text: '¿Deseas eliminar la materia?',
+                          showCancelButton: true,
+                          cancelButtonText: `Cancelar`,
+                          cancelButtonColor:'#62A4C0',
+                          confirmButtonColor:'red',
+                          confirmButtonText:'Eliminar',
+                          icon:'error',
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            document.getElementById('{{ 'delMateria'.$m->id }}').submit();
+                          }
+                        });
+                      ">
                       <i class="far fa-trash-alt"></i>
                     </a>
                     <form id="{{ 'delMateria'.$m->id }}"
@@ -89,7 +106,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('materias.update', $m->id) }}" id="modalForm" method="POST">
+        <form action="{{ route('materias.update', 0) }}" id="modalForm" method="POST">
           @csrf
           @method('PUT')
           <input type="hidden" id='materiaModID'>
@@ -102,10 +119,16 @@
     </div>
   </div>
 </div>
+
+@if(session('status'))
+  <x-success-alert :message="session('status')"/>
+@endif
+@isset($status)
+  <x-success-alert :message="$status"/>
+@endisset
 @endsection
 
 @section('scripts')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
 <script src="{{ asset('js/ajax/materiaSwitcher.js') }}" ></script>
 @endsection

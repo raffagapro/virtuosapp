@@ -47,14 +47,17 @@ class ClaseController extends Controller
             'label' => $request->label,
             'sdate' => $request->sdate,
             'edate' => $request->edate,
-            'teacher' => $request->teacherId,
+            'teacher' => 0,
             'status' => 1,
         ]);
-        // dd(User::findOrFail((int)$request->teacherId), Materia::findOrFail((int)$request->materiaId));
+        if ($request->teacherId != 0) {
+            $clase->teacher = $request->teacherId;
+        }
+        $clase->save();
         $materia = Materia::findOrFail((int)$request->materiaId);
         $materia->clases()->save($clase);
-
-        return view('test2.edit')->with(compact('clase'));
+        $status = 'La clase ha sido creada exitosamente.';
+        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
     }
 
     /**
@@ -76,7 +79,9 @@ class ClaseController extends Controller
      */
     public function edit($id)
     {
-        //
+        //NEEDS CODING TO DIRECT TO THE CLASS PAGE, NOT MATERIA PAGE
+        // $materia = Materia::findOrFail($id);
+        // return view('test.edit')->with(compact('materia'));
     }
 
     /**
@@ -88,7 +93,15 @@ class ClaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $materia = Materia::findOrFail((int)$request->materiaId);
+        $clase = Clase::findOrFail($id);
+        $clase->label = $request->modLabel;
+        $clase->sdate = $request->modSdate;
+        $clase->edate = $request->modEdate;
+        $clase->teacher = $request->modteacherId;
+        $clase->save();
+        $status = 'La clase ha sido actualizada exitosamente.';
+        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
     }
 
     /**
@@ -100,5 +113,15 @@ class ClaseController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function claseGrabber(Request $request){
+        $clase = Clase::findOrFail($request->claseId);
+        $teachers = User::whereHas(
+            'role', function($q){
+                $q->where('name', 'maestro');
+            }
+        )->get();
+        return [$clase, $teachers];
     }
 }

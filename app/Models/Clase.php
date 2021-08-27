@@ -17,11 +17,6 @@ class Clase extends Model
         'status'
     ];
 
-    public function teacher()
-    {
-        return User::where('id', $this->teacher);
-    }
-
     public function materia()
     {
         return $this->belongsTo(Materia::class);
@@ -30,5 +25,9 @@ class Clase extends Model
     public function students()
     {
         return $this->belongsToMany(User::class);
+    }
+    public function teacher()
+    {
+        return User::findOrFail($this->teacher);
     }
 }

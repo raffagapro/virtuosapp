@@ -21,10 +21,10 @@
         "postcss": "^8.1.14",
         "resolve-url-loader": "^4.0.0",
         "sass": "^1.32.11",
-        "sass-loader": "^11.0.1"
+        "sass-loader": "^11.0.1",
+        "sweetalert2": "^11.1.4"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4",
-        "sweetalert2": "^11.1.4"
+        "@fortawesome/fontawesome-free": "^5.15.4"
     }
 }
