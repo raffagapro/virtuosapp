@@ -76,11 +76,14 @@
               @endforelse
             </tbody>
           </table>
+          {{-- Paginator --}}
+          {{$materias->links()}}
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Modal Agregar Materia -->
 <div class="modal fade" id="materiasModal" tabindex="-1">
   <div class="modal-dialog">
