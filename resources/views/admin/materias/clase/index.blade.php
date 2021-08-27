@@ -6,7 +6,7 @@
     <div class="col-md-10">
       <div class="card border-secondary text-center">
         <div class="card-body">
-          <h3>Clases</h3>
+          <h3>{{ $materia->name }}</h3>
           <div class="row mb-3">
             <div class="col">
               <ul class="nav nav-tabs">

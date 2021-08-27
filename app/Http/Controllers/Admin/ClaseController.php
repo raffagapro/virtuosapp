@@ -17,9 +17,11 @@ class ClaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('admin.materias.clase.index');
+        $materia = Materia::findOrFail($id);
+        // dd($materia);
+        return view('admin.materias.clase.index')->with(compact('materia'));
     }
 
     /**
