@@ -8,6 +8,10 @@
     	background-color: #052040;
 	}
 
+	.bgVirtuos-docente{
+		background: linear-gradient(to bottom, #052040 50%, white 50%);
+	}
+
 	.rounded-pill-start{
 		border-bottom-left-radius: 50rem;
 		border-top-left-radius: 50rem;
@@ -18,12 +22,17 @@
 		border-top-right-radius: 50rem;
 	}
 
+	.tarea-status{
+		width: 66px;
+		color: white !important;
+	}
+
 /* HEADER-------------------------------- */
  /* .site-header{} */
  .userPortrait{
 	color: gray;
 	background-color: #DAE1E5;
-	border: white;
+	border: #FFFAFA;
 	border-radius: 100%;
 	border-style: solid;
 	border-width: 2px;

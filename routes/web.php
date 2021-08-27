@@ -49,3 +49,10 @@ Route::prefix('maestro')->group(function(){
     });
 });
 
+Route::prefix('estudiante')->group(function(){
+    Route::middleware(['StudentRoleRedirect'])->group(function (){
+        Route::get('/index', [App\Http\Controllers\Student\StudentController::class, 'index'])->name('student');
+        Route::get('/materia', [App\Http\Controllers\Student\MateriaController::class, 'index'])->name('studentMateria');
+        Route::get('/tarea', [App\Http\Controllers\Student\TareaController::class, 'index'])->name('tarea');
+    });
+});
