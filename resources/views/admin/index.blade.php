@@ -37,7 +37,7 @@
                     <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('materias.index') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Materias</h4>
-                            <img class="ml-auto panel-btn-icon" src="assets\images\classes_icon.png" alt="">
+                            <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\classes_icon.png') }}" alt="">
                         </div>
                     </a>
                 </div>
@@ -47,7 +47,7 @@
                     <a class="btn d-block btn-light border-secondary btn-text-start">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Maestros</h4>
-                            <img class="ml-auto panel-btn-icon" src="assets\images\teacher_icon.png" alt="">
+                            <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\teacher_icon.png') }}" alt="">
                         </div>
                     </a>
                 </div>
@@ -55,7 +55,7 @@
                     <a class="btn d-block btn-light border-secondary btn-text-start">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Coordinadores</h4>
-                            <img class="ml-auto panel-btn-icon" src="assets\images\staff_icon.png" alt="">
+                            <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\staff_icon.png') }}" alt="">
                         </div>
                     </a>
                 </div>
@@ -65,7 +65,7 @@
                     <a class="btn d-block btn-light border-secondary btn-text-start">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Tutores</h4>
-                            <img class="ml-auto panel-btn-icon" src="assets\images\student_icon.png" alt="">
+                            <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\student_icon.png') }}" alt="">
                         </div>
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                     <a class="btn d-block btn-light border-secondary btn-text-start">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Administración</h4>
-                            <img class="ml-auto panel-btn-icon" src="assets\images\admin_icon.png" alt="">
+                            <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\admin_icon.png') }}" alt="">
                         </div>
                     </a>
                 </div>
