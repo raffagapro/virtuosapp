@@ -11,7 +11,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="sweetalert2.all.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -78,15 +77,7 @@
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-light sub-bar">
-            <div class="container-fluid">
-                <nav class="mx-auto">
-                    <ol class="breadcrumb sub-bar-item mb-0">
-                      <li class="breadcrumb-item active"><a class="sub-bar-item" href="{{ url('/') }}"><i class="fas fa-home mr-2"></i>Dashboard</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </nav>
+        @yield('subBar')
 
         <main class="py-4">
             @yield('content')
