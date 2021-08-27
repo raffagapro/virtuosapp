@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('subBar')
+  @php
+    $crumbs = ["Estudiantes"=>'studentList']
+  @endphp
+
+  <x-sub-bar :crumbs="$crumbs"/>
+
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
