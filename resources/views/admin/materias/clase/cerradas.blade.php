@@ -1,6 +1,6 @@
 @php
     // dd(count($materia->clases()->where('status', '0')->get()));
-    $cClases = $materia->clases()->where('status', '0')->get();
+    $cClases = $materia->clases()->where('status', '0')->paginate(2);
 @endphp
 <table class="table table-bordered">
     @if (count($cClases) > 0)
@@ -70,3 +70,5 @@
       @endforelse
     </tbody>
   </table>
+  {{-- Paginator --}}
+  {{$cClases->links()}}
