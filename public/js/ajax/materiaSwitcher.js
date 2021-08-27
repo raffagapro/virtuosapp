@@ -4,7 +4,7 @@ $(function() {
         dataObj = {
             materiaId: $(this).attr('id'),
         }
-        console.log(dataObj);
+        // console.log(dataObj);
         $.ajax({
             url: 'materias/mGrabber',
             type: 'POST',
@@ -12,7 +12,7 @@ $(function() {
             data: dataObj,
           })
           .done(data =>{
-            console.log("success");
+            // console.log("success");
             $("#materiaModID").val(data.id);
             $("#modNombre").val(data.name);
             $("#modalForm").attr('action', '//localhost:3000/admin/materias/'+data.id);

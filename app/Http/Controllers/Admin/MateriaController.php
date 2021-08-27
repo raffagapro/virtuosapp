@@ -45,7 +45,8 @@ class MateriaController extends Controller
         $materia = Materia::create([
             'name' => $request->nombre,
         ]);
-        return redirect()->route('materias.index');
+        $status = 'La materia ha sido creada exitosamente.';
+        return redirect()->route('materias.index')->with(compact('status'));
     }
 
     /**
@@ -83,7 +84,8 @@ class MateriaController extends Controller
         $materia = Materia::findOrFail($id);
         $materia->name = $request->modNombre;
         $materia->save();
-        return redirect()->route('materias.index');
+        $status = 'La materia ha sido actualizada exitosamente.';
+        return redirect()->route('materias.index')->with(compact('status'));
     }
 
     /**
