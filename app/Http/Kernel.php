@@ -66,5 +66,7 @@ class Kernel extends HttpKernel
         'GuestRoleRedirect' => \App\Http\Middleware\GuestRoleRedirect::class,
         'AdminRoleRedirect' => \App\Http\Middleware\AdminRoleRedirect::class,
         'TeacherRoleRedirect' => \App\Http\Middleware\TeacherRoleRedirect::class,
+        'StudentRoleRedirect' => \App\Http\Middleware\StudentRoleRedirect::class,
+
     ];
 }
