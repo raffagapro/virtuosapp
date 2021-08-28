@@ -17,11 +17,11 @@
       @forelse ($aClases as $c)
         <tr>
           {{-- CHANGE ROTE TO CLASS EDIT PAGE!!!!  --}}
-          <td class="text-left"><a href="{{ route('clase.index', $c->id) }}">{{ $c->label }}</a></td>
+          <td class="text-left"><a href="{{ route('clase.index', $c->id) }}">{{ ucwords($c->label) }}</a></td>
           {{-- Teacher --}}
           <td>
             @if ($c->teacher != 0)
-              {{ $c->teacher()->name }}
+              {{ ucwords($c->teacher()->name) }}
             @else
               Sin Maestro
             @endif
@@ -31,10 +31,37 @@
             5
           </td>
           <td>
-            <span class="btn btn-primary text-light mr-2 classBtnModal" id="{{ $c->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
+            <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" id="{{ $c->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
+            @if ($c->status === 0)
+              <a
+                href="javascript:void(0);"
+                class="btn btn-sm btn-success text-light mr-2"
+                onclick="event.preventDefault(); document.getElementById('{{ 'claseActivate'.$c->id }}').submit();">
+                <i class="fas fa-check"></i>
+              </a>
+              <form id="{{ 'claseActivate'.$c->id }}"
+                action="{{ route('clase.activate', $c->id) }}"
+                method="POST"
+                style="display: none;"
+                >@method('PUT') @csrf
+              </form>
+            @else
+              <a
+                href="javascript:void(0);"
+                class="btn btn-sm btn-danger text-light mr-2"
+                onclick="event.preventDefault(); document.getElementById('{{ 'claseDeactivate'.$c->id }}').submit();">
+                <i class="fas fa-times"></i>
+              </a>
+              <form id="{{ 'claseDeactivate'.$c->id }}"
+                action="{{ route('clase.deactivate', $c->id) }}"
+                method="POST"
+                style="display: none;"
+                >@method('PUT') @csrf
+              </form>
+            @endif
             <a
               href="javascript:void(0);"
-              class="btn btn-danger text-light"
+              class="btn btn-sm btn-danger text-light"
               onclick="
                 event.preventDefault();
                 swal.fire({
@@ -55,7 +82,7 @@
             </a>
             <form id="{{ 'delClase'.$c->id }}"
               {{-- CHANGE ROUTE TO DELETE CLASSES!!!! --}}
-              action="{{ route('materias.destroy', $c->id) }}"
+              action="{{ route('clase.destroy', $c->id) }}"
               method="POST"
               style="display: none;"
             >@csrf
