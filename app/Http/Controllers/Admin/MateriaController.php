@@ -98,7 +98,8 @@ class MateriaController extends Controller
     {
         $materia = Materia::findOrFail($id);
         $materia->delete();
-        return redirect()->route('materias.index');
+        $status = 'La materia ha sido eliminada exitosamente.';
+        return redirect()->route('materias.index')->with(compact('status'));
     }
 
     public function materiaGrabber(Request $request){

@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Materias"=>'studentMateria',"Clases"=>'clase']
+    $crumbs = ["Materias"=>'materias.index',"Clases"=>'clase.index']
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
