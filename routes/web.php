@@ -34,12 +34,13 @@ Route::prefix('admin')->group(function(){
     Route::middleware(['AdminRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
         Route::get('/estudiantes', [App\Http\Controllers\Admin\StudentListController::class, 'index'])->name('studentList');
-        // Route::get('/materias', [App\Http\Controllers\Admin\MateriaController::class, 'index'])->name('materias');
         Route::resource('materias', App\Http\Controllers\Admin\MateriaController::class);
         Route::post('materias/mGrabber', [App\Http\Controllers\Admin\MateriaController::class, 'materiaGrabber']);
         Route::resource('clase', App\Http\Controllers\Admin\ClaseController::class, ['except'=>['index']]);
         Route::get('/clase/indv/{materia_id}', [App\Http\Controllers\Admin\ClaseController::class, 'index'])->name('clase.index');
         Route::post('clase/indv/cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
+        Route::put('clase/indv/activate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'activate'])->name('clase.activate');
+        Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
     });
 });
 

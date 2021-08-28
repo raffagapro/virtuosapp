@@ -17,11 +17,11 @@
         @forelse ($cClases as $cc)
         <tr>
           {{-- CHANGE ROTE TO CLASS EDIT PAGE!!!!  --}}
-          <td class="text-left"><a href="{{ route('clase.index', $cc->id) }}">{{ $cc->label }}</a></td>
+          <td class="text-left"><a href="{{ route('clase.index', $cc->id) }}">{{ ucwords($cc->label) }}</a></td>
           {{-- Teacher --}}
           <td>
             @if ($cc->teacher != 0)
-              {{ $cc->teacher()->name }}
+              {{ ucwords($cc->teacher()->name) }}
             @else
               Sin Maestro
             @endif
@@ -31,10 +31,37 @@
             5
           </td>
           <td>
-            <span class="btn btn-primary text-light mr-2 classBtnModal" id="{{ $cc->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
+            <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" id="{{ $cc->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
+            @if ($cc->status === 0)
+              <a
+                href="javascript:void(0);"
+                class="btn btn-sm btn-success text-light mr-2"
+                onclick="event.preventDefault(); document.getElementById('{{ 'claseActivate'.$cc->id }}').submit();">
+                <i class="fas fa-check"></i>
+              </a>
+              <form id="{{ 'claseActivate'.$cc->id }}"
+                action="{{ route('clase.activate', $cc->id) }}"
+                method="POST"
+                style="display: none;"
+                >@method('PUT') @csrf
+              </form>
+            @else
+              <a
+                href="javascript:void(0);"
+                class="btn btn-sm btn-danger text-light mr-2"
+                onclick="event.preventDefault(); document.getElementById('{{ 'claseDeactivate'.$cc->id }}').submit();">
+                <i class="fas fa-times"></i>
+              </a>
+              <form id="{{ 'claseDeactivate'.$cc->id }}"
+                action="{{ route('clase.deactivate', $cc->id) }}"
+                method="POST"
+                style="display: none;"
+                >@method('PUT') @csrf
+              </form>
+            @endif
             <a
               href="javascript:void(0);"
-              class="btn btn-danger text-light"
+              class="btn btn-sm btn-danger text-light"
               onclick="
                 event.preventDefault();
                 swal.fire({
@@ -55,7 +82,7 @@
             </a>
             <form id="{{ 'delClase'.$cc->id }}"
               {{-- CHANGE ROUTE TO DELETE CLASSES!!!! --}}
-              action="{{ route('materias.destroy', $cc->id) }}"
+              action="{{ route('clase.destroy', $cc->id) }}"
               method="POST"
               style="display: none;"
             >@csrf

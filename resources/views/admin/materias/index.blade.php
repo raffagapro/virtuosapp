@@ -36,7 +36,7 @@
             <tbody>
               @forelse ($materias as $m)
                 <tr>
-                  <td class="text-left"><a href="{{ route('clase.index', $m->id) }}">{{ $m->name }}</a></td>
+                  <td class="text-left"><a href="{{ route('clase.index', $m->id) }}">{{ ucwords($m->name) }}</a></td>
                   <td>
                     <span class="btn btn-primary text-light mr-2 materiaBtn" id="{{ $m->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#materiasModModal"></i></span>
                     <a

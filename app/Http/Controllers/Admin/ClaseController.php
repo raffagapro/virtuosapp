@@ -104,6 +104,28 @@ class ClaseController extends Controller
         return redirect()->route('clase.index', $materia->id)->with(compact('status'));
     }
 
+    public function activate($id)
+    {
+        $clase = Clase::findOrFail($id);
+        $materia = Materia::findOrFail($clase->materia->id);
+        // dd($materia->id);
+        $clase->status = 1;
+        $clase->save();
+        $status = 'La clase ha sido actiavda exitosamente.';
+        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
+    }
+
+    public function deactivate($id)
+    {
+        $clase = Clase::findOrFail($id);
+        $materia = Materia::findOrFail($clase->materia->id);
+        // dd($materia->id);
+        $clase->status = 0;
+        $clase->save();
+        $status = 'La clase ha sido desactivada exitosamente.';
+        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -112,7 +134,12 @@ class ClaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //POSIBLEMENTE AGREGAR MAS CODGO PARA BORRAR TODO LO RELACIONADO CON LA CLASE
+        $clase = Clase::findOrFail($id);
+        $materia = Materia::findOrFail($clase->materia->id);
+        $clase->delete();
+        $status = 'La clase ha sido eliminada exitosamente.';
+        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
     }
 
     public function claseGrabber(Request $request){
