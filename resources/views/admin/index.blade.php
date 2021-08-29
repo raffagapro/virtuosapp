@@ -26,7 +26,7 @@
         <div class="col-md-8">
             <div class="row mb-4">
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('studentList') }}">
+                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('estudiantes.index') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Estudiantes</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\student_icon.png') }}" alt="">
@@ -44,7 +44,7 @@
             </div>
             <div class="row my-4">
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start">
+                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('maestros.index') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Maestros</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\teacher_icon.png') }}" alt="">
