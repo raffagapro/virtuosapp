@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Estudiantes"=>'studentList']
+    $crumbs = ["Meastros"=>'teacherList']
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -19,13 +19,13 @@
                     <div class="col-4">
 
                     </div>
-                    <h3 class="col-4">Estudiantes</h3>
+                    <h3 class="col-4">Maestros</h3>
                     <div class="col-4">
                       <button class="btn btn-primary float-right" data-toggle="modal" data-target="#newStudentModal">Agregar<i class="fas fa-book-reader ml-2"></i></button>
                     </div>
                   </div>
                   <table class="table table-bordered">
-                    @if (count($students) > 0)
+                    @if (count($teachers) > 0)
                       <thead>
                         <tr>
                           <th class="col-6 text-start"><h5>Nombre</h4></th>
@@ -35,28 +35,28 @@
                       </thead> 
                     @endif
                     <tbody>
-                      @forelse ($students as $s)
+                      @forelse ($teachers as $t)
                         <tr>
                           {{-- NOMBRE --}}
-                          <td><a href="{{ route('estudiantes.show', $s->id) }}">{{ ucwords($s->name) }}</a></td>
+                          <td><a href="{{ route('estudiantes.show', $t->id) }}">{{ ucwords($t->name) }}</a></td>
                           {{-- GRADO --}}
-                          @if (isset($s->grado))
-                            <td>{{ $s->grado->name }}</td>
+                          @if (isset($t->grado))
+                            <td>{{ $t->grado->name }}</td>
                           @else
                               <td>-</td>
                           @endif
                           {{-- ACTUALIZAR --}}
                           <td>
-                            @if ($s->status === 0)
+                            @if ($t->status === 0)
                               <a
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-success text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Activar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'studentActivate'.$s->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'studentActivate'.$t->id }}').submit();">
                                 <i class="fas fa-check"></i>
                               </a>
-                              <form id="{{ 'studentActivate'.$s->id }}"
-                                action="{{ route('estudiantes.activate', $s->id) }}"
+                              <form id="{{ 'studentActivate'.$t->id }}"
+                                action="{{ route('estudiantes.activate', $t->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -66,11 +66,11 @@
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-danger text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Desactivar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'studentDeactivate'.$s->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'studentDeactivate'.$t->id }}').submit();">
                                 <i class="fas fa-times"></i>
                               </a>
-                              <form id="{{ 'studentDeactivate'.$s->id }}"
-                                action="{{ route('estudiantes.deactivate', $s->id) }}"
+                              <form id="{{ 'studentDeactivate'.$t->id }}"
+                                action="{{ route('estudiantes.deactivate', $t->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -92,14 +92,14 @@
                                   icon:'error',
                                 }).then((result) => {
                                   if (result.isConfirmed) {
-                                    document.getElementById('{{ 'delStudent'.$s->id }}').submit();
+                                    document.getElementById('{{ 'delStudent'.$t->id }}').submit();
                                   }
                                 });
                               ">
                               <i class="far fa-trash-alt"></i>
                             </a>
-                            <form id="{{ 'delStudent'.$s->id }}"
-                            action="{{ route('estudiantes.destroy', $s->id) }}"
+                            <form id="{{ 'delStudent'.$t->id }}"
+                            action="{{ route('estudiantes.destroy', $t->id) }}"
                             method="POST"
                             style="display: none;"
                             >@csrf
@@ -115,7 +115,7 @@
                     </tbody>
                   </table>
                   {{-- Paginator --}}
-                  {{$students->links()}}
+                  {{$teachers->links()}}
                 </div>
             </div>
         </div>

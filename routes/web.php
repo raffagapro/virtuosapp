@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-//testing route
-// Route::resource('test', App\Http\Controllers\MateriaController::class);
-// Route::resource('test2', App\Http\Controllers\ClaseController::class);
-
 Route::get('/', function () {
     return view('auth.login');
 })->middleware('user');
@@ -33,7 +29,15 @@ Route::middleware(['GuestRoleRedirect'])->group(function (){
 Route::prefix('admin')->group(function(){
     Route::middleware(['AdminRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
-        Route::get('/estudiantes', [App\Http\Controllers\Admin\StudentListController::class, 'index'])->name('studentList');
+
+        Route::resource('estudiantes', App\Http\Controllers\Admin\StudentListController::class);
+        Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'activate'])->name('estudiantes.activate');
+        Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'deactivate'])->name('estudiantes.deactivate');
+        
+        Route::resource('maestros', App\Http\Controllers\Admin\TeacherListController::class);
+        Route::put('maestros/indv/activate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('estudiantes.activate');
+        Route::put('maestros/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('estudiantes.deactivate');
+        
         Route::resource('materias', App\Http\Controllers\Admin\MateriaController::class);
         Route::post('materias/mGrabber', [App\Http\Controllers\Admin\MateriaController::class, 'materiaGrabber']);
         Route::resource('clase', App\Http\Controllers\Admin\ClaseController::class, ['except'=>['index']]);

@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'curp',
+        'edad',
         'status',
     ];
 
@@ -42,9 +44,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function students()
+    {
+      return $this->belongsToMany(User::class, 'student_tutor', 'student_id');
+    }
+
+    public function tutors()
+    {
+      return $this->belongsToMany(User::class, 'student_tutor', 'tutor_id');
+    }
+
     public function role()
     {
       return $this->belongsTo(Role::class);
+    }
+
+    public function area()
+    {
+      return $this->belongsTo(Area::class);
+    }
+
+    public function modalidad()
+    {
+      return $this->belongsTo(Modalidad::class);
+    }
+
+    public function grado()
+    {
+      return $this->belongsTo(Grado::class);
     }
 
     public function clases()

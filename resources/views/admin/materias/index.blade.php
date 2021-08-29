@@ -38,10 +38,11 @@
                 <tr>
                   <td class="text-left"><a href="{{ route('clase.index', $m->id) }}">{{ ucwords($m->name) }}</a></td>
                   <td>
-                    <span class="btn btn-primary text-light mr-2 materiaBtn" id="{{ $m->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#materiasModModal"></i></span>
+                    <span class="btn btn-sm btn-primary text-light mr-2 materiaBtn" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $m->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#materiasModModal"></i></span>
                     <a
                     href="javascript:void(0);"
-                    class="btn btn-danger text-light"
+                    class="btn btn-sm btn-danger text-light"
+                    data-toggle="tooltip" data-placement="top" title="Borrar"
                     onclick="
                         event.preventDefault();
                         swal.fire({

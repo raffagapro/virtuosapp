@@ -31,11 +31,12 @@
             5
           </td>
           <td>
-            <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" id="{{ $c->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
+            <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $c->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
             @if ($c->status === 0)
               <a
                 href="javascript:void(0);"
                 class="btn btn-sm btn-success text-light mr-2"
+                data-toggle="tooltip" data-placement="top" title="Activar"
                 onclick="event.preventDefault(); document.getElementById('{{ 'claseActivate'.$c->id }}').submit();">
                 <i class="fas fa-check"></i>
               </a>
@@ -49,6 +50,7 @@
               <a
                 href="javascript:void(0);"
                 class="btn btn-sm btn-danger text-light mr-2"
+                data-toggle="tooltip" data-placement="top" title="Desactivar"
                 onclick="event.preventDefault(); document.getElementById('{{ 'claseDeactivate'.$c->id }}').submit();">
                 <i class="fas fa-times"></i>
               </a>
@@ -61,6 +63,7 @@
             @endif
             <a
               href="javascript:void(0);"
+              data-toggle="tooltip" data-placement="top" title="Borrar"
               class="btn btn-sm btn-danger text-light"
               onclick="
                 event.preventDefault();
