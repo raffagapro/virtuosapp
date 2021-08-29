@@ -33,6 +33,14 @@ class UserDevOnlySeeder extends Seeder
         $user2->save();
         $student->user()->save($user2);
 
+        $user2a = new User();
+        $user2a->name = 'student2';
+        $user2a->email = 'student2@admin.com';
+        $user2a->password = '$2y$10$.S01CBGHskwB3Tb7ke/m8OXyz8jbWO7zwd6FYv9ENQP5zRPtLM/gC';
+        $user2a->status = 1;
+        $user2a->save();
+        $student->user()->save($user2a);
+
         $parent = Role::where('name', 'guardian')->first();
         $user3 = new User();
         $user3->name = 'parent1';
@@ -41,5 +49,13 @@ class UserDevOnlySeeder extends Seeder
         $user3->status = 1;
         $user3->save();
         $parent->user()->save($user3);
+
+        $user3a = new User();
+        $user3a->name = 'parent2';
+        $user3a->email = 'parent2@admin.com';
+        $user3a->password = '$2y$10$.S01CBGHskwB3Tb7ke/m8OXyz8jbWO7zwd6FYv9ENQP5zRPtLM/gC';
+        $user3a->status = 1;
+        $user3a->save();
+        $parent->user()->save($user3a);
     }
 }

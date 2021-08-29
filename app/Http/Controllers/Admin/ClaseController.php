@@ -111,7 +111,7 @@ class ClaseController extends Controller
         // dd($materia->id);
         $clase->status = 1;
         $clase->save();
-        $status = 'La clase ha sido actiavda exitosamente.';
+        $status = 'La clase ha sido activada exitosamente.';
         return redirect()->route('clase.index', $materia->id)->with(compact('status'));
     }
 
