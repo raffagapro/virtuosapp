@@ -35,8 +35,8 @@ Route::prefix('admin')->group(function(){
         Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'deactivate'])->name('estudiantes.deactivate');
         
         Route::resource('maestros', App\Http\Controllers\Admin\TeacherListController::class);
-        Route::put('maestros/indv/activate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('estudiantes.activate');
-        Route::put('maestros/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('estudiantes.deactivate');
+        Route::put('maestros/indv/activate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('maestros.activate');
+        Route::put('maestros/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('maestros.deactivate');
         
         Route::resource('materias', App\Http\Controllers\Admin\MateriaController::class);
         Route::post('materias/mGrabber', [App\Http\Controllers\Admin\MateriaController::class, 'materiaGrabber']);
