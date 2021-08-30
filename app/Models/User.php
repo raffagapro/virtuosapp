@@ -44,15 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function students()
-    {
-      return $this->belongsToMany(User::class, 'student_tutor', 'student_id');
-    }
+    // public function students()
+    // {
+    //   return $this->belongsToMany(User::class, 'student_tutor', 'student_id');
+    // }
 
-    public function tutors()
-    {
-      return $this->belongsToMany(User::class, 'student_tutor', 'tutor_id');
-    }
+    // public function tutors()
+    // {
+    //   return $this->belongsToMany(User::class, 'student_tutor', 'tutor_id');
+    // }
 
     public function role()
     {

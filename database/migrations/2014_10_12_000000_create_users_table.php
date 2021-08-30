@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->integer('modalidad_id')->nullable();
             $table->integer('role_id')->nullable();
             $table->integer('area_id')->nullable();
+            $table->integer('tutor1')->nullable();
+            $table->integer('tutor2')->nullable();
             $table->string('password');
             $table->integer('status')->nullable();
             $table->rememberToken();
