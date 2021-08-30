@@ -45,6 +45,7 @@ Route::prefix('admin')->group(function(){
         Route::post('clase/indv/cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
         Route::put('clase/indv/activate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'activate'])->name('clase.activate');
         Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
+   
     });
 });
 
