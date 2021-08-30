@@ -12,11 +12,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card bgVirtuos border-secondary text-light text-center py-5">
                 <div class="card-body">
-                    <div class="userPortrait-lg mx-auto py-5 mb-2">
-                        <i class="fas fa-user fa-3x align-bottom"></i>
+                    <div class="mx-auto mb-3">
+						<span class="fa-stack fa-5x">
+							<i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
+							<i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+						</span>
                     </div>
                     <h3 class="mb-0">{{ Auth::user()->name }}</h3>
                 </div>

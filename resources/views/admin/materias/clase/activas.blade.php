@@ -17,7 +17,7 @@
       @forelse ($aClases as $c)
         <tr>
           {{-- CHANGE ROTE TO CLASS EDIT PAGE!!!!  --}}
-          <td class="text-left"><a href="{{ route('clase.index', $c->id) }}">{{ ucwords($c->label) }}</a></td>
+          <td class="text-left"><a href="{{ route('clase.show', $c->id) }}">{{ ucwords($c->label) }}</a></td>
           {{-- Teacher --}}
           <td>
             @if ($c->teacher != 0)
@@ -26,7 +26,7 @@
               Sin Maestro
             @endif
           </td>
-          {{-- # Studdens --}}
+          {{-- # Students --}}
           <td>
             5
           </td>

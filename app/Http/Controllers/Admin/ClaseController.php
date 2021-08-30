@@ -68,7 +68,7 @@ class ClaseController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.materias.clase.details');
     }
 
     /**
@@ -134,7 +134,7 @@ class ClaseController extends Controller
      */
     public function destroy($id)
     {
-        //POSIBLEMENTE AGREGAR MAS CODGO PARA BORRAR TODO LO RELACIONADO CON LA CLASE
+        //POSIBLEMENTE AGREGAR MAS CÓDIGO PARA BORRAR TODO LO RELACIONADO CON LA CLASE
         $clase = Clase::findOrFail($id);
         $materia = Materia::findOrFail($clase->materia->id);
         $clase->delete();
