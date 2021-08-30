@@ -15,8 +15,8 @@
         <div class="col-md-3">
             <div class="card bgVirtuos border-secondary text-light text-center py-5">
                 <div class="card-body">
-                    <div class="mx-auto mb-2">
-						<span class="fa-stack fa-6x">
+                    <div class="mx-auto mb-3">
+						<span class="fa-stack fa-5x">
 							<i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
 							<i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
 						</span>

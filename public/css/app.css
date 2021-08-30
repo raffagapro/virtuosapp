@@ -14651,6 +14651,10 @@ body {
   line-height: 1.2;
 }
 
+.btn-light {
+  background-color: white;
+}
+
 .btn-text-start {
   text-align: start;
   height: 100px;
