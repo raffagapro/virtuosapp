@@ -12,7 +12,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card bgVirtuos border-secondary text-light text-center py-5">
                 <div class="card-body">
                     <div class="userPortrait-lg mx-auto py-5 mb-2">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card border-secondary px-3">
                 <div class="card-body">
                     <table class="table text-center">

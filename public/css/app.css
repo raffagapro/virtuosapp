@@ -4632,7 +4632,7 @@ readers do not read off random characters that represent icons */
   --info: #00F2EF;
   --warning: #FDCC00;
   --danger: #FF4063;
-  --light: white;
+  --light: #DAE1E5;
   --dark: #343a40;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -6427,21 +6427,21 @@ pre code {
 .table-light,
 .table-light > th,
 .table-light > td {
-  background-color: white;
+  background-color: #f5f7f8;
 }
 .table-light th,
 .table-light td,
 .table-light thead th,
 .table-light tbody + tbody {
-  border-color: white;
+  border-color: #eceff1;
 }
 
 .table-hover .table-light:hover {
-  background-color: #f2f2f2;
+  background-color: #e6ebee;
 }
 .table-hover .table-light:hover > td,
 .table-hover .table-light:hover > th {
-  background-color: #f2f2f2;
+  background-color: #e6ebee;
 }
 
 .table-dark,
@@ -7224,32 +7224,32 @@ fieldset:disabled a.btn {
 
 .btn-light {
   color: #212529;
-  background-color: white;
-  border-color: white;
+  background-color: #DAE1E5;
+  border-color: #DAE1E5;
 }
 .btn-light:hover {
   color: #212529;
-  background-color: #ececec;
-  border-color: #e6e6e6;
+  background-color: #c4cfd5;
+  border-color: #bcc9d0;
 }
 .btn-light:focus, .btn-light.focus {
   color: #212529;
-  background-color: #ececec;
-  border-color: #e6e6e6;
-  box-shadow: 0 0 0 0.2rem rgba(222, 222, 223, 0.5);
+  background-color: #c4cfd5;
+  border-color: #bcc9d0;
+  box-shadow: 0 0 0 0.2rem rgba(190, 197, 201, 0.5);
 }
 .btn-light.disabled, .btn-light:disabled {
   color: #212529;
-  background-color: white;
-  border-color: white;
+  background-color: #DAE1E5;
+  border-color: #DAE1E5;
 }
 .btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active, .show > .btn-light.dropdown-toggle {
   color: #212529;
-  background-color: #e6e6e6;
-  border-color: #dfdfdf;
+  background-color: #bcc9d0;
+  border-color: #b5c3cb;
 }
 .btn-light:not(:disabled):not(.disabled):active:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .show > .btn-light.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(222, 222, 223, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(190, 197, 201, 0.5);
 }
 
 .btn-dark {
@@ -7433,28 +7433,28 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-light {
-  color: white;
-  border-color: white;
+  color: #DAE1E5;
+  border-color: #DAE1E5;
 }
 .btn-outline-light:hover {
   color: #212529;
-  background-color: white;
-  border-color: white;
+  background-color: #DAE1E5;
+  border-color: #DAE1E5;
 }
 .btn-outline-light:focus, .btn-outline-light.focus {
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(218, 225, 229, 0.5);
 }
 .btn-outline-light.disabled, .btn-outline-light:disabled {
-  color: white;
+  color: #DAE1E5;
   background-color: transparent;
 }
 .btn-outline-light:not(:disabled):not(.disabled):active, .btn-outline-light:not(:disabled):not(.disabled).active, .show > .btn-outline-light.dropdown-toggle {
   color: #212529;
-  background-color: white;
-  border-color: white;
+  background-color: #DAE1E5;
+  border-color: #DAE1E5;
 }
 .btn-outline-light:not(:disabled):not(.disabled):active:focus, .btn-outline-light:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-light.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(218, 225, 229, 0.5);
 }
 
 .btn-outline-dark {
@@ -9387,15 +9387,15 @@ a.badge-danger:focus, a.badge-danger.focus {
 
 .badge-light {
   color: #212529;
-  background-color: white;
+  background-color: #DAE1E5;
 }
 a.badge-light:hover, a.badge-light:focus {
   color: #212529;
-  background-color: #e6e6e6;
+  background-color: #bcc9d0;
 }
 a.badge-light:focus, a.badge-light.focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(218, 225, 229, 0.5);
 }
 
 .badge-dark {
@@ -9530,15 +9530,15 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-light {
-  color: #858585;
-  background-color: white;
-  border-color: white;
+  color: #717577;
+  background-color: #f8f9fa;
+  border-color: #f5f7f8;
 }
 .alert-light hr {
-  border-top-color: #f2f2f2;
+  border-top-color: #e6ebee;
 }
 .alert-light .alert-link {
-  color: #6c6c6c;
+  color: #585b5d;
 }
 
 .alert-dark {
@@ -9894,17 +9894,17 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .list-group-item-light {
-  color: #858585;
-  background-color: white;
+  color: #717577;
+  background-color: #f5f7f8;
 }
 .list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:focus {
-  color: #858585;
-  background-color: #f2f2f2;
+  color: #717577;
+  background-color: #e6ebee;
 }
 .list-group-item-light.list-group-item-action.active {
   color: #fff;
-  background-color: #858585;
-  border-color: #858585;
+  background-color: #717577;
+  border-color: #717577;
 }
 
 .list-group-item-dark {
@@ -10767,13 +10767,13 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-  background-color: white !important;
+  background-color: #DAE1E5 !important;
 }
 
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,
 button.bg-light:focus {
-  background-color: #e6e6e6 !important;
+  background-color: #bcc9d0 !important;
 }
 
 .bg-dark {
@@ -10859,7 +10859,7 @@ button.bg-dark:focus {
 }
 
 .border-light {
-  border-color: white !important;
+  border-color: #DAE1E5 !important;
 }
 
 .border-dark {
@@ -14454,11 +14454,11 @@ a.text-danger:hover, a.text-danger:focus {
 }
 
 .text-light {
-  color: white !important;
+  color: #DAE1E5 !important;
 }
 
 a.text-light:hover, a.text-light:focus {
-  color: #d9d9d9 !important;
+  color: #adbdc5 !important;
 }
 
 .text-dark {
@@ -14638,30 +14638,6 @@ body {
 
 /* HEADER-------------------------------- */
 /* .site-header{} */
-.userPortrait {
-  color: gray;
-  background-color: #DAE1E5;
-  border: #FFFAFA;
-  border-radius: 100%;
-  border-style: solid;
-  border-width: 2px;
-  height: 40px;
-  width: 40px;
-  text-align: center;
-}
-
-.userPortrait-lg {
-  color: gray;
-  background-color: #DAE1E5;
-  border: white;
-  border-radius: 100%;
-  border-style: solid;
-  border-width: 8px;
-  height: 160px;
-  width: 160px;
-  text-align: center;
-}
-
 .sub-bar {
   color: black;
   background-color: white;
