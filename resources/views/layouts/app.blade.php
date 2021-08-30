@@ -61,6 +61,10 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link text-light align-items-center" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
+                                    <span class="fa-stack fa-lg ml-1">
+                                        <i class="fas fa-circle fa-stack-2x text-light"></i>
+                                        <i class="fas fa-user fa-stack-1x fa-sm text-secondary"></i>
+                                    </span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -74,9 +78,6 @@
                                         @csrf
                                     </form>
                                 </div>
-                            </li>
-                            <li class="userPortrait">
-                                <i class="fas fa-user fa-sm align-bottom"></i>
                             </li>
                         @endguest
                     </ul>

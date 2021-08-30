@@ -50,7 +50,9 @@ Route::prefix('admin')->group(function(){
 
 Route::prefix('maestro')->group(function(){
     Route::middleware(['TeacherRoleRedirect'])->group(function (){
-        Route::get('/index', [App\Http\Controllers\TeacherController::class, 'index'])->name('teacher');
+        Route::get('/index', [App\Http\Controllers\Teacher\TeacherController::class, 'index'])->name('teacher');
+        Route::get('/materia', [App\Http\Controllers\Teacher\MateriaController::class, 'index'])->name('maestroMateria');
+        Route::get('/clase/indv/{materia_id}', [App\Http\Controllers\Teacher\ClaseController::class, 'index'])->name('maestroClase.index');
     });
 });
 

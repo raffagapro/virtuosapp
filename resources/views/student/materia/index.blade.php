@@ -12,7 +12,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card border-secondary text-center">
                 <div class="card-body px-0">
                     <div class="my-3">
@@ -75,7 +75,7 @@
             </div>
         </div>
         
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card bgVirtuos-docente border-secondary text-center py-5">
                 <div class="card-body">
                     <div class="userPortrait-lg mx-auto py-5 mb-2">
