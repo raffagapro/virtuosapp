@@ -52,7 +52,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start">
+                    <a class="btn d-block btn-light border-secondary btn-text-start disabled">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Coordinadores</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\staff_icon.png') }}" alt="">
@@ -62,7 +62,7 @@
             </div>
             <div class="row mb-4">
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start">
+                    <a class="btn d-block btn-light border-secondary btn-text-start disabled">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Tutores</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\student_icon.png') }}" alt="">
@@ -70,7 +70,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start">
+                    <a class="btn d-block btn-light border-secondary btn-text-start disabled">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Administración</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\admin_icon.png') }}" alt="">

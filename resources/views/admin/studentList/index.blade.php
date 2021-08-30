@@ -191,29 +191,3 @@
   <x-success-alert :message="$status"/>
 @endisset
 @endsection
-
-@section('scripts')
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<script src="{{ asset('js/ajax/materiaSwitcher.js') }}" ></script>
-@endsection
-
-
-          {{--  TUTOR  --}}
-          {{--  <div class="form-group">
-            @php
-                $tutores = App\Models\User::whereHas(
-                    'role', function($q){
-                        $q->where('name', 'guardian');
-                    }
-                )->get();
-              @endphp
-              <small id="emailHelp" class="form-text text-muted">Tutor</small>
-              <select class="form-control" name="teacherId">
-                <option value=0>Sin Tutor</option>
-                @forelse ($tutores as $t)
-                    <option value={{ $t->id }}>{{ $t->name }}</option>
-                @empty
-                    <option value=0 disabled>No hay tutores registrados</option>
-                @endforelse
-              </select>
-          </div>  --}}

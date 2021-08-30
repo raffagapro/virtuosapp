@@ -21,7 +21,7 @@
                     </div>
                     <h3 class="col-4">Maestros</h3>
                     <div class="col-4">
-                      <button class="btn btn-primary float-right" data-toggle="modal" data-target="#newStudentModal">Agregar<i class="fas fa-book-reader ml-2"></i></button>
+                      <button class="btn btn-primary float-right" data-toggle="modal" data-target="#newTeacherModal">Agregar<i class="fas fa-book-reader ml-2"></i></button>
                     </div>
                   </div>
                   <table class="table table-bordered">
@@ -29,7 +29,7 @@
                       <thead>
                         <tr>
                           <th class="col-6 text-start"><h5>Nombre</h4></th>
-                          <th><h5>Grado</h4></th>
+                          <th><h5>Area</h4></th>
                           <th><h5>Actualizar</h4></th>
                         </tr>
                       </thead> 
@@ -38,10 +38,10 @@
                       @forelse ($teachers as $t)
                         <tr>
                           {{-- NOMBRE --}}
-                          <td><a href="{{ route('estudiantes.show', $t->id) }}">{{ ucwords($t->name) }}</a></td>
+                          <td><a href="{{ route('maestros.show', $t->id) }}">{{ ucwords($t->name) }}</a></td>
                           {{-- GRADO --}}
-                          @if (isset($t->grado))
-                            <td>{{ $t->grado->name }}</td>
+                          @if (isset($t->area))
+                            <td>{{ $t->area->name }}</td>
                           @else
                               <td>-</td>
                           @endif
@@ -52,11 +52,11 @@
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-success text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Activar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'studentActivate'.$t->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'teacherActivate'.$t->id }}').submit();">
                                 <i class="fas fa-check"></i>
                               </a>
-                              <form id="{{ 'studentActivate'.$t->id }}"
-                                action="{{ route('estudiantes.activate', $t->id) }}"
+                              <form id="{{ 'teacherActivate'.$t->id }}"
+                                action="{{ route('maestros.activate', $t->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -66,11 +66,11 @@
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-danger text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Desactivar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'studentDeactivate'.$t->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'teacherDeactivate'.$t->id }}').submit();">
                                 <i class="fas fa-times"></i>
                               </a>
-                              <form id="{{ 'studentDeactivate'.$t->id }}"
-                                action="{{ route('estudiantes.deactivate', $t->id) }}"
+                              <form id="{{ 'teacherDeactivate'.$t->id }}"
+                                action="{{ route('maestros.deactivate', $t->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -83,7 +83,7 @@
                             onclick="
                                 event.preventDefault();
                                 swal.fire({
-                                  text: '¿Deseas eliminar el estudiante?',
+                                  text: '¿Deseas eliminar al maestro?',
                                   showCancelButton: true,
                                   cancelButtonText: `Cancelar`,
                                   cancelButtonColor:'#62A4C0',
@@ -92,14 +92,14 @@
                                   icon:'error',
                                 }).then((result) => {
                                   if (result.isConfirmed) {
-                                    document.getElementById('{{ 'delStudent'.$t->id }}').submit();
+                                    document.getElementById('{{ 'delteacher'.$t->id }}').submit();
                                   }
                                 });
                               ">
                               <i class="far fa-trash-alt"></i>
                             </a>
-                            <form id="{{ 'delStudent'.$t->id }}"
-                            action="{{ route('estudiantes.destroy', $t->id) }}"
+                            <form id="{{ 'delteacher'.$t->id }}"
+                            action="{{ route('maestros.destroy', $t->id) }}"
                             method="POST"
                             style="display: none;"
                             >@csrf
@@ -109,7 +109,7 @@
                         </tr>
                       @empty
                         <div class="alert alert-danger" role="alert">
-                          Sin estudiantes
+                          Sin meastros
                         </div>
                       @endforelse
                     </tbody>
@@ -122,18 +122,18 @@
     </div>
 </div>
 
-<!-- Modal Agregar Student -->
-<div class="modal fade" id="newStudentModal" tabindex="-1">
+<!-- Modal Agregar Teacher -->
+<div class="modal fade" id="newTeacherModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Nuevo Estudiante</h5>
+        <h5 class="modal-title">Nuevo Maestro</h5>
         <button type="button" class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('estudiantes.store') }}" method="POST">
+        <form action="{{ route('maestros.store') }}" method="POST">
           @csrf
           {{--  NOMBRE  --}}
           <div class="form-group">
@@ -147,33 +147,15 @@
           <div class="form-group">
             <input type="text" class="form-control" name="curp" placeholder="CURP">
           </div>
-          {{-- EDAD / GRADO --}}
-          <div class="form-group row">
-            <div class="col">
-              <small id="emailHelp" class="form-text text-muted">Edad</small>
-              <input type="number" min="1" max="99" class="form-control" name="age" placeholder="Edad">
-            </div>
-            <div class="col">
-              <small id="emailHelp" class="form-text text-muted">Grado</small>
-              <select class="form-control" name="gradoId">
-                <option value=0>Sin Grado</option>
-                @forelse (App\Models\Grado::all() as $g)
-                    <option value={{ $g->id }}>{{ $g->name }}</option>
-                @empty
-                    <option value=0 disabled>No hay grados registrados</option>
-                @endforelse
-              </select>
-            </div>
-          </div>
-          {{--  MODALIDAD  --}}
+          {{--  Area  --}}
           <div class="form-group">
-            <small id="emailHelp" class="form-text text-muted">Modalidad</small>
-              <select class="form-control" name="modalidadId">
-                <option value=0>Sin Modalidad</option>
-                @forelse (App\Models\Modalidad::all() as $m)
-                    <option value={{ $m->id }}>{{ $m->name }}</option>
+            <small id="emailHelp" class="form-text text-muted">Area</small>
+              <select class="form-control" name="areaId">
+                <option value=0>Sin Area</option>
+                @forelse (App\Models\Area::all() as $a)
+                    <option value={{ $a->id }}>{{ $a->name }}</option>
                 @empty
-                    <option value=0 disabled>No hay modalidades registradas</option>
+                    <option value=0 disabled>No hay areas registradas</option>
                 @endforelse
               </select>
           </div>
@@ -191,29 +173,3 @@
   <x-success-alert :message="$status"/>
 @endisset
 @endsection
-
-@section('scripts')
-<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<script src="{{ asset('js/ajax/materiaSwitcher.js') }}" ></script>
-@endsection
-
-
-          {{--  TUTOR  --}}
-          {{--  <div class="form-group">
-            @php
-                $tutores = App\Models\User::whereHas(
-                    'role', function($q){
-                        $q->where('name', 'guardian');
-                    }
-                )->get();
-              @endphp
-              <small id="emailHelp" class="form-text text-muted">Tutor</small>
-              <select class="form-control" name="teacherId">
-                <option value=0>Sin Tutor</option>
-                @forelse ($tutores as $t)
-                    <option value={{ $t->id }}>{{ $t->name }}</option>
-                @empty
-                    <option value=0 disabled>No hay tutores registrados</option>
-                @endforelse
-              </select>
-          </div>  --}}

@@ -27,7 +27,7 @@ class RoleSeeder extends Seeder
         ]);
     
         Role::create([
-            'name' => 'guardian',
+            'name' => 'tutor',
         ]);
     
         Role::create([
