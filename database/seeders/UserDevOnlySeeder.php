@@ -41,7 +41,7 @@ class UserDevOnlySeeder extends Seeder
         $user2a->save();
         $student->user()->save($user2a);
 
-        $parent = Role::where('name', 'guardian')->first();
+        $parent = Role::where('name', 'tutor')->first();
         $user3 = new User();
         $user3->name = 'parent1';
         $user3->email = 'parent@admin.com';

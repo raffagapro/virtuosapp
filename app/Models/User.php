@@ -76,7 +76,15 @@ class User extends Authenticatable
 
     public function clases()
     {
-        return $this->hasMany(Clase::class);
+        return $this->belongsToMany(Clase::class);
+    }
+
+    public function hasClase($clase)
+    {
+      if ($this->clases()->where('clase_id', $clase->id)->first()) {
+        return true;
+      }
+      return false;
     }
 
     public function getNameAttribute($name)

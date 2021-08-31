@@ -16,8 +16,7 @@
     <tbody>
         @forelse ($cClases as $cc)
         <tr>
-          {{-- CHANGE ROTE TO CLASS EDIT PAGE!!!!  --}}
-          <td class="text-left"><a href="{{ route('clase.index', $cc->id) }}">{{ ucwords($cc->label) }}</a></td>
+          <td class="text-left"><a href="{{ route('clase.edit', $cc->id) }}">{{ ucwords($cc->label) }}</a></td>
           {{-- Teacher --}}
           <td>
             @if ($cc->teacher != 0)
@@ -28,7 +27,7 @@
           </td>
           {{-- # Studdens --}}
           <td>
-            5
+            {{ count($c->students) }}
           </td>
           <td>
             <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $cc->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
@@ -84,7 +83,6 @@
               <i class="far fa-trash-alt"></i>
             </a>
             <form id="{{ 'delClase'.$cc->id }}"
-              {{-- CHANGE ROUTE TO DELETE CLASSES!!!! --}}
               action="{{ route('clase.destroy', $cc->id) }}"
               method="POST"
               style="display: none;"
