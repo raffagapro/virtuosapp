@@ -27,20 +27,20 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card border-secondary">
                 <div class="card-body">
                     <table class="table">
                         <thead>
                           <tr>
-                            <th><h5>Materias</h5></th>
+                            <th><h5>Clases</h5></th>
                             <th></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="align-middle"><a href="{{ route('maestroMateria') }}">Matemáticas</a></td>
-                            <td class="align-middle py-0">
+                            <td class="align-middle"><a href="{{ route('maestroCourse') }}">Matemáticas</a></td>
+                            <td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -51,7 +51,7 @@
                           </tr>
                           <tr>
                             <td>Español</td>
-                            <td class="align-middle py-0">
+                            <td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -62,7 +62,7 @@
                           </tr>
                           <tr>
                             <td>Ciencias</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -72,7 +72,7 @@
 							</td>                          </tr>
                           <tr>
                             <td>Artes Plásticas</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -82,7 +82,7 @@
 							</td>                          </tr>
                           <tr>
                             <td>Música</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -92,7 +92,7 @@
 							</td>                          </tr>
                           <tr>
                             <td>Coro</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -102,7 +102,7 @@
 							</td>                          </tr>
                           <tr>
                             <td>Artes Escénicas</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -112,7 +112,7 @@
 							</td>                          </tr>
                           <tr>
                             <td>Deportes</td>
-							<td class="align-middle py-0">
+							<td class="align-middle text-right py-0">
 								<button type="button" class="btn btn-link">
 									<span class="fa-stack fa-lg">
 										<i class="fas fa-circle fa-stack-2x"></i>
@@ -126,7 +126,7 @@
             </div>
         </div>
 
-		<div class="col-md-3">
+		<div class="col-md-4">
             <div class="card border-secondary">
                 <div class="card-body">
 					<h5>Mensajes</h5>

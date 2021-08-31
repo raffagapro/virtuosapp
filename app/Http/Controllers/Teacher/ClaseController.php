@@ -3,12 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Clase;
-use App\Models\Materia;
-use App\Models\User;
 use Illuminate\Http\Request;
-
-use function GuzzleHttp\Promise\all;
 
 class ClaseController extends Controller
 {
@@ -17,11 +12,9 @@ class ClaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $materia = Materia::findOrFail($id);
-        // dd($materia);
-        return view('teacher.materia.clase.index')->with(compact('materia'));
+        return view('teacher.course.clase.index');
     }
 
     /**
@@ -42,7 +35,7 @@ class ClaseController extends Controller
      */
     public function store(Request $request)
     {
-       
+       //
     }
 
     /**
@@ -64,9 +57,7 @@ class ClaseController extends Controller
      */
     public function edit($id)
     {
-        //NEEDS CODING TO DIRECT TO THE CLASS PAGE, NOT MATERIA PAGE
-        // $materia = Materia::findOrFail($id);
-        // return view('test.edit')->with(compact('materia'));
+        //
     }
 
     /**
@@ -78,17 +69,7 @@ class ClaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-    }
-
-    public function activate($id)
-    {
-
-    }
-
-    public function deactivate($id)
-    {
-
+        //
     }
 
     /**
@@ -99,17 +80,8 @@ class ClaseController extends Controller
      */
     public function destroy($id)
     {
-        //POSIBLEMENTE AGREGAR MAS CODGO PARA BORRAR TODO LO RELACIONADO CON LA CLASE
+        //
 
     }
 
-    public function claseGrabber(Request $request){
-        $clase = Clase::findOrFail($request->claseId);
-        $teachers = User::whereHas(
-            'role', function($q){
-                $q->where('name', 'maestro');
-            }
-        )->get();
-        return [$clase, $teachers];
-    }
 }

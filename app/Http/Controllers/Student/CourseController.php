@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Teacher;
+namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\Materia;
 use Illuminate\Http\Request;
 
-class MateriaController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +14,12 @@ class MateriaController extends Controller
      */
     // public function __construct()
     // {
-    //     $this->middleware('auth');
+            //
     // }
 
     public function index()
     {
-        $materias = Materia::paginate(2);
-        return view('teacher.materia.index')->with(compact('materias'));
+        return view('student.course.index');
     }
 
     /**
@@ -42,7 +40,7 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -64,7 +62,7 @@ class MateriaController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -76,7 +74,7 @@ class MateriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //
     }
 
     /**
@@ -87,11 +85,6 @@ class MateriaController extends Controller
      */
     public function destroy($id)
     {
-
-    }
-
-    public function materiaGrabber(Request $request){
-        $materia = Materia::findOrFail($request->materiaId);
-        return $materia;
+       //
     }
 }

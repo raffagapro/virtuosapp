@@ -78,7 +78,9 @@
             </tbody>
           </table>
           {{-- Paginator --}}
-          {{$materias->links()}}
+          <div class="d-flex justify-content-center">
+            {{$materias->links()}}
+          </div>
         </div>
       </div>
     </div>
