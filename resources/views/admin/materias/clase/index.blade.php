@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Materias"=>'materias.index',"Clases"=>'clase.index']
+    $crumbs = ["Materias"=>['materias.index'],"Clases"=>['clase.index']]
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -47,6 +47,7 @@
     </div>
   </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="addClassModal" tabindex="-1">
   <div class="modal-dialog">

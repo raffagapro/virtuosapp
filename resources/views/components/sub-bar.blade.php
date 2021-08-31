@@ -13,7 +13,11 @@
                 @if ($totalN === 0)
                     <li class="breadcrumb-item active">{{ $key }}</li>
                 @else
-                    <li class="breadcrumb-item"><a href="{{ route($value) }}">{{ $key }}</a></li>
+                    @if (isset($value[1]))
+                        <li class="breadcrumb-item"><a href="{{ route($value[0], $value[1]) }}">{{ $key }}</a></li>
+                    @else
+                        <li class="breadcrumb-item"><a href="{{ route($value[0]) }}">{{ $key }}</a></li>
+                    @endif
                 @endif
               @endforeach
             </ol>

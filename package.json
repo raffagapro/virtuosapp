@@ -25,6 +25,7 @@
         "sweetalert2": "^11.1.4"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4"
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "select2": "^4.1.0-rc.0"
     }
 }

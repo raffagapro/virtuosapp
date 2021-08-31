@@ -68,7 +68,7 @@ class ClaseController extends Controller
      */
     public function show($id)
     {
-        return view('admin.materias.clase.details');
+        //
     }
 
     /**
@@ -79,9 +79,8 @@ class ClaseController extends Controller
      */
     public function edit($id)
     {
-        //NEEDS CODING TO DIRECT TO THE CLASS PAGE, NOT MATERIA PAGE
-        // $materia = Materia::findOrFail($id);
-        // return view('test.edit')->with(compact('materia'));
+        $clase = Clase::findOrFail($id);
+        return view('admin.materias.clase.details')->with(compact('clase'));
     }
 
     /**
@@ -101,7 +100,7 @@ class ClaseController extends Controller
         $clase->teacher = $request->modteacherId;
         $clase->save();
         $status = 'La clase ha sido actualizada exitosamente.';
-        return redirect()->route('clase.index', $materia->id)->with(compact('status'));
+        return back()->with(compact('status'));
     }
 
     public function activate($id)
@@ -150,5 +149,36 @@ class ClaseController extends Controller
             }
         )->get();
         return [$clase, $teachers];
+    }
+
+    public function studentSearcher(Request $request){
+        $clase = Clase::findOrFail($request->claseId);
+        $students = User::where('name', 'LIKE', '%'.$request->value.'%')  
+                        ->whereHas(
+                            'role', function($q){
+                                $q->where('name', 'estudiante');
+                            }
+                        )->get();
+        return [$students, $clase];
+    }
+
+    public function addStudent($classID, $studentID){
+        $clase = Clase::findOrFail($classID);
+        $student = User::findOrFail($studentID);
+        // dd($clase, $student);
+        if (!$student->hasClase($clase)) {
+            $student->clases()->attach($clase);
+        }
+        $status = 'El estudiante ha sido agregado exitosamente.';
+        return back()->with(compact('status'));
+    }
+
+    public function rmStudent($classID, $studentID){
+        $clase = Clase::findOrFail($classID);
+        $student = User::findOrFail($studentID);
+        // dd($clase, $student);
+        $student->clases()->detach($clase);
+        $status = 'El estudiante ha sido eliminado exitosamente.';
+        return back()->with(compact('status'));
     }
 }
