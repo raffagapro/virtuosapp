@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Materia"=>'studentMateria',"Tarea"=>'tarea']
+    $crumbs = ["Clase"=>'studentCourse',"Tarea"=>'tarea']
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -27,13 +27,13 @@
                 <div class="card-footer px-5">
                     <div class="row">
                         <div class="ml-auto mr-3">
-                            <button class="btn btn-info text-light">Subir Tarea</button>
+                            <button class="btn btn-info text-white">Subir Tarea</button>
                         </div>
                         <div class="mr-3">
-                            <button class="btn btn-danger text-light">Ver Video</button>
+                            <button class="btn btn-danger text-white">Ver Video</button>
                         </div>
                         <div class="mr-3">
-                            <button class="btn btn-dark text-light"><i class="fas fa-book"></i></button>
+                            <button class="btn btn-dark text-white"><i class="fas fa-book"></i></button>
                         </div>
                     </div>
                 </div>

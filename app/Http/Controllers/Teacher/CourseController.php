@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Materia;
 use Illuminate\Http\Request;
 
-class MateriaController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +14,12 @@ class MateriaController extends Controller
      */
     // public function __construct()
     // {
-    //     $this->middleware('auth');
+            //
     // }
 
     public function index()
     {
-        return view('student.materia.index');
+        return view('teacher.course.index');
     }
 
     /**
@@ -41,7 +40,7 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -63,7 +62,7 @@ class MateriaController extends Controller
      */
     public function edit($id)
     {
-        
+        //
     }
 
     /**
@@ -86,6 +85,7 @@ class MateriaController extends Controller
      */
     public function destroy($id)
     {
-       
+        //
     }
+
 }
