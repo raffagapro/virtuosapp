@@ -45,7 +45,7 @@ class StudentListController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('admin.studentList.details');
     }
 
     /**

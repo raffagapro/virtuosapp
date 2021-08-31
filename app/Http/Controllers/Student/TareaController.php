@@ -24,6 +24,6 @@ class TareaController extends Controller
      */
     public function index()
     {
-        return view('student.materia.tarea.index');
+        return view('student.course.tarea.index');
     }
 }

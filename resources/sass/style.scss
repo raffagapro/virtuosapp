@@ -26,6 +26,13 @@
 		width: 66px;
 		color: white !important;
 	}
+
+	.studentPortrait{
+		border: 1px solid black;
+		background-color: white;
+		height: 115px;
+		width: 100px;
+	}
 	
 /* HEADER-------------------------------- */
  /* .site-header{} */
@@ -45,6 +52,10 @@
 
  .btn-light{
 	background-color: white;
+ }
+
+ .btn-info{
+	 color: white;
  }
 
  .btn-text-start{

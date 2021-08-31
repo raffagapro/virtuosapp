@@ -15,11 +15,14 @@
         <div class="col-md-3">
             <div class="card bgVirtuos border-secondary text-light text-center py-5">
                 <div class="card-body">
-                    <div class="userPortrait-lg mx-auto py-5 mb-2">
-                        <i class="fas fa-user fa-3x align-bottom"></i>
-                    </div>
-                    <h3 class="mb-0">{{ Auth::user()->name }}</h3>
-                    <p class="text-white-50">Primaria 2 A</p>
+                  <div class="mx-auto mb-3">
+                    <span class="fa-stack fa-5x">
+                      <i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
+                      <i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+                    </span>
+                  </div>
+                  <h3 class="mb-0">{{ Auth::user()->name }}</h3>
+                  <p class="text-white-50">Primaria 2 A</p>
                 </div>
             </div>
         </div>
@@ -30,13 +33,13 @@
                     <table class="table text-center">
                         <thead>
                           <tr>
-                            <th class="col-9 text-left"><h5>Materias</h4></th>
+                            <th class="col-9 text-left"><h5>Clases</h4></th>
                             <th class="col-3"><h5>Status</h4></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="text-left"><a href="{{ route('studentMateria') }}">Matemáticas</a></td>
+                            <td class="text-left"><a href="{{ route('studentCourse') }}">Matemáticas</a></td>
                             <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
                           </tr>
                           <tr>
