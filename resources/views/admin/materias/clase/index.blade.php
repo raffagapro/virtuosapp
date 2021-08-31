@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Materias"=>'materias.index',"Clases"=>'clase.index']
+    $crumbs = ["Materias"=>['materias.index'],"Clases"=>['clase.index']]
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -29,7 +29,7 @@
               </ul>
             </div>
             <div class="col-3 ml-auto">
-              <button class="btn btn-primary" data-toggle="modal" data-target="#addClassModal">Abrir Clase<i class="fas fa-book-reader ml-2"></i></button>
+              <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addClassModal">Abrir Clase<i class="fas fa-book-reader ml-2"></i></button>
             </div>
           </div>
           <div class="tab-content">
@@ -47,6 +47,7 @@
     </div>
   </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="addClassModal" tabindex="-1">
   <div class="modal-dialog">

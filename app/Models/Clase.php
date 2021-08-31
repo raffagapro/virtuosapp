@@ -30,4 +30,13 @@ class Clase extends Model
     {
         return User::findOrFail($this->teacher);
     }
+
+    public function getLabelAttribute($label)
+    {
+      return ucwords($label);
+    }
+    public function setLabelAttribute($label)
+    {
+      $this->attributes['label'] = mb_strtolower($label);
+    }
 }

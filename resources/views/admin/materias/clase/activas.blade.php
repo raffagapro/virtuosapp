@@ -16,8 +16,7 @@
     <tbody>
       @forelse ($aClases as $c)
         <tr>
-          {{-- CHANGE ROTE TO CLASS EDIT PAGE!!!!  --}}
-          <td class="text-left"><a href="{{ route('clase.show', $c->id) }}">{{ ucwords($c->label) }}</a></td>
+          <td class="text-left"><a href="{{ route('clase.edit', $c->id) }}">{{ ucwords($c->label) }}</a></td>
           {{-- Teacher --}}
           <td>
             @if ($c->teacher != 0)
@@ -28,24 +27,17 @@
           </td>
           {{-- # Students --}}
           <td>
-            5
+            {{ count($c->students) }}
           </td>
           <td>
             <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $c->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>
             @if ($c->status === 0)
               <a
-                href="javascript:void(0);"
+                href="{{ route('clase.activate', $c->id) }}"
                 class="btn btn-sm btn-success text-light mr-2"
-                data-toggle="tooltip" data-placement="top" title="Activar"
-                onclick="event.preventDefault(); document.getElementById('{{ 'claseActivate'.$c->id }}').submit();">
+                data-toggle="tooltip" data-placement="top" title="Activar">
                 <i class="fas fa-check"></i>
               </a>
-              <form id="{{ 'claseActivate'.$c->id }}"
-                action="{{ route('clase.activate', $c->id) }}"
-                method="POST"
-                style="display: none;"
-                >@method('PUT') @csrf
-              </form>
             @else
               <a
                 href="javascript:void(0);"
@@ -84,7 +76,6 @@
               <i class="far fa-trash-alt"></i>
             </a>
             <form id="{{ 'delClase'.$c->id }}"
-              {{-- CHANGE ROUTE TO DELETE CLASSES!!!! --}}
               action="{{ route('clase.destroy', $c->id) }}"
               method="POST"
               style="display: none;"
