@@ -29,7 +29,7 @@
               </ul>
             </div>
             <div class="col-3 ml-auto">
-              <button class="btn btn-primary" data-toggle="modal" data-target="#addClassModal">Abrir Clase<i class="fas fa-book-reader ml-2"></i></button>
+              <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addClassModal">Abrir Clase<i class="fas fa-book-reader ml-2"></i></button>
             </div>
           </div>
           <div class="tab-content">

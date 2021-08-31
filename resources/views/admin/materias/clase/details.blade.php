@@ -30,11 +30,11 @@
               <small class="text-secondary">{{ $sdate.' / '.$edate }}</small>
             </div>
             <div class="col-3">
-              <button class="btn btn-primary" data-toggle="modal" data-target="#modClassModal">
-                <i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modificar Clase"></i>
-              </button>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#addStudentModal">
+              <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addStudentModal">
                 <i class="fas fa-user-graduate" data-toggle="tooltip" data-placement="top" title="Agregar Estudiante"></i>
+              </button>
+              <button class="btn btn-primary float-right mr-1" data-toggle="modal" data-target="#modClassModal">
+                <i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modificar Clase"></i>
               </button>
             </div>
           </div>
