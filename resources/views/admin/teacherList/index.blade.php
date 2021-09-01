@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Meastros"=>'teacherList']
+    $crumbs = ["Maestros"=>'teacherList']
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -109,7 +109,7 @@
                         </tr>
                       @empty
                         <div class="alert alert-danger" role="alert">
-                          Sin meastros
+                          Sin maestros
                         </div>
                       @endforelse
                     </tbody>
@@ -137,15 +137,39 @@
           @csrf
           {{--  NOMBRE  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" placeholder="Nombre">
+            @error('nombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          {{--  USUARIO  --}}
+          <div class="form-group">
+            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Usuario">
+            @error('username')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{--  Email  --}}
           <div class="form-group">
-            <input type="mail" class="form-control" name="email" placeholder="Correo">
+            <input type="mail" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Correo">
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{--  CURP  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="curp" placeholder="CURP">
+            <input type="text" class="form-control @error('curp') is-invalid @enderror" name="curp" placeholder="CURP">
+            @error('curp')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{--  Area  --}}
           <div class="form-group">
@@ -159,12 +183,19 @@
                 @endforelse
               </select>
           </div>
+          
           <button type="submit" class="btn btn-primary float-right">Agregar</button>
       </form>
       </div>
     </div>
   </div>
 </div>
+
+@if ($errors->any())
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#newTeacherModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>

@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Materias"=>'materias']
+    $crumbs = ["Materias"=>['materias']]
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>

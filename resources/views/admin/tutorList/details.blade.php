@@ -2,7 +2,7 @@
 
 @section('subBar')
   @php
-    $crumbs = ["Maestros"=>['maestros.index'], $teacher->name => ['maestros.edit', $teacher->id]]
+    $crumbs = ["Tutores"=>['tutores.index'], $tutor->name => ['tutores.edit', $tutor->id]]
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -20,17 +20,11 @@
               <img class="studentPortrait" src="" alt="">
             </div>
             <div class="col-10 text-left pl-0">
-              <h4>{{ $teacher->name }}</h4>
+              <h4>{{ $tutor->name }}</h4>
               <div class="row">
                 <div class="col-9">
                   <div class="row">
                     <div class="col-5">
-                      {{-- Area --}}
-                      @if (isset($teacher->area))
-                        <p>{{ $teacher->area->name }}</p>
-                      @else
-                        <p class="text-danger">Area sin asignar</p> 
-                      @endif
                       {{-- UserName --}}
                       @if (isset($tutor->username))
                         <p>{{ $tutor->username }}</p>
@@ -38,16 +32,16 @@
                         <p class="text-danger">Usuario sin asignar</p> 
                       @endif
                       {{-- Email --}}
-                      @if (isset($teacher->email))
-                      <p>{{ $teacher->email }}</p>
+                      @if (isset($tutor->email))
+                      <p>{{ $tutor->email }}</p>
                       @else
                         <p class="text-danger">Email sin asignar</p> 
                       @endif
                     </div>
                     <div class="col-7 pl-0">
                       {{-- CURP --}}
-                      @if (isset($teacher->curp))
-                      <p>{{ strtoupper($teacher->curp) }}</p>
+                      @if (isset($tutor->curp))
+                      <p>{{ strtoupper($tutor->curp) }}</p>
                       @else
                         <p class="text-danger">CURP sin asignar</p> 
                       @endif
@@ -57,8 +51,8 @@
                 <div class="col-3">
                   <div class="row">
                     <div class="col text-right pl-0">
-                      {{--  MODIFY TEACHER BTN  --}}
-                      <button class="btn btn-primary" data-toggle="modal" data-target="#modTeacherModal">
+                      {{--  MODIFY TUTOR BTN  --}}
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#modTutorModal">
                         <i class="fas fa-pen fa-fw" data-toggle="tooltip" data-placement="top" title="Modificar Maestro"></i>
                       </button>
                       {{--  ADD CLASS BTN  --}}
@@ -82,14 +76,14 @@
                             icon:'error',
                           }).then((result) => {
                             if (result.isConfirmed) {
-                              document.getElementById('{{ 'delTeacher'.$teacher->id }}').submit();
+                              document.getElementById('{{ 'delTutor'.$tutor->id }}').submit();
                             }
                           });"
                       >
                         <i class="fas fa-trash-alt fa-fw"></i>
                       </a>
-                      <form id="{{ 'delTeacher'.$teacher->id }}"
-                        action="{{ route('maestros.destroy', $teacher->id) }}"
+                      <form id="{{ 'delTutor'.$tutor->id }}"
+                        action="{{ route('maestros.destroy', $tutor->id) }}"
                         method="POST"
                         style="display: none;"
                       >@csrf @method('DELETE')
@@ -102,27 +96,7 @@
           </div>
           
           <div class="row">
-            <div class="col">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#activas"><h4>Clases Activas</h4>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#cerradas"><h4>Clases Cerradas</h4></a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="tab-content">
-            {{-- TAB ABIERTAS --}}
-            <div class="tab-pane active" id="activas">
-              @include('admin.teacherList.activas')
-            </div>
-            {{-- TAB CERRADAS --}}
-            <div class="tab-pane" id="cerradas">
-              @include('admin.teacherList.cerradas')
-            </div>
+            
           </div>
         </div>
       </div>
@@ -130,8 +104,8 @@
   </div>
 </div>
 
-<!-- Modal Modify Teacher -->
-<div class="modal fade" id="modTeacherModal" tabindex="-1">
+<!-- Modal Modify Tutor -->
+<div class="modal fade" id="modTutorModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -141,7 +115,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('maestros.update', $teacher->id) }}" method="POST">
+        <form action="{{ route('maestros.update', $tutor->id) }}" method="POST">
           @csrf
           @method('PUT')
           {{--  NOMBRE  --}}
@@ -180,29 +154,9 @@
                 </span>
             @enderror
           </div>
-          {{--  AREA  --}}
-          <div class="form-group">
-            <small id="emailHelp" class="form-text text-muted">Area</small>
-              <select class="form-control" name="modAreaId">
-                <option value=0>Sin Area</option>
-                @forelse (App\Models\Area::all() as $a)
-                @if (isset($teacher->area))
-                  @if ($a->id === $teacher->area->id)
-                    <option value={{ $a->id }} selected>{{ $a->name }}</option> 
-                  @else
-                    <option value={{ $a->id }}>{{ $a->name }}</option>
-                  @endif
-                @else
-                  <option value={{ $a->id }}>{{ $a->name }}</option>
-                @endif
-                @empty
-                    <option value=0 disabled>No hay areas registradas</option>
-                @endforelse
-              </select>
-          </div>
 
           <button type="submit" class="btn btn-primary float-right">Modificar</button>
-          <a href="{{ route('user.resetPW', $teacher->id) }}" type="submit" class="btn btn-warning float-right mr-1">Restablecer Password</a>
+          <a href="{{ route('user.resetPW', $tutor->id) }}" type="submit" class="btn btn-warning float-right mr-1">Restablecer Password</a>
       </form>
       </div>
     </div>
@@ -222,7 +176,7 @@
       <div class="modal-body">
         <div class="form-group">
           <input type="text" class="form-control" id="classSearch" placeholder="Nombre de la clase">
-          <input type="hidden" id="teacherId" value="{{ $teacher->id }}">
+          <input type="hidden" id="tutorId" value="{{ $tutor->id }}">
         </div>
         <table class="table table-bordered">
           <tbody id="classListCont">
@@ -235,7 +189,7 @@
 
 @if ($errors->any())
   <script type="text/javascript">
-    $( document ).ready(function() { $('#modTeacherModal').modal('show'); });
+    $( document ).ready(function() { $('#modTutorModal').modal('show'); });
   </script>
 @endif
 

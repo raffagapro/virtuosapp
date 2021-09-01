@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('edad')->nullable();
             $table->string('curp')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('grado_id')->nullable();
             $table->integer('modalidad_id')->nullable();

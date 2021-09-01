@@ -174,21 +174,51 @@
           @method('PUT')
           {{--  NOMBRE  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="modNombre" placeholder="Nombre" value="{{ $student->name }}">
+            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" name="modNombre" placeholder="Nombre">
+            @error('modNombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+            
+          </div>
+          {{--  USUARIO  --}}
+          <div class="form-group">
+            <input type="text" class="form-control @error('modUserName') is-invalid @enderror" name="modUserName" placeholder="Usuario">
+            @error('modUserName')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{--  Email  --}}
           <div class="form-group">
-            <input type="mail" class="form-control" name="modEmail" placeholder="Correo" value="{{ $student->email }}">
+            <input type="mail" class="form-control @error('modEmail') is-invalid @enderror" name="modEmail" placeholder="Correo">
+            @error('modEmail')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{--  CURP  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="modCurp" placeholder="CURP" value="{{ $student->curp }}">
+            <input type="text" class="form-control @error('modCurp') is-invalid @enderror" name="modCurp" placeholder="CURP">
+            @error('modCurp')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{-- EDAD / GRADO --}}
           <div class="form-group row">
             <div class="col">
               <small id="emailHelp" class="form-text text-muted">Edad</small>
-              <input type="number" min="1" max="99" class="form-control" name="modAge" placeholder="Edad" value="{{ $student->edad }}">
+              <input type="number" min="1" max="99" class="form-control @error('modAge') is-invalid @enderror" name="modAge" placeholder="Edad">
+              @error('modAge')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
             </div>
             <div class="col">
               <small id="emailHelp" class="form-text text-muted">Grado</small>
@@ -239,7 +269,7 @@
 </div>
 
 <!-- Modal Agregar Tutor -->
-<div class="modal fade" id="addTutorModal" tabindex="-1">
+<div class="modal fade" id="modStudentModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -286,6 +316,12 @@
     </div>
   </div>
 </div>
+
+@if ($errors->any())
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#newTeacherModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>
