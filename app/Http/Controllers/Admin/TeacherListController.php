@@ -101,16 +101,18 @@ class TeacherListController extends Controller
     public function update(Request $request, $id)
     {
         $teacher = User::findOrFail($id);
-        dd($teacher);
+        // dd($teacher);
         $teacher->name = $request->modNombre;
         $teacher->email = $request->modEmail;
         $teacher->curp = $request->modCurp;
-
-        if ((int)$request->modAreaId > 0 || $request->modAreaId !== null) {
-            $area = Area::findOrFail((int)$request->modAreaId);
-            $area->user()->save($teacher);
-        }else {
-            $teacher->area()->dissociate();
+        // dd($request->modAreaId);
+        if ($request->modAreaId !== null) {
+            if ((int)$request->modAreaId > 0) {
+                $area = Area::findOrFail((int)$request->modAreaId);
+                $area->user()->save($teacher);
+            }else {
+                $teacher->area()->dissociate();
+            }
         }
         $teacher->save();
         $status = 'El maestro ha sido actualizado exitosamente.';
