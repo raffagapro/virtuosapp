@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Area;
+use App\Models\Clase;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,7 +23,7 @@ class TeacherListController extends Controller
             'role', function($q){
                 $q->where('name', 'maestro');
             }
-        )->paginate(2);
+        )->orderBy('name')->paginate(50);
         return view('admin.teacherList.index')->with(compact('teachers'));
     }
 
@@ -86,7 +87,8 @@ class TeacherListController extends Controller
      */
     public function edit($id)
     {
-        //
+        $teacher = User::findOrFail($id);
+        return view('admin.teacherList.details')->with(compact('teacher'));
     }
 
     /**
@@ -98,7 +100,21 @@ class TeacherListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $teacher = User::findOrFail($id);
+        dd($teacher);
+        $teacher->name = $request->modNombre;
+        $teacher->email = $request->modEmail;
+        $teacher->curp = $request->modCurp;
+
+        if ((int)$request->modAreaId > 0 || $request->modAreaId !== null) {
+            $area = Area::findOrFail((int)$request->modAreaId);
+            $area->user()->save($teacher);
+        }else {
+            $teacher->area()->dissociate();
+        }
+        $teacher->save();
+        $status = 'El maestro ha sido actualizado exitosamente.';
+        return back()->with(compact('status'));
     }
 
     /**
@@ -132,5 +148,24 @@ class TeacherListController extends Controller
         $teacher->save();
         $status = 'El mastro ha sido desactivado exitosamente.';
         return redirect()->route('maestros.index')->with(compact('status'));
+    }
+
+    public function addTeacher($classID, $teacherID){
+        $clase = Clase::findOrFail($classID);
+        $teacher = User::findOrFail($teacherID);
+        // dd($clase, $student);
+        $clase->teacher = $teacher->id;
+        $clase->save();
+        $status = 'La clase ha sido agregada exitosamente.';
+        return back()->with(compact('status'));
+    }
+
+    public function rmTeacher($classID, $teacherID){
+        $clase = Clase::findOrFail($classID);
+        // dd($clase);
+        $clase->teacher = 0;
+        $clase->save();
+        $status = 'La clase ha sido eliminada exitosamente.';
+        return back()->with(compact('status'));
     }
 }

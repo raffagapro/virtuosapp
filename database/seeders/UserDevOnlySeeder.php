@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Materia;
 use Illuminate\Database\Seeder;
 use App\Models\Role;
 use App\Models\User;
@@ -57,5 +58,25 @@ class UserDevOnlySeeder extends Seeder
         $user3a->status = 1;
         $user3a->save();
         $parent->user()->save($user3a);
+
+        $materia = new Materia();
+        $materia->name = 'matematicas';
+        $materia->save();
+
+        $materia1 = new Materia();
+        $materia1->name = 'ingles basico';
+        $materia1->save();
+
+        $materia2 = new Materia();
+        $materia2->name = 'ingles intermedio';
+        $materia2->save();
+
+        $materia3 = new Materia();
+        $materia3->name = 'literatura';
+        $materia3->save();
+
+        $materia4 = new Materia();
+        $materia4->name = 'historia';
+        $materia4->save();
     }
 }

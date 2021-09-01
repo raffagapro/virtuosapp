@@ -17,6 +17,7 @@ class CreateClasesTable extends Migration
             $table->id();
             $table->integer('materia_id')->nullable();
             $table->string('label')->nullable();
+            $table->text('zlink')->nullable();
             $table->integer('teacher')->nullable();
             $table->integer('status')->nullable();
             $table->date('sdate')->nullable();

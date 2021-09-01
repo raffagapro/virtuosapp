@@ -38,7 +38,7 @@
                       @forelse ($teachers as $t)
                         <tr>
                           {{-- NOMBRE --}}
-                          <td><a href="{{ route('maestros.show', $t->id) }}">{{ ucwords($t->name) }}</a></td>
+                          <td><a href="{{ route('maestros.edit', $t->id) }}">{{ ucwords($t->name) }}</a></td>
                           {{-- GRADO --}}
                           @if (isset($t->area))
                             <td>{{ $t->area->name }}</td>
