@@ -22,7 +22,10 @@ class User extends Authenticatable
         'password',
         'curp',
         'edad',
+        'tutor1',
+        'tutor2',
         'status',
+        'username',
     ];
 
     /**
@@ -57,6 +60,11 @@ class User extends Authenticatable
     public function role()
     {
       return $this->belongsTo(Role::class);
+    }
+
+    public function getTutor($tutorID)
+    {
+      return User::findOrFail($tutorID);
     }
 
     public function area()

@@ -20,7 +20,7 @@ class MateriaController extends Controller
 
     public function index()
     {
-        $materias = Materia::paginate(2);
+        $materias = Materia::paginate(50);
         return view('admin.materias.index')->with(compact('materias'));
     }
 

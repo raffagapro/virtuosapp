@@ -43,7 +43,9 @@
               <thead>
                 <tr>
                   <th class="col-9 text-left"><h5>Alumnos</h5></th>
-                  <th class="col-3"><h5>Eliminar</h5></th>
+                  @if ($clase->status === 1)
+                    <th class="col-3"><h5>Eliminar</h5></th>
+                  @endif
                 </tr>
               </thead>
             @endif
@@ -51,39 +53,41 @@
               @forelse ($clase->students as $s)
                 <tr>
                   {{-- NOMBRE --}}
-                  <td class="text-left"><a href="{{ route('clase.edit', $s->id) }}">{{ ucwords($s->name) }}</a></td>
-                  {{-- ACTUALIZA --}}
-                  <td>
-                    <a
-                      href="javascript:void(0);"
-                      data-toggle="tooltip" data-placement="top" title="Eliminar"
-                      class="btn btn-sm btn-danger text-light"
-                      onclick="
-                        event.preventDefault();
-                        swal.fire({
-                          text: '¿Deseas eliminar el estudiante de la clase?',
-                          showCancelButton: true,
-                          cancelButtonText: `Cancelar`,
-                          cancelButtonColor:'#62A4C0',
-                          confirmButtonColor:'red',
-                          confirmButtonText:'Eliminar',
-                          icon:'error',
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            document.getElementById('{{ 'delStudent'.$s->id }}').submit();
-                          }
-                        });"
-                    >
-                      <i class="far fa-trash-alt"></i>
-                    </a>
-                    <form id="{{ 'delStudent'.$s->id }}"
-                      action="{{ route('clase.rmStudent', [$clase->id, $s->id]) }}"
-                      method="POST"
-                      style="display: none;"
-                    >@csrf
-                    @method('GET')
-                    </form>
-                  </td>
+                  <td class="text-left"><a href="{{ route('estudiantes.edit', $s->id) }}">{{ ucwords($s->name) }}</a></td>
+                  @if ($clase->status === 1)
+                    {{-- ACTUALIZA --}}
+                    <td>
+                      <a
+                        href="javascript:void(0);"
+                        data-toggle="tooltip" data-placement="top" title="Eliminar"
+                        class="btn btn-sm btn-danger text-light"
+                        onclick="
+                          event.preventDefault();
+                          swal.fire({
+                            text: '¿Deseas eliminar el estudiante de la clase?',
+                            showCancelButton: true,
+                            cancelButtonText: `Cancelar`,
+                            cancelButtonColor:'#62A4C0',
+                            confirmButtonColor:'red',
+                            confirmButtonText:'Eliminar',
+                            icon:'error',
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              document.getElementById('{{ 'delStudent'.$s->id }}').submit();
+                            }
+                          });"
+                      >
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                      <form id="{{ 'delStudent'.$s->id }}"
+                        action="{{ route('clase.rmStudent', [$clase->id, $s->id]) }}"
+                        method="POST"
+                        style="display: none;"
+                      >@csrf
+                      @method('GET')
+                      </form>
+                    </td>
+                  @endif
                 </tr>
               @empty
                 <div class="alert alert-danger" role="alert">

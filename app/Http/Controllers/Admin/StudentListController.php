@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clase;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Grado;
@@ -33,7 +34,7 @@ class StudentListController extends Controller
             'role', function($q){
                 $q->where('name', 'estudiante');
             }
-        )->paginate(2);
+        )->orderBy('name')->paginate(50);
         return view('admin.studentList.index')->with(compact('students'));
     }
 
@@ -45,7 +46,7 @@ class StudentListController extends Controller
      */
     public function show($id)
     {
-        return view('admin.studentList.details');
+        //
     }
 
     /**
@@ -86,6 +87,51 @@ class StudentListController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $student = User::findOrFail($id);
+        return view('admin.studentList.details')->with(compact('student'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $student = User::findOrFail($id);
+        $student->name = $request->modNombre;
+        $student->email = $request->modEmail;
+        $student->curp = $request->modCurp;
+        $student->edad = $request->modAge;
+
+        if ((int)$request->modGradoId > 0) {
+            $grado = Grado::findOrFail((int)$request->modGradoId);
+            $grado->user()->save($student);
+        }else {
+            $student->grado()->dissociate();
+        }
+
+        if ((int)$request->modModalidadId > 0) {
+            $modalidad = Modalidad::findOrFail((int)$request->modModalidadId);
+            $modalidad->user()->save($student);
+        }else {
+            $student->modalidad()->dissociate();
+        }
+        $student->save();
+        $status = 'El estudiante ha sido actualizado exitosamente.';
+        return back()->with(compact('status'));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -116,5 +162,54 @@ class StudentListController extends Controller
         $student->save();
         $status = 'El estudiante ha sido desactivado exitosamente.';
         return redirect()->route('estudiantes.index')->with(compact('status'));
+    }
+
+    public function tutorSearcher(Request $request)
+    {
+        $student = User::findOrFail($request->studentId);
+        $tutors = User::where('name', 'LIKE', '%'.$request->value.'%')  
+                        ->whereHas(
+                            'role', function($q){
+                                $q->where('name', 'tutor');
+                            }
+                        )->get();
+        $tutorNum = (int)$request->tutorNUm;
+        return [$tutors, $student, $tutorNum];
+    }
+
+    public function claseSearcher(Request $request)
+    {
+        $student = User::findOrFail($request->studentId);
+        //POSIBLY ADD A WHERE TO PRE-FILTER CLASES BY MATERIA!!!
+        $clases = Clase::where('label', 'LIKE', '%'.$request->value.'%')->where('status', 1)->get();
+        return [$clases, $student];
+    }
+
+    public function addTutor($tutorID, $studentID, $tutorNum)
+    {
+        $tutor = User::findOrFail($tutorID);
+        $student = User::findOrFail($studentID);
+        // dd($clase, $student);
+        if ((int)$tutorNum === 1) {
+            $student->tutor1 = $tutor->id;
+        } else {
+            $student->tutor2 = $tutor->id;
+        }
+        $student->save();
+        $status = 'El tutor ha sido agregado exitosamente.';
+        return back()->with(compact('status'));
+    }
+
+    public function rmTutor($tutorID, $studentID, $tutorNum)
+    {
+        $student = User::findOrFail($studentID);
+        if ((int)$tutorNum === 1) {
+            $student->tutor1 = null;
+        } else {
+            $student->tutor2 = null;
+        }
+        $student->save();
+        $status = 'El tutor ha sido eliminado exitosamente.';
+        return back()->with(compact('status'));
     }
 }
