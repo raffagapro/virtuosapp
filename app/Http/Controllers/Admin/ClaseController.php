@@ -181,4 +181,13 @@ class ClaseController extends Controller
         $status = 'El estudiante ha sido eliminado exitosamente.';
         return back()->with(compact('status'));
     }
+
+    public function setZlink(Request $request)
+    {
+        $clase = Clase::findOrFail($request->claseID);
+        $clase->zlink = $request->zlink;
+        $clase->save();
+        $status = 'El link ha sido guardado exitosamente.';
+        return back()->with(compact('status'));
+    }
 }

@@ -1,6 +1,6 @@
 @php
     // dd(count($materia->clases()->where('status', '0')->get()));
-    $cClases = $materia->clases()->where('status', '0')->paginate(2);
+    $cClases = $materia->clases()->where('status', '0')->paginate(50);
 @endphp
 <table class="table table-bordered">
     @if (count($cClases) > 0)
@@ -27,7 +27,7 @@
           </td>
           {{-- # Studdens --}}
           <td>
-            {{ count($c->students) }}
+            {{ count($cc->students) }}
           </td>
           <td>
             <span class="btn btn-sm btn-primary text-light mr-2 classBtnModal" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $cc->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#modClassModal"></i></span>

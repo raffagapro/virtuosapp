@@ -1,6 +1,6 @@
 @php
     // dd(count($materia->clases()->where('status', '1')->get()));
-    $aClases = $materia->clases()->where('status', '1')->paginate(2);
+    $aClases = $materia->clases()->where('status', '1')->paginate(50);
 @endphp
 <table class="table table-bordered">
     @if (count($aClases) > 0)

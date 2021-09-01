@@ -14,7 +14,8 @@ class Clase extends Model
         'sdate',
         'edate',
         'teacher',
-        'status'
+        'status',
+        'zlink',
     ];
 
     public function materia()
