@@ -103,14 +103,22 @@ class TutorListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'modNombre' => 'required|max:255',
-            'modUserName' => 'required|unique:users,username|max:255',
-            'modEmail' => 'required|max:255',
-            'modCurp' => 'required|max:255',
-        ]);
-        
         $tutor = User::findOrFail($id);
+        if ($tutor->username === $request->modUserName) {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|unique:users,username|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        }
 
         $tutor->name = $request->modNombre;
         $tutor->username = $request->modUserName;

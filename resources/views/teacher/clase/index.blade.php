@@ -15,84 +15,38 @@
     <div class="col-md-10">
       <div class="card border-secondary text-center">
         <div class="card-body">
-          <div class="row mb-3">
-            <div class="col-4">
-
+          <h3>Tareas</h3>
+          <div class="row">
+            {{--  TABS  --}}
+            <div class="col">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#activas"><h4>Activas</h4>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#cerradas"><h4>Vencidas</h4></a>
+                </li>
+              </ul>
             </div>
-            <h3 class="col-4">Tareas</h3>
-            <div class="col-4">
+            {{--  AGREGAR TAREA BTN  --}}
+            <div class="col-3 ml-auto">
               <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addTareaModal">Agregar<i class="fas fa-book-reader ml-2"></i></button>
             </div>
           </div>
-          <table class="table table-bordered">
+          <div class="tab-content">
+            {{-- TAB ABIERTAS --}}
             @php
-                // dd(count($clase->homeworks));
+              $date = date('Y-m-d');
             @endphp
-            @if (count($clase->homeworks) > 0)
-              <thead>
-                <tr>
-                  <th class="col-4 text-left"><h5>Nombre</h5></th>
-                  <th><h5>Fecha de entrega</h5></th>
-                  <th><h5>Asignado</h5></th>
-                  <th><h5>Actualizar</h5></th>
-                </tr>
-              </thead> 
-            @endif
-            <tbody>
-              @forelse ($clase->homeworks->sortBy('edate', SORT_REGULAR, true) as $h)
-                <tr>
-                  <td class="text-left"><a href="{{ route('maestroDash.tarea', $h->id) }}">{{ $h->title }}</a></td>
-                  @php
-                      $edate = date('M d', strtotime($h->edate));
-                  @endphp
-                  <td>{{ $edate }}</td>
-                  <td>
-                    @if ($h->student === 0)
-                      <span class="badge bg-info tarea-status">Grupal</span> 
-                    @else
-                      <span class="badge bg-warning tarea-status">{{ $h->getStudent()->name }}</span> 
-                    @endif
-                  </td>
-                  <td>
-                    <span class="btn btn-sm btn-primary text-white mr-2 homeworkBtn" id="{{ $h->id }}" data-toggle="modal" data-target="#modTareaModal"><i class="fas fa-pen" data-toggle="tooltip" data-placement="top" title="Modificar"></i></span>
-                    <a
-                      href="javascript:void(0);"
-                      class="btn btn-sm btn-danger text-white mr-2"
-                      data-toggle="tooltip" data-placement="top" title="Borrar"
-                      onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar la tarea?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delTarea'.$h->id }}').submit();
-                            }
-                          });"
-                    >
-                      <i class="far fa-trash-alt"></i>
-                    </a>
-                    <form id="{{ 'delTarea'.$h->id }}"
-                    action="{{ route('homework.destroy', $h->id) }}"
-                    method="POST"
-                    style="display: none;"
-                    >@csrf
-                    @method('DELETE')
-                    </form>
-                  </td>
-                </tr>
-              @empty
-                <div class="alert alert-danger" role="alert">
-                  Sin tareas
-                </div>
-              @endforelse
-            </tbody>
-          </table>
+            <div class="tab-pane active" id="activas">
+              @include('teacher.clase.activas')
+            </div>
+            {{-- TAB CERRADAS --}}
+            <div class="tab-pane" id="cerradas">
+              @include('teacher.clase.cerradas')
+            </div>
+          </div>
         </div>
       </div>
     </div>
