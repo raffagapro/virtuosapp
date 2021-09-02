@@ -108,14 +108,23 @@ class TeacherListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'modNombre' => 'required|max:255',
-            'modUserName' => 'required|unique:users,username|max:255',
-            'modEmail' => 'required|max:255',
-            'modCurp' => 'required|max:255',
-        ]);
-
         $teacher = User::findOrFail($id);
+        if ($teacher->username === $request->modUserName) {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|unique:users,username|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        }
+        
         $teacher->name = $request->modNombre;
         $teacher->username = $request->modUserName;
         $teacher->email = $request->modEmail;

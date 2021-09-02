@@ -22,7 +22,11 @@
                     </span>
                   </div>
                   <h3 class="mb-0">{{ Auth::user()->name }}</h3>
-                  <p class="text-white-50">Primaria 2 A</p>
+                  @if (isset(Auth::user()->grado))
+                    <p class="text-white-50">{{ Auth::user()->grado->name }}</p>
+                  @else
+                    <p class="text-white-50">Sin Grado asignado</p>	
+                  @endif
                 </div>
             </div>
         </div>
@@ -38,38 +42,16 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td class="text-left"><a href="{{ route('studentCourse') }}">Matemáticas</a></td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Español</td>
-                            <td><span class="badge bg-info tarea-status">Complete</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Ciencias</td>
-                            <td><span class="badge bg-warning tarea-status">Nueva</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Artes Plásticas</td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Música</td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Coro</td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Artes Escénicas</td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
-                          <tr>
-                            <td class="text-left">Deportes</td>
-                            <td><span class="badge bg-danger tarea-status">Pendiente</span></td>
-                          </tr>
+                          @forelse (Auth::user()->clases as $c)
+                            <tr>
+                              <td class="text-left"><a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a></td>
+                              <td><span class="badge bg-info tarea-status">Complete</span></td>
+                              {{--  <td><span class="badge bg-warning tarea-status">Nueva</span></td>
+                              <td><span class="badge bg-danger tarea-status">Pendiente</span></td>  --}}
+                            </tr>
+                          @empty
+                              
+                          @endforelse
                         </tbody>
                     </table>
                 </div>
