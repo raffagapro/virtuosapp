@@ -21,6 +21,7 @@
             </div>
             <div class="col-10 text-left pl-0">
               <h4>{{ $student->name }}</h4>
+              <h4>{{ $student->username }}</h4>
               <div class="row">
                 <div class="col-6">
                   <div class="row">
@@ -174,7 +175,7 @@
           @method('PUT')
           {{--  NOMBRE  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" name="modNombre" placeholder="Nombre">
+            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" name="modNombre" value="{{ $student->name }}" placeholder="Nombre">
             @error('modNombre')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -184,7 +185,7 @@
           </div>
           {{--  USUARIO  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modUserName') is-invalid @enderror" name="modUserName" placeholder="Usuario">
+            <input type="text" class="form-control @error('modUserName') is-invalid @enderror" name="modUserName" value="{{ $student->username }}" placeholder="Usuario">
             @error('modUserName')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -193,7 +194,7 @@
           </div>
           {{--  Email  --}}
           <div class="form-group">
-            <input type="mail" class="form-control @error('modEmail') is-invalid @enderror" name="modEmail" placeholder="Correo">
+            <input type="mail" class="form-control @error('modEmail') is-invalid @enderror" name="modEmail" value="{{ $student->email }}" placeholder="Correo">
             @error('modEmail')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -202,7 +203,7 @@
           </div>
           {{--  CURP  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modCurp') is-invalid @enderror" name="modCurp" placeholder="CURP">
+            <input type="text" class="form-control @error('modCurp') is-invalid @enderror" name="modCurp" value="{{ $student->curp }}" placeholder="CURP">
             @error('modCurp')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -213,7 +214,7 @@
           <div class="form-group row">
             <div class="col">
               <small id="emailHelp" class="form-text text-muted">Edad</small>
-              <input type="number" min="1" max="99" class="form-control @error('modAge') is-invalid @enderror" name="modAge" placeholder="Edad">
+              <input type="number" min="1" max="99" class="form-control @error('modAge') is-invalid @enderror" name="modAge" value="{{ $student->edad }}" placeholder="Edad">
               @error('modAge')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
