@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->hasMany(Retro::class);
     }
 
+    public function studentHomeworks()
+    {
+        return $this->hasMany(StudentHomework::class);
+    }
+
     public function clases()
     {
         return $this->belongsToMany(Clase::class);
