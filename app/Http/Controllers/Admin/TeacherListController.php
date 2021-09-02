@@ -110,7 +110,7 @@ class TeacherListController extends Controller
     {
         $request->validate([
             'modNombre' => 'required|max:255',
-            'modUserName' => 'required|unique:users|max:255',
+            'modUserName' => 'required|unique:users,username|max:255',
             'modEmail' => 'required|max:255',
             'modCurp' => 'required|max:255',
         ]);
