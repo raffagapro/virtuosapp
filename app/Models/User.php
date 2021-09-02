@@ -82,6 +82,11 @@ class User extends Authenticatable
       return $this->belongsTo(Grado::class);
     }
 
+    public function retros()
+    {
+        return $this->hasMany(Retro::class);
+    }
+
     public function clases()
     {
         return $this->belongsToMany(Clase::class);

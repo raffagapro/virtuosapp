@@ -108,25 +108,35 @@ class TeacherListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'modNombre' => 'required|max:255',
-            'modUserName' => 'required|unique:users,username|max:255',
-            'modEmail' => 'required|max:255',
-            'modCurp' => 'required|max:255',
-        ]);
-
         $teacher = User::findOrFail($id);
-
+        if ($teacher->username === $request->modUserName) {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|unique:users,username|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        }
+        
         $teacher->name = $request->modNombre;
         $teacher->username = $request->modUserName;
         $teacher->email = $request->modEmail;
         $teacher->curp = $request->modCurp;
-
-        if ((int)$request->modAreaId > 0 || $request->modAreaId !== null) {
-            $area = Area::findOrFail((int)$request->modAreaId);
-            $area->user()->save($teacher);
-        }else {
-            $teacher->area()->dissociate();
+        // dd($request->modAreaId);
+        if ($request->modAreaId !== null) {
+            if ((int)$request->modAreaId > 0) {
+                $area = Area::findOrFail((int)$request->modAreaId);
+                $area->user()->save($teacher);
+            }else {
+                $teacher->area()->dissociate();
+            }
         }
         $teacher->save();
         $status = 'El maestro ha sido actualizado exitosamente.';

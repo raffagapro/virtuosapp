@@ -116,15 +116,22 @@ class StudentListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'modNombre' => 'required|max:255',
-            'modUserName' => 'required|unique:users,username|max:255',
-            'modEmail' => 'required|max:255',
-            'modCurp' => 'required|max:255',
-            'modAge' => 'required|max:255',
-        ]);
-
         $student = User::findOrFail($id);
+        if ($student->username === $request->modUserName) {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        } else {
+            $request->validate([
+                'modNombre' => 'required|max:255',
+                'modUserName' => 'required|unique:users,username|max:255',
+                'modEmail' => 'required|max:255',
+                'modCurp' => 'required|max:255',
+            ]);
+        }
 
         $student->name = $request->modNombre;
         $student->username = $request->modUserName;

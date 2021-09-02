@@ -17,6 +17,7 @@
         <div class="card-body">
           <h3>{{ $materia->name }}</h3>
           <div class="row mb-3">
+            {{--  TABS  --}}
             <div class="col">
               <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -28,6 +29,7 @@
                 </li>
               </ul>
             </div>
+            {{--  AGREGAR CLASE BTN  --}}
             <div class="col-3 ml-auto">
               <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addClassModal">Abrir Clase<i class="fas fa-book-reader ml-2"></i></button>
             </div>

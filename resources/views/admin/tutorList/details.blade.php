@@ -109,13 +109,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modificar Maestro</h5>
+        <h5 class="modal-title">Modificar Tutor</h5>
         <button type="button" class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('maestros.update', $tutor->id) }}" method="POST">
+        <form action="{{ route('tutores.update', $tutor->id) }}" method="POST">
           @csrf
           @method('PUT')
           {{--  NOMBRE  --}}

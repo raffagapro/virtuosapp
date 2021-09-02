@@ -270,7 +270,7 @@
 </div>
 
 <!-- Modal Agregar Tutor -->
-<div class="modal fade" id="modStudentModal" tabindex="-1">
+<div class="modal fade" id="addTutorModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -320,7 +320,7 @@
 
 @if ($errors->any())
   <script type="text/javascript">
-    $( document ).ready(function() { $('#newTeacherModal').modal('show'); });
+    $( document ).ready(function() { $('#modStudentModal').modal('show'); });
   </script>
 @endif
 
