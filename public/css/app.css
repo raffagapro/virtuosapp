@@ -14643,6 +14643,14 @@ body {
   width: 100px;
 }
 
+.loginImg {
+  background-image: url(/images/group43.png?0a039600782b1813b4322b9075f354f2);
+  background-repeat: no-repeat;
+  margin-left: -3px;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+
 /* HEADER-------------------------------- */
 /* .site-header{} */
 .sub-bar {
