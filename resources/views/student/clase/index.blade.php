@@ -10,6 +10,9 @@
 @endsection
 
 @section('content')
+@php
+    $date = date('Y-m-d');
+@endphp
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-9">
@@ -38,9 +41,15 @@
                                                 $edate = date('M d', strtotime($h->edate));
                                             @endphp
                                             <td class="border-right">{{ $edate }}</td>
-                                            <td class="pr-4"><span class="badge bg-info tarea-status">Complete</span></td>
-                                            {{-- <td class="pr-4"><span class="badge bg-warning tarea-status">Nueva</span></td> --}}
-                                            {{-- <td class="pr-4"><span class="badge bg-danger tarea-status">Pendiente</span></td> --}}
+                                            @if (App\Models\StudentHomework::where('homework_id', $h->id)->where('user_id', Auth::user()->id)->first())
+                                                <td class="pr-4"><span class="badge bg-info tarea-status">Complete</span></td>
+                                            @else
+                                                @if ($h->edate < $date)
+                                                    <td class="pr-4"><span class="badge bg-danger tarea-status">Pendiente</span></td>
+                                                @else
+                                                    <td class="pr-4"><span class="badge bg-warning tarea-status">Nueva</span></td>
+                                                @endif
+                                            @endif                                            
                                         </tr>   
                                     @endif
                                 @empty
@@ -59,6 +68,7 @@
             </div>
         </div>
         
+        {{-- RIGHT PANEL --}}
         <div class="col-md-3">
             <div class="card bgVirtuos-docente border-secondary text-center py-5">
                 <div class="card-body">
@@ -78,25 +88,5 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="materiasModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span>&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 @endsection

@@ -22,9 +22,19 @@ class Homework extends Model
         return $this->belongsTo(Clase::class);
     }
 
+    public function studentHomeworks()
+    {
+        return $this->hasMany(StudentHomework::class);
+    }
+
     public function retros()
     {
         return $this->hasMany(Retro::class);
+    }
+
+    public function medias()
+    {
+        return $this->hasMany(Media::class);
     }
 
     public function hasRetro($studentId)

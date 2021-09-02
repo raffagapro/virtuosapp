@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Clase;
 use App\Models\Homework;
+use App\Models\Media;
 use App\Models\Retro;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeworkController extends Controller
 {
@@ -156,6 +158,46 @@ class HomeworkController extends Controller
         $retro->save();
  
         $status = 'La retroalimentacion ha sido actualizada exitosamente.';
+        return back()->with(compact('status'));
+    }
+
+    public function uploadFile(Request $request)
+    {   
+        $homework = Homework::findOrFail($request->homeworkId);
+        if ($request->hasFile('hFile')) {
+            if ($request->file('hFile')->isValid()) {
+                $validated = $request->validate([
+                    'hFile'=>'mimes:jpeg,png,pdf,doc|max:2000',
+                ]);
+                $homework = Homework::findOrFail($request->homeworkId);
+                $workingTitle = str_replace(' ', '_', $homework->title);
+                $originalName = substr($request->hFile->getClientOriginalName(), 0, strrpos($request->hFile->getClientOriginalName(), "."));
+                $originalName = str_replace(' ', '_', $originalName);
+                $extension = $request->hFile->extension();
+
+                $request->hFile->storeAs('/public/tHomework', $workingTitle.'_'.$originalName.".".$extension);
+                $url = Storage::url('tHomework/'.$workingTitle.'_'.$originalName.".".$extension);
+                $media = Media::create([
+                    'media' => $url,
+                ]);
+                $homework->medias()->save($media);
+            }
+            $eStatus = 1;
+            $status = 'El archivo ha sido guardado exitosamente.';
+        }else{
+            $eStatus = 0;
+            $status = 'No se adjunto archivo a la tarea.';
+        }
+        return back()->with(compact('status', 'eStatus'));
+    }
+
+    public function deleteFile($fileId)
+    {
+        $foundMedia = Media::findOrFail($fileId);
+        $delMedia = str_replace('/storage/', "",$foundMedia->media);
+        Storage::delete('public/'.$delMedia);
+        $foundMedia->delete();
+        $status = 'El archivo se ha eliminado exitosamente.';
         return back()->with(compact('status'));
     }
 }
