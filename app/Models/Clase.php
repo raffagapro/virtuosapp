@@ -23,6 +23,11 @@ class Clase extends Model
         return $this->belongsTo(Materia::class);
     }
 
+    public function homeworks()
+    {
+        return $this->hasMany(Homework::class);
+    }
+
     public function students()
     {
         return $this->belongsToMany(User::class);

@@ -116,17 +116,18 @@ class TeacherListController extends Controller
         ]);
 
         $teacher = User::findOrFail($id);
-
         $teacher->name = $request->modNombre;
         $teacher->username = $request->modUserName;
         $teacher->email = $request->modEmail;
         $teacher->curp = $request->modCurp;
-
-        if ((int)$request->modAreaId > 0 || $request->modAreaId !== null) {
-            $area = Area::findOrFail((int)$request->modAreaId);
-            $area->user()->save($teacher);
-        }else {
-            $teacher->area()->dissociate();
+        // dd($request->modAreaId);
+        if ($request->modAreaId !== null) {
+            if ((int)$request->modAreaId > 0) {
+                $area = Area::findOrFail((int)$request->modAreaId);
+                $area->user()->save($teacher);
+            }else {
+                $teacher->area()->dissociate();
+            }
         }
         $teacher->save();
         $status = 'El maestro ha sido actualizado exitosamente.';

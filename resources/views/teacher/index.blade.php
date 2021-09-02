@@ -47,7 +47,7 @@
                         <tbody>
 							@forelse (App\Models\Clase::where('teacher', Auth::user()->id)->where('status', '1')->orderBy('label')->get() as $c)
 								<tr>
-									<td class="align-middle"><a href="{{ route('maestroCourse') }}">{{ $c->label }}</a></td>
+									<td class="align-middle"><a href="{{ route('maestroDash.clase', $c->id) }}">{{ $c->label }}</a></td>
 									<td class="align-middle text-right py-0">
 										<button type="button" class="btn btn-link zoomModalBtn" id="{{ $c->id }}" data-toggle="modal" data-target="#zoomModal">
 											<span class="fa-stack fa-lg">
@@ -178,18 +178,30 @@
 	</div>
 </div>
 
+{{--  ALERTS  --}}
 @if(session('status'))
-	@if (session('eStatus') === 1)
+	@if (session('eStatus') === null)
 		<x-success-alert :message="session('status')"/>
 	@else
-		<x-error-alert :message="session('status')"/>	
+		@if (session('eStatus') === 1)
+			<x-success-alert :message="session('status')"/>
+		@else
+			<x-error-alert :message="session('status')"/>	
+		@endif
 	@endif
 @endif
 @isset($status)
-	@if ($eStatus)
+@php
+	dd($eStatus);
+@endphp
+	@if ($eStatus === null)
 		<x-success-alert :message="$status"/>
 	@else
-		<x-error-alert :message="$status"/>
+		@if ($eStatus)
+			<x-success-alert :message="$status"/>
+		@else
+			<x-error-alert :message="$status"/>
+		@endif
 	@endif
 @endisset
 
