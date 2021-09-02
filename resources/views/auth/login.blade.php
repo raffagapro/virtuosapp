@@ -39,9 +39,9 @@
             
                                     <div class="form-group row my-2">            
                                         <div class="col-md-8  input-group mx-auto px-0">
-                                            <label for="email" class="input-group-text login-input-pill rounded-pill-start"><i class="fas fa-user"></i></label>
-                                            <input id="email" type="email" class="form-control login-input-pill rounded-pill-end @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Correó" autofocus>
-                                            @error('email')
+                                            <label for="username" class="input-group-text login-input-pill rounded-pill-start"><i class="fas fa-user"></i></label>
+                                            <input id="username" type="text" class="form-control login-input-pill rounded-pill-end @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" placeholder="Usuario" autofocus>
+                                            @error('username')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -52,7 +52,7 @@
                                     <div class="form-group row">            
                                         <div class="col-md-8 input-group mx-auto px-0">
                                             <label for="password" class="input-group-text login-input-pill rounded-pill-start"><i class="fas fa-lock"></i></label>
-                                            <input id="password" type="password" class="form-control login-input-pill rounded-pill-end @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña" value="contraseña">
+                                            <input id="password" type="password" class="form-control login-input-pill rounded-pill-end @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

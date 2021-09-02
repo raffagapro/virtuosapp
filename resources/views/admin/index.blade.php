@@ -65,7 +65,7 @@
             </div>
             <div class="row mb-4">
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start disabled">
+                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('tutores.index') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Tutores</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\student_icon.png') }}" alt="">

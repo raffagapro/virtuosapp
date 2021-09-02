@@ -57,14 +57,23 @@ class StudentListController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required|max:255',
+            'username' => 'required|unique:users|max:255',
+            'email' => 'required|max:255',
+            'curp' => 'required|max:255',
+            'edad' => 'required|max:255',
+        ]);
+
         $workingPW = explode(' ', strtolower($request->nombre));
         $pw = 'VI'.ucfirst($workingPW[0]).'2022';
         // dd($pw, $request->all(), strtolower($request->nombre));
         $student = User::create([
             'name' => $request->nombre,
+            'username' => $request->username,
             'email' => $request->email,
             'curp' => $request->curp,
-            'edad' => $request->age,
+            'edad' => $request->edad,
             'status' => 1,
             'password' => Hash::make($pw),
         ]);
@@ -107,8 +116,18 @@ class StudentListController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'modNombre' => 'required|max:255',
+            'modUserName' => 'required|unique:users|max:255',
+            'modEmail' => 'required|max:255',
+            'modCurp' => 'required|max:255',
+            'modAge' => 'required|max:255',
+        ]);
+
         $student = User::findOrFail($id);
+
         $student->name = $request->modNombre;
+        $student->username = $request->modUserName;
         $student->email = $request->modEmail;
         $student->curp = $request->modCurp;
         $student->edad = $request->modAge;
@@ -139,7 +158,7 @@ class StudentListController extends Controller
      */
     public function destroy($id)
     {
-        // EXPANDER EN EL FUNTURO PARA INCLUIR RELATED DB INFO
+        // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
         $student = User::findOrFail($id);
         $student->delete();
         $status = 'El estudiante ha sido eliminado exitosamente.';
@@ -151,7 +170,7 @@ class StudentListController extends Controller
         $student = User::findOrFail($id);
         $student->status = 1;
         $student->save();
-        $status = 'El estudiante ha sido actiavado exitosamente.';
+        $status = 'El estudiante ha sido activado exitosamente.';
         return redirect()->route('estudiantes.index')->with(compact('status'));
     }
 
@@ -180,7 +199,7 @@ class StudentListController extends Controller
     public function claseSearcher(Request $request)
     {
         $student = User::findOrFail($request->studentId);
-        //POSIBLY ADD A WHERE TO PRE-FILTER CLASES BY MATERIA!!!
+        //POSSIBLY ADD A WHERE TO PRE-FILTER CLASES BY MATERIA!!!
         $clases = Clase::where('label', 'LIKE', '%'.$request->value.'%')->where('status', 1)->get();
         return [$clases, $student];
     }
