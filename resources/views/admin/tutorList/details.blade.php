@@ -120,7 +120,7 @@
           @method('PUT')
           {{--  NOMBRE  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" name="modNombre" placeholder="Nombre">
+            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" name="modNombre" value="{{ $tutor->name }}" placeholder="Nombre">
             @error('modNombre')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -129,7 +129,7 @@
           </div>
           {{--  USUARIO  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modUserName') is-invalid @enderror" name="modUserName" placeholder="Usuario">
+            <input type="text" class="form-control @error('modUserName') is-invalid @enderror" name="modUserName" value="{{ $tutor->username }}" placeholder="Usuario">
             @error('modUserName')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -138,7 +138,7 @@
           </div>
           {{--  Email  --}}
           <div class="form-group">
-            <input type="mail" class="form-control @error('modEmail') is-invalid @enderror" name="modEmail" placeholder="Correo">
+            <input type="mail" class="form-control @error('modEmail') is-invalid @enderror" name="modEmail" value="{{ $tutor->email }}" placeholder="Correo">
             @error('modEmail')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -147,7 +147,7 @@
           </div>
           {{--  CURP  --}}
           <div class="form-group">
-            <input type="text" class="form-control @error('modCurp') is-invalid @enderror" name="modCurp" placeholder="CURP">
+            <input type="text" class="form-control @error('modCurp') is-invalid @enderror" name="modCurp" value="{{ $tutor->curp }}" placeholder="CURP">
             @error('modCurp')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
