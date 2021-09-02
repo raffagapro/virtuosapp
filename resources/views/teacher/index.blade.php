@@ -191,9 +191,6 @@
 	@endif
 @endif
 @isset($status)
-@php
-	dd($eStatus);
-@endphp
 	@if ($eStatus === null)
 		<x-success-alert :message="$status"/>
 	@else

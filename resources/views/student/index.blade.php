@@ -27,6 +27,9 @@
                   @else
                     <p class="text-white-50">Sin Grado asignado</p>	
                   @endif
+                  <p>
+                    <a href="javascript:void(0);" class="text-white-50" data-toggle="modal" data-target="#passwordModal">Modificar Contraseña</a>
+                  </p>
                 </div>
             </div>
         </div>
@@ -45,9 +48,24 @@
                           @forelse (Auth::user()->clases as $c)
                             <tr>
                               <td class="text-left"><a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a></td>
-                              <td><span class="badge bg-info tarea-status">Complete</span></td>
-                              {{--  <td><span class="badge bg-warning tarea-status">Nueva</span></td>
-                              <td><span class="badge bg-danger tarea-status">Pendiente</span></td>  --}}
+                              @php
+                                  $hws = $c->homeworks->all();
+                                  $pendingHomeworks = false;
+                                  foreach ($hws as $thw) {
+                                    if ($thw->student === 0 || $thw->student === Auth::user()->id) {
+                                      if (!App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()) {
+                                        $pendingHomeworks = true;
+                                      }
+                                    }
+                                  }
+                              @endphp
+                              <td>
+                                @if ($pendingHomeworks)
+                                  <span class="badge bg-danger tarea-status">Pendiente</span> 
+                                @else
+                                  <span class="badge bg-info tarea-status">Complete</span>
+                                @endif
+                              </td>
                             </tr>
                           @empty
                               
@@ -59,4 +77,74 @@
         </div>
     </div>
 </div>
+
+<!-- Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Cambiar Contraseña</h5>
+		  <button type="button" class="close" data-dismiss="modal">
+			<span>&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  <form action="{{ route('student.updatePW', Auth::user()->id) }}" method="POST">
+			@csrf
+			@method('PUT')
+			{{--  CURRENT PASSWORD  --}}
+			<div class="form-group">
+			  <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control @error('nuevaContraseña') is-invalid @enderror" id="nuevaContraseña" name="nuevaContraseña" placeholder="Nueva Contraseña">
+				@error('nuevaContraseña')
+					<span class="invalid-feedback" role="alert">
+						{{--  <strong>{{ $message }}</strong>  --}}
+						<strong>La nueva contraseña es invalida o no concuerda</strong>
+					</span>
+				@enderror
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="nuevaContraseña_confirmation" name="nuevaContraseña_confirmation" placeholder="Confirmar Nueva Contraseña">
+			</div>
+			<button type="submit" class="btn btn-primary float-right">Modificar</button>
+			<a href="{{ route('user.resetPW', Auth::user()->id) }}" type="submit" class="btn btn-warning float-right mr-1">Restablecer Contraseña</a>
+		</form>
+		</div>
+	  </div>
+	</div>
+</div>
+
+{{--  ALERTS  --}}
+@if(session('status'))
+	@if (session('eStatus') === null)
+		<x-success-alert :message="session('status')"/>
+	@else
+		@if (session('eStatus') === 1)
+			<x-success-alert :message="session('status')"/>
+		@else
+			<x-error-alert :message="session('status')"/>	
+		@endif
+	@endif
+@endif
+@isset($status)
+	@if ($eStatus === null)
+		<x-success-alert :message="$status"/>
+	@else
+		@if ($eStatus)
+			<x-success-alert :message="$status"/>
+		@else
+			<x-error-alert :message="$status"/>
+		@endif
+	@endif
+@endisset
+
+@error('nuevaContraseña')
+	<script type="text/javascript">
+		$( document ).ready(function() {
+		$('#passwordModal').modal('show');
+	});
+	</script>
+@enderror
 @endsection

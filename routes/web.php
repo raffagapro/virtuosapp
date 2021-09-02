@@ -77,6 +77,8 @@ Route::prefix('maestro')->group(function(){
         Route::post('/tarea/updateRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'updateRetro'])->name('retro.update');
         Route::post('clase/hGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'homeworkGrabber']);
         Route::post('clase/sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
+        Route::post('/uHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadFile'])->name('maestroDash.ufile');
+        Route::delete('/delFile/{fileId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'deleteFile'])->name('maestroDash.dfile');
 
         Route::post('cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
         Route::post('zlink', [App\Http\Controllers\Admin\ClaseController::class, 'setZlink'])->name('clase.setZlink');
@@ -91,5 +93,8 @@ Route::prefix('estudiante')->group(function(){
         Route::resource('homework', App\Http\Controllers\Student\HomeworkController::class, ['except'=>['index', 'show']]);
         Route::get('/clase/{claseID}', [App\Http\Controllers\Student\HomeworkController::class, 'index'])->name('studentDash.clase');
         Route::get('/tarea/{tareaID}', [App\Http\Controllers\Student\HomeworkController::class, 'show'])->name('studentDash.tarea');
+        Route::post('/uHomework', [App\Http\Controllers\Student\HomeworkController::class, 'uploadFile'])->name('studentDash.ufile');
+
+        Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('student.updatePW');
     });
 });

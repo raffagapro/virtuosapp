@@ -13,6 +13,7 @@
 - php artisan migrate:refresh
 - php artisan db:seed
 - php artisan db:seed --class=UserDevOnlySeeder
+- php artisan storage:link
 
 ## About Laravel
 
