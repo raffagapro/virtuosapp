@@ -36,7 +36,8 @@ $(function() {
               teacherSelect += '<option value=0 disabled>No hay maestros registrados</option>';
             }
             $("#teacherId").empty().append(teacherSelect);
-            $("#modalForm").attr('action', '//localhost:3000/admin/clase/'+data[0].id);
+            // $("#modalForm").attr('action', '//localhost:3000/admin/clase/'+data[0].id);
+            $("#modalForm").attr('action', '//virtuousapp.herokuapp.com/admin/clase/'+data[0].id);
           })
           .fail(e =>{
             // console.log("error");
