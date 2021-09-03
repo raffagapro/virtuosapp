@@ -47,7 +47,16 @@
                         <tbody>
                           @forelse (Auth::user()->clases as $c)
                             <tr>
-                              <td class="text-left"><a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a></td>
+                              <td class="text-left">
+                                <a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a>
+            
+                                <a href="{{ $c->zlink }}" type="button" class="btn btn-link @if ($c->zlink === null) disabled @endif" target="_blank" data-toggle="tooltip" data-placement="top" title="Clase Zoom">
+                                  <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fas fa-video fa-sm fa-stack-1x fa-inverse"></i>
+                                  </a>
+                                </button>
+                              </td>
                               @php
                                   $hws = $c->homeworks->all();
                                   $pendingHomeworks = false;

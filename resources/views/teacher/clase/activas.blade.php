@@ -15,7 +15,7 @@
     <tbody>
         @php $activasCounter = 0;@endphp
         @forelse ($clase->homeworks->sortBy('edate') as $h)
-            @if ($h->edate >$date)
+            @if ($h->edate >=$date)
                 @php $activasCounter++;@endphp
                 <tr>
                     <td class="text-left"><a href="{{ route('maestroDash.tarea', $h->id) }}">{{ $h->title }}</a></td>
