@@ -159,6 +159,7 @@
 		  <form action="{{ route('maestro.updateInfo', Auth::user()->id) }}" method="POST">
 			@csrf
 			@method('PUT')
+			<input type="hidden" name="modUserName" value="{{ Auth::user()->username }}">
 			{{--  NOMBRE  --}}
 			<div class="form-group">
 			  <input type="text" class="form-control" name="modNombre" placeholder="Nombre" value="{{ Auth::user()->name }}">
