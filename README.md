@@ -8,7 +8,7 @@
 </p>
 
 ## Commands
-- npm i
+- npm install
 - composer update
 - php artisan migrate:refresh
 - php artisan db:seed

@@ -90,7 +90,7 @@ Route::prefix('maestro')->group(function(){
 Route::prefix('estudiante')->group(function(){
     Route::middleware(['StudentRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Student\StudentController::class, 'index'])->name('student');
-        Route::resource('homework', App\Http\Controllers\Student\HomeworkController::class, ['except'=>['index', 'show']]);
+        Route::resource('stHomework', App\Http\Controllers\Student\HomeworkController::class, ['except'=>['index', 'show']]);
         Route::get('/clase/{claseID}', [App\Http\Controllers\Student\HomeworkController::class, 'index'])->name('studentDash.clase');
         Route::get('/tarea/{tareaID}', [App\Http\Controllers\Student\HomeworkController::class, 'show'])->name('studentDash.tarea');
         Route::post('/uHomework', [App\Http\Controllers\Student\HomeworkController::class, 'uploadFile'])->name('studentDash.ufile');
