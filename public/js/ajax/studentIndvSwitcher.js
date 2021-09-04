@@ -27,7 +27,8 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    let url= '//localhost:3000';
+                    // let url= '//localhost:3000';
+                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
@@ -76,7 +77,8 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    let url= '//localhost:3000';
+                    // let url= '//localhost:3000';
+                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
