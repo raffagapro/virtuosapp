@@ -29,7 +29,8 @@ $(function() {
                 }
             });
             $('#modStudentId').empty().append(pros);
-            $('#modHWForm').attr('action', '//localhost:3000/maestro/homework/'+data[0].id);
+            // $('#modHWForm').attr('action', '//localhost:3000/maestro/homework/'+data[0].id);
+            $('#modHWForm').attr('action', '//virtuousapp.herokuapp.com/maestro/homework/'+data[0].id);
         })
         .fail(e =>{
             // console.log("error");
@@ -62,11 +63,13 @@ $(function() {
             $('#studentId').val(data[1].id);
             if (data[0] === 0) {
                 $("textarea[name='body']").val('');
-                $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/newRetro');
+                // $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/newRetro');
+                $('#retroFrom').attr('action', '//virtuousapp.herokuapp.com/maestro/tarea/newRetro');
             } else {
                 $('#retroId').val(data[0].id);
                 $("textarea[name='body']").val(data[0].body);
-                $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/updateRetro');
+                // $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/updateRetro');
+                $('#retroFrom').attr('action', '//virtuousapp.herokuapp.com/maestro/tarea/updateRetro');
             }
         })
         .fail(e =>{

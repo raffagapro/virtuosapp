@@ -109,6 +109,7 @@ class TeacherListController extends Controller
     public function update(Request $request, $id)
     {
         $teacher = User::findOrFail($id);
+        // dd($teacher);
         if ($teacher->username === $request->modUserName) {
             $request->validate([
                 'modNombre' => 'required|max:255',
