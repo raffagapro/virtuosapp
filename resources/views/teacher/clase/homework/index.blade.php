@@ -138,6 +138,12 @@
                           <button id="{{ $s->id }}" class="btn retroBtn @if (!$homework->hasRetro($s->id)) btn-warning @else btn-primary @endif" data-toggle="modal" data-target="#retroMod">
                             <i class="fas @if (!$homework->hasRetro($s->id)) fa-chalkboard-teacher @else fa-check-double @endif" data-toggle="tooltip" data-placement="top" title="Retroalimentacion"></i>
                           </button>
+                          {{-- STUDENT HOMEWORK --}}
+                          @if (App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first())
+                            <a href="{{ asset(App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first()->media) }}" class="btn btn-dark text-white" download>
+                              <i class="fas fa-book" data-toggle="tooltip" data-placement="top" title="Tarea Alumno"></i>
+                            </a>  
+                          @endif
                         </td>
                       </tr>
                     @empty

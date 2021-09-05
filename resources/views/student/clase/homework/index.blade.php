@@ -18,6 +18,7 @@
                 <div class="card-header">
                     <div class="my-3">
                         <h5>Instrucciones</h5>
+                        <p>Docente: {{ $homework->clase->teacher()->name }}</p>
                     </div>
                 </div>
 
