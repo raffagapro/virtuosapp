@@ -250,6 +250,7 @@
 	});
 	</script>
 @enderror
+
 @endsection
 
 @section('scripts')

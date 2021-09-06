@@ -140,7 +140,7 @@ class TeacherListController extends Controller
             }
         }
         $teacher->save();
-        $status = 'El maestro ha sido actualizado exitosamente.';
+        $status = 'La informacion ha sido actualizada exitosamente.';
         return back()->with(compact('status'));
     }
 
