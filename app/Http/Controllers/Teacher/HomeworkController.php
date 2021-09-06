@@ -174,9 +174,15 @@ class HomeworkController extends Controller
                 $originalName = substr($request->hFile->getClientOriginalName(), 0, strrpos($request->hFile->getClientOriginalName(), "."));
                 $originalName = str_replace(' ', '_', $originalName);
                 $extension = $request->hFile->extension();
+                $saveName = $workingTitle.'_'.$originalName.".".$extension;
+                // dd($saveName, $request->file('hFile'));
 
-                $request->hFile->storeAs('/public/tHomework', $workingTitle.'_'.$originalName.".".$extension);
-                $url = Storage::url('tHomework/'.$workingTitle.'_'.$originalName.".".$extension);
+                Storage::disk('s3')->put('tHomework/'.$saveName, fopen($request->file('hFile'), 'r+'));
+                $url = Storage::disk('s3')->url('tHomework/'.$saveName);
+
+                // $request->hFile->storeAs('/public/tHomework', $workingTitle.'_'.$originalName.".".$extension);
+                // $url = Storage::url('tHomework/'.$workingTitle.'_'.$originalName.".".$extension);
+
                 $media = Media::create([
                     'media' => $url,
                 ]);
@@ -191,11 +197,39 @@ class HomeworkController extends Controller
         return back()->with(compact('status', 'eStatus'));
     }
 
+    public function uploadProfile(Request $request)
+    {
+        $user = User::findOrFail($request->userId);
+        if ($request->hasFile('photoFile')) {
+            if ($request->file('photoFile')->isValid()) {
+                $validated = $request->validate([
+                    'photoFile'=>'mimes:jpeg,png|max:2000',
+                ]);
+ 
+                $extension = $request->photoFile->extension();
+                $saveName = 'perfil_'.$user->id.'.'.$extension;
+                // dd($saveName, $request->file('hFile'));
+
+                Storage::disk('s3')->put('perfil/'.$saveName, fopen($request->file('photoFile'), 'r+'));
+                $url = Storage::disk('s3')->url('perfil/'.$saveName);
+
+                $user->perfil = $url;
+                $user->save();
+            }
+            $eStatus = 1;
+            $status = 'El perfil ha sido guardado exitosamente.';
+        }else{
+            $eStatus = 0;
+            $status = 'No se gurado el perfil.';
+        }
+        return back()->with(compact('status', 'eStatus'));
+    }
+
     public function deleteFile($fileId)
     {
         $foundMedia = Media::findOrFail($fileId);
-        $delMedia = str_replace('/storage/', "",$foundMedia->media);
-        Storage::delete('public/'.$delMedia);
+        // $delMedia = str_replace('/storage/', "",$foundMedia->media);
+        Storage::disk('s3')->delete(parse_url($foundMedia->media));
         $foundMedia->delete();
         $status = 'El archivo se ha eliminado exitosamente.';
         return back()->with(compact('status'));

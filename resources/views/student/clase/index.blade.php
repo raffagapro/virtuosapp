@@ -74,8 +74,12 @@
                 <div class="card-body">
                     <div class="mx-auto mb-3">
                         <span class="fa-stack fa-5x">
-                            <i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
-                            <i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+                            @if (Auth::user()->perfil)
+                                <img src="{{ asset(Auth::user()->perfil) }}" class="chat-img">	
+                            @else
+                                <i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
+                                <i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+                            @endif
                         </span>
                     </div>
                     <h3 class="mb-0">{{ Auth::user()->name }}</h3>

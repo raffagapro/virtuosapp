@@ -168,6 +168,18 @@
   text-align: center;
   width: 100%; }
 
+.chat-img{
+  width: 130px;
+  height: 130px;
+  border-radius: 50%
+}
+
+.mini-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%
+}
+
 .fa-stack-1x {
   line-height: inherit; }
 
