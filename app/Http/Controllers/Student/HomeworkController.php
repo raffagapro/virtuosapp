@@ -62,8 +62,10 @@ class HomeworkController extends Controller
                 $student = User::findOrFail($request->studentId);
                 $workingName = str_replace(' ', '_', $student->name);
                 $extension = $request->sFile->extension();
-                $request->sFile->storeAs('/public/sHomework', $workingTitle.'_'.$workingName.".".$extension);
-                $url = Storage::url('sHomework/'.$workingTitle.'_'.$workingName.".".$extension);
+                $saveName = $workingTitle.'_'.$workingName.".".$extension;
+
+                Storage::disk('s3')->put('sHomework/'.$saveName, fopen($request->file('sFile'), 'r+'));
+                $url = Storage::disk('s3')->url('sHomework/'.$saveName);
 
                 $foundSH = StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first();
                 if ($foundSH) {

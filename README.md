@@ -10,6 +10,8 @@
 ## Commands
 - npm install
 - composer update
+- composer require league/flysystem-sftp "~1.0.29"
+- composer require --with-all-dependencies league/flysystem-aws-s3-v3 "^1.0"
 - php artisan migrate:refresh
 - php artisan db:seed
 - php artisan db:seed --class=UserDevOnlySeeder
