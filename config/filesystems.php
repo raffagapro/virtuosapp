@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 's3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -35,6 +35,14 @@ return [
             'root' => storage_path('app'),
         ],
 
+        // 'ftp' => [
+        //     'driver' => 'sftp',
+        //     'host' => env('FTP_HOST'),
+        //     'username' => env('FTP_USERNAME'),
+        //     'password' => env('FTP_PASSWORD'),
+        //     'port' => 22,
+        // ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -49,6 +57,7 @@ return [
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
+            'visibility' => 'public',
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],

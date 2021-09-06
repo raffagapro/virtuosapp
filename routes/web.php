@@ -78,6 +78,7 @@ Route::prefix('maestro')->group(function(){
         Route::post('clase/hGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'homeworkGrabber']);
         Route::post('clase/sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
         Route::post('/uHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadFile'])->name('maestroDash.ufile');
+        Route::post('/profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('maestroDash.profile');
         Route::delete('/delFile/{fileId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'deleteFile'])->name('maestroDash.dfile');
 
         Route::post('cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
@@ -96,5 +97,7 @@ Route::prefix('estudiante')->group(function(){
         Route::post('/uHomework', [App\Http\Controllers\Student\HomeworkController::class, 'uploadFile'])->name('studentDash.ufile');
 
         Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('student.updatePW');
+        Route::post('/profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('studentDash.profile');
+
     });
 });
