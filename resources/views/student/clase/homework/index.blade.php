@@ -18,6 +18,7 @@
                 <div class="card-header">
                     <div class="my-3">
                         <h5>Instrucciones</h5>
+                        <p>Docente: {{ $homework->clase->teacher()->name }}</p>
                     </div>
                 </div>
 
@@ -32,7 +33,7 @@
                           <button class="btn btn-dark" data-toggle="modal" data-target="#uploadHomework">Reemplazar Tarea</button>
                         </div>
                         <div class="mr-3">
-                          <a href="{{ asset(App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first()->media) }}" class="btn btn-dark text-white" data-toggle="tooltip" data-placement="top" title="Mi Tarea" download>
+                          <a href="{{ asset(App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first()->media) }}" class="btn btn-dark text-white" data-toggle="tooltip" data-placement="top" title="Mi Tarea" target="_blank">
                             <i class="fas fa-book"></i>
                           </a>
                         </div>
@@ -82,7 +83,7 @@
                     @forelse ($homework->medias as $hm)
                         <tr>
                           <td class="align-middle">
-                            <a href="{{ asset($hm->media) }}" download>{{ str_replace('/storage/tHomework/', '', $hm->media) }}</a>
+                            <a href="{{ asset($hm->media) }}" target="_blank">{{ str_replace('https://virtuousapp.s3.us-east-2.amazonaws.com/tHomework/', '', $hm->media) }}</a>
                           </td>
                         </tr>
                       @empty
