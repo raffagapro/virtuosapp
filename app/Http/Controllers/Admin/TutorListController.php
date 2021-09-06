@@ -181,4 +181,24 @@ class TutorListController extends Controller
         $status = 'La clase ha sido eliminada exitosamente.';
         return back()->with(compact('status'));
     }
+
+    public function addStudent($tutorID, $studentID){
+        // $tutor = User::findOrFail($tutorID);
+        // $student = User::findOrFail($studentID);
+        // // dd($clase, $student);
+        // if (!$student->hasClase($clase)) {
+        //     $student->clases()->attach($clase);
+        // }
+        // $status = 'El estudiante ha sido agregado exitosamente.';
+        // return back()->with(compact('status'));
+    }
+
+    public function rmStudent($tutorID, $studentID){
+        // $clase = Clase::findOrFail($tutorID);
+        // $student = User::findOrFail($studentID);
+        // // dd($clase, $student);
+        // $student->clases()->detach($clase);
+        // $status = 'El estudiante ha sido eliminado exitosamente.';
+        // return back()->with(compact('status'));
+    }
 }

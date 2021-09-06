@@ -17,7 +17,14 @@
         <div class="card-body">
           <div class="row mb-4">
             <div class="col-2">
-              <img class="studentPortrait" src="" alt="">
+              <span class="fa-stack fa-4x">
+                @if ($tutor->perfil)
+                  <img src="{{ asset($tutor->perfil) }}" class="chat-img">	
+                @else
+                  <i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
+                  <i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+                @endif
+              </span>
             </div>
             <div class="col-10 text-left pl-0">
               <h4>{{ $tutor->name }}</h4>
@@ -53,16 +60,16 @@
                     <div class="col text-right pl-0">
                       {{--  MODIFY TUTOR BTN  --}}
                       <button class="btn btn-primary" data-toggle="modal" data-target="#modTutorModal">
-                        <i class="fas fa-pen fa-fw" data-toggle="tooltip" data-placement="top" title="Modificar Maestro"></i>
+                        <i class="fas fa-pen fa-fw" data-toggle="tooltip" data-placement="top" title="Modificar Tutor"></i>
                       </button>
-                      {{--  ADD CLASS BTN  --}}
-                      <button class="btn btn-info" data-toggle="modal" data-target="#addClaseModal">
-                        <i class="fas fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Agregar Clase"></i>
-                      </button>
+                      {{--  ADD STUDENT BTN  --}}
+                      {{--  <button class="btn btn-info" data-toggle="modal" data-target="#addStudentModal">
+                        <i class="fas fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Agregar Estudiante"></i>
+                      </button>  --}}
                       {{--  DELETE STUDENT BTN  --}}
                       <a
                         href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar Maestro"
+                        data-toggle="tooltip" data-placement="top" title="Eliminar Tutor"
                         class="btn btn-danger"
                         onclick="
                           event.preventDefault();
@@ -96,7 +103,30 @@
           </div>
           
           <div class="row">
-            
+            <table class="table table-bordered">
+              @php
+                $students = App\Models\User::where('tutor1', $tutor->id)->orWhere('tutor2', $tutor->id)->orderBy('name')->paginate(50);
+              @endphp
+              @if (count($students) > 0)
+                <thead>
+                  <tr>
+                    <th class="col-9 text-left"><h5>Alumnos</h5></th>
+                  </tr>
+                </thead>
+              @endif
+              <tbody>
+                @forelse ($students as $s)
+                  <tr>
+                    {{-- NOMBRE --}}
+                    <td class="text-left"><a href="{{ route('estudiantes.edit', $s->id) }}">{{ ucwords($s->name) }}</a></td>
+                  </tr>
+                @empty
+                  {{--  <div class="alert alert-danger" role="alert">
+                    Sin estudiantes registrados
+                  </div>  --}}
+                @endforelse
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -163,23 +193,23 @@
   </div>
 </div>
 
-<!-- Modal Agregar Clase -->
-<div class="modal fade" id="addClaseModal" tabindex="-1">
+<!-- Modal Agregar Estudiante -->
+<div class="modal fade" id="addStudentModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modTitleCont">Agregar Clase</h5>
+        <h5 class="modal-title" id="modTitleCont">Agregar Estudiante</h5>
         <button type="button" class="close" data-dismiss="modal">
           <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <input type="text" class="form-control" id="classSearch" placeholder="Nombre de la clase">
+          <input type="text" class="form-control" id="studentSearch" placeholder="Nombre del estudiante">
           <input type="hidden" id="tutorId" value="{{ $tutor->id }}">
         </div>
         <table class="table table-bordered">
-          <tbody id="classListCont">
+          <tbody id="stidentListCont">
           </tbody>
         </table>
       </div>
@@ -203,5 +233,5 @@
 
 @section('scripts')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<script src="{{ asset('js/ajax/teacherIndvSwitcher.js') }}" ></script>
+<script src="{{ asset('js/ajax/tutorIndvSwitcher.js') }}" ></script>
 @endsection
