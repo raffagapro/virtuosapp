@@ -33,9 +33,11 @@ class AdminController extends Controller
     public function resetPW($id)
     {
         $user = User::findOrFail($id);
-        $workingPW = explode(' ', strtolower($user->nombre));
+        $workingPW = explode(' ', strtolower($user->name));
         $pw = 'VI'.ucfirst($workingPW[0]).'2022';
+        // dd($pw);
         $user->password = Hash::make($pw);
+        $user->save();
         $status = 'El password ha sido reestablecido.';
         return back()->with(compact('status'));
     }

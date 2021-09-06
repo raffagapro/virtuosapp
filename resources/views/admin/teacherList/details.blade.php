@@ -17,7 +17,14 @@
         <div class="card-body">
           <div class="row mb-4">
             <div class="col-2">
-              <img class="studentPortrait" src="" alt="">
+              <span class="fa-stack fa-4x">
+                @if ($teacher->perfil)
+                  <img src="{{ asset($teacher->perfil) }}" class="chat-img">	
+                @else
+                  <i class="fas fa-circle fa-stack-2x text-light" style="line-height: inherit"></i>
+                  <i class="fas fa-user fa-stack-1x text-secondary" style="line-height: inherit"></i>
+                @endif
+              </span>
             </div>
             <div class="col-10 text-left pl-0">
               <h4>{{ $teacher->name }}</h4>

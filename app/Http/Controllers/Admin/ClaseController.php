@@ -152,14 +152,23 @@ class ClaseController extends Controller
     }
 
     public function studentSearcher(Request $request){
-        $clase = Clase::findOrFail($request->claseId);
+        if ($request->claseId) {
+            $clase = Clase::findOrFail($request->claseId);
+        } else {
+            $clase = Clase::findOrFail(1);
+        }
+        if ($request->tutorId) {
+            $tutor = User::findOrFail($request->tutorId);
+        } else {
+            $tutor = User::findOrFail(1);
+        }
         $students = User::where('name', 'LIKE', '%'.$request->value.'%')  
                         ->whereHas(
                             'role', function($q){
                                 $q->where('name', 'estudiante');
                             }
                         )->get();
-        return [$students, $clase];
+        return [$students, $clase, $tutor];
     }
 
     public function addStudent($classID, $studentID){

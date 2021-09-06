@@ -30,6 +30,10 @@ Route::prefix('admin')->group(function(){
     Route::middleware(['AdminRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
         Route::get('/resetClave/{userID}', [App\Http\Controllers\Admin\AdminController::class, 'resetPW'])->name('user.resetPW');
+        Route::post('/profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('admin.profile');
+        Route::put('info/{userId}', [App\Http\Controllers\Admin\TeacherListController::class, 'update'])->name('admin.updateInfo');
+        Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('admin.updatePW');
+        
 
         Route::resource('estudiantes', App\Http\Controllers\Admin\StudentListController::class);
         Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'activate'])->name('estudiantes.activate');
@@ -50,7 +54,8 @@ Route::prefix('admin')->group(function(){
         Route::put('tutores/indv/deactivate/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'deactivate'])->name('tutores.deactivate');
         Route::get('tutores/clase/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'addTeacher'])->name('tutores.addTeacher');
         Route::get('tutores/clase/rm/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'rmTeacher'])->name('tutores.rmTeacher');
-
+        Route::get('tutores/student/{tutorID}/{studentID}', [App\Http\Controllers\Admin\TutorListController::class, 'addStudent'])->name('tutores.addStudent');
+        Route::get('tutores/student/rm/{tutorID}/{studentID}', [App\Http\Controllers\Admin\TutorListController::class, 'rmStudent'])->name('tutores.rmStudent');
         
         Route::resource('materias', App\Http\Controllers\Admin\MateriaController::class);
         Route::post('materias/mGrabber', [App\Http\Controllers\Admin\MateriaController::class, 'materiaGrabber']);
