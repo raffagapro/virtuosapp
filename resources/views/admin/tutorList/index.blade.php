@@ -28,8 +28,7 @@
                     @if (count($tutors) > 0)
                       <thead>
                         <tr>
-                          <th class="col-6 text-start"><h5>Nombre</h4></th>
-                          <th><h5>Area</h4></th>
+                          <th class="col-9 text-start"><h5>Nombre</h4></th>
                           <th><h5>Actualizar</h4></th>
                         </tr>
                       </thead> 
@@ -39,12 +38,6 @@
                         <tr>
                           {{-- NOMBRE --}}
                           <td><a href="{{ route('tutores.edit', $t->id) }}">{{ ucwords($t->name) }}</a></td>
-                          {{-- GRADO --}}
-                          @if (isset($t->area))
-                            <td>{{ $t->area->name }}</td>
-                          @else
-                              <td>-</td>
-                          @endif
                           {{-- ACTUALIZAR --}}
                           <td>
                             @if ($t->status === 0)
