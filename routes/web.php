@@ -100,9 +100,12 @@ Route::prefix('estudiante')->group(function(){
         Route::get('/clase/{claseID}', [App\Http\Controllers\Student\HomeworkController::class, 'index'])->name('studentDash.clase');
         Route::get('/tarea/{tareaID}', [App\Http\Controllers\Student\HomeworkController::class, 'show'])->name('studentDash.tarea');
         Route::post('/uHomework', [App\Http\Controllers\Student\HomeworkController::class, 'uploadFile'])->name('studentDash.ufile');
+        Route::get('/homeworkDone/{homeworkId}/{studentId}', [App\Http\Controllers\Student\HomeworkController::class, 'markComplete'])->name('studentDash.done');
 
         Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('student.updatePW');
         Route::post('/profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('studentDash.profile');
+
+        Route::post('chatGrabber', [App\Http\Controllers\Admin\ChatController::class, 'grabber']);
 
     });
 });

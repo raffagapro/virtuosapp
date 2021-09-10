@@ -28,20 +28,33 @@
 
                 <div class="card-footer px-5">
                     <div class="row">
+
                       @if (App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first())
-                        <div class="ml-auto mr-3">
-                          <button class="btn btn-dark" data-toggle="modal" data-target="#uploadHomework">Reemplazar Tarea</button>
-                        </div>
-                        <div class="mr-3">
-                          <a href="{{ asset(App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first()->media) }}" class="btn btn-dark text-white" data-toggle="tooltip" data-placement="top" title="Mi Tarea" target="_blank">
-                            <i class="fas fa-book"></i>
-                          </a>
-                        </div>
+                        @if (App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first()->media === null)
+                          <div class="ml-auto mr-3">  
+                            <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Tarea</button>
+                          </div>
+                        @else
+                          <div class="ml-auto mr-3">
+                            <button class="btn btn-dark" data-toggle="modal" data-target="#uploadHomework">Reemplazar Tarea</button>
+                          </div>
+                          <div class="mr-3">
+                            <a href="{{ asset(App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', Auth::user()->id)->first()->media) }}" class="btn btn-dark text-white" data-toggle="tooltip" data-placement="top" title="Mi Tarea" target="_blank">
+                              <i class="fas fa-book"></i>
+                            </a>
+                          </div> 
+                        @endif
                       @else
                         <div class="ml-auto mr-3">
-                          <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Tarea</button>
+                          <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Archivo</button>
+                        </div>
+                        <div class="mr-3">
+                          <a href="{{ route('studentDash.done', [$homework->id, Auth::user()->id]) }}" class="btn btn-dark text-white" data-toggle="tooltip" data-placement="top" title="Marcar Completada">
+                            <i class="fas fa-check"></i>
+                          </a>
                         </div>
                       @endif
+
                       @if ($homework->vlink !== null && $homework->vlink !== '')
                         <div class="mr-3">
                           <a href="{{ $homework->vlink }}" class="btn btn-danger text-white" target="_blank">Ver Video</a>

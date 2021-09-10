@@ -15,8 +15,7 @@ $(function() {
             // console.log("success");
             $("#materiaModID").val(data.id);
             $("#modNombre").val(data.name);
-            // $("#modalForm").attr('action', '//localhost:3000/admin/materias/'+data.id);
-            $("#modalForm").attr('action', '//virtuousapp.herokuapp.com/admin/materias/'+data.id);
+            $("#modalForm").attr('action', webUrl+'/admin/materias/'+data.id);
           })
           .fail(e =>{
             // console.log("error");

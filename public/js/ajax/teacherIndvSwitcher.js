@@ -17,8 +17,6 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    // let url= '//localhost:3000';
-                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
@@ -28,7 +26,7 @@ $(function() {
                         } else {
                             pros += `<td class="text-left text-danger">`+i.label;
                         }
-                        pros += `<a href="`+ url +`/admin/maestros/clase/`+ Number(i.id )+`/`+ Number(data[1].id )+`"`;
+                        pros += `<a href="`+ webUrl +`/admin/maestros/clase/`+ Number(i.id )+`/`+ Number(data[1].id )+`"`;
                         pros += `class="btn btn-sm btn-primary text-white mr-2 float-right"`;
                         pros += `data-toggle="tooltip" data-placement="top" title="Agregar Clase">`;
                         pros += `<i class="fas fa-plus"></i></a>`;
