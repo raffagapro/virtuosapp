@@ -95,7 +95,7 @@
           </div>
           {{-- FECHA DE ENTREGA --}}
           <div class="form-group">
-            <small id="emailHelp" class="form-text text-muted">Fecha de Entrega</small>
+            <small class="form-text text-muted">Fecha de Entrega</small>
               <input type="date" class="form-control" name="edate">
           </div>
           <button type="submit" class="btn btn-primary float-right">Agregar</button>

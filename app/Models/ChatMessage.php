@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StudentHomework extends Model
+class ChatMessage extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'media',
+        'body',
         'status'
     ];
-
-    public function homework()
+    public function chat()
     {
-        return $this->belongsTo(Homework::class);
+        return $this->belongsTo(Chat::class);
     }
-    public function student()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -34,10 +34,10 @@
                       <div class="ml-auto mr-3">
                         <a href="{{ $homework->vlink }}" class="btn btn-danger text-white" target="_blank">Ver Video</a>
                       </div>
-                      <div class="mr-3">
-                        <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Archivo</button>
-                      </div>
                     @endif
+                    <div class=" @if ($homework->vlink === null || $homework->vlink === '') ml-auto @endif mr-3">
+                      <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Archivo</button>
+                    </div>
                   </div>
               </div>
           </div>
@@ -129,8 +129,19 @@
                         {{--  <td class="align-middle"><a href="{{ route('maestroDash.clase', $s->id) }}">{{ $s->name }}</a></td>  --}}
                         <td class="align-middle">{{ $s->name }}</td>
                         <td class="align-middle text-right py-0">
-                          @if (App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first())
-                            <span class="badge badge-info">Completado</span>
+                          @php
+                              $foundHomework = App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first();
+                          @endphp
+                          @if ($foundHomework)
+                            @if ($foundHomework->status === 0 || $foundHomework->status === null)
+                              <span class="badge btn-danger text-white">Pendiente</span> 
+                            @endif
+                            @if ($foundHomework->status === 1)
+                              <span class="badge badge-info">Enviado</span>
+                            @endif
+                            @if ($foundHomework->status === 2)
+                              <span class="badge badge-info">Completado</span>
+                            @endif
                           @else
                             <span class="badge btn-danger text-white">Pendiente</span>
                           @endif

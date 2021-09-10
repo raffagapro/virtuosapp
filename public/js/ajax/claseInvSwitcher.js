@@ -18,14 +18,12 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    // let url= '//localhost:3000';
-                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
                         pros += '<tr>';
                         pros += `<td class="text-left">`+i.name;
-                        pros += `<a href="`+ url +`/admin/clase/student/`+ Number(data[1].id )+`/`+ Number(i.id )+`"`;
+                        pros += `<a href="`+ webUrl +`/admin/clase/student/`+ Number(data[1].id )+`/`+ Number(i.id )+`"`;
                         pros += `class="btn btn-sm btn-primary text-white mr-2 float-right"`;
                         pros += `data-toggle="tooltip" data-placement="top" title="Agregar Alumno">`;
                         pros += `<i class="fas fa-plus"></i></a>`;
