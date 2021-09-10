@@ -42,6 +42,10 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required|max:255',
+        ]);
+
         $materia = Materia::create([
             'name' => $request->nombre,
         ]);
@@ -81,6 +85,10 @@ class MateriaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'modNombre' => 'required|max:255',
+        ]);
+
         $materia = Materia::findOrFail($id);
         $materia->name = $request->modNombre;
         $materia->save();
