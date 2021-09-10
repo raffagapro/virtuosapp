@@ -52,7 +52,10 @@
                                         <div class="form-group">            
                                             <div class="col-md-8 input-group mx-auto px-0">
                                                 <label for="password" class="input-group-text login-input-pill rounded-pill-start"><i class="fas fa-lock"></i></label>
-                                                <input id="password" type="password" class="form-control login-input-pill rounded-pill-end @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
+                                                <input id="password" type="password" class="form-control login-input-pill @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Contraseña">
+                                                <button type="button" class="btn btn-link input-group-text login-input-pill rounded-pill-end" onclick="myFunction()">
+                                                    <i class="far fa-eye"></i>
+                                                </button>
                                                 @error('password')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -96,4 +99,15 @@
         </main>
     </div>
 </body>
+
+<script>
+    function myFunction() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+</script>
 </html>
