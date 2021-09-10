@@ -55,13 +55,13 @@
                             <tr>
                               <td class="text-left">
                                 <a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a>
-            
-                                <a href="{{ $c->zlink }}" type="button" class="btn btn-link @if ($c->zlink === null) disabled @endif" target="_blank" data-toggle="tooltip" data-placement="top" title="Clase Zoom">
+                                {{--  ZOOM BTN  --}}
+                                {{--  <a href="{{ $c->zlink }}" type="button" class="btn btn-link p-0 @if ($c->zlink === null) disabled @endif" target="_blank" data-toggle="tooltip" data-placement="top" title="Clase Zoom">
                                   <span class="fa-stack fa-lg">
                                     <i class="fas fa-circle fa-stack-2x"></i>
                                     <i class="fas fa-video fa-sm fa-stack-1x fa-inverse"></i>
-                                  </a>
-                                </button>
+                                  </span>
+                                </a>  --}}
                               </td>
                               @php
                                   $hws = $c->homeworks->all();
@@ -70,6 +70,10 @@
                                     if ($thw->student === 0 || $thw->student === Auth::user()->id) {
                                       if (!App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()) {
                                         $pendingHomeworks = true;
+                                      }else {
+                                        if (App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()->status !== 2) {
+                                          $pendingHomeworks = true;
+                                        }
                                       }
                                     }
                                   }

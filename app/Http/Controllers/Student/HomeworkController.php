@@ -74,6 +74,7 @@ class HomeworkController extends Controller
                 } else {
                     $studentHomework = StudentHomework::create([
                         'media' => $url,
+                        'status' => 1,
                     ]);
                     $homework->studentHomeworks()->save($studentHomework);
                     $student->studentHomeworks()->save($studentHomework);
@@ -86,5 +87,25 @@ class HomeworkController extends Controller
             $status = 'No se adjunto archivo a la tarea.';
         }
         return back()->with(compact('status', 'eStatus'));
+    }
+
+    public function markComplete($homeworkId, $studentId)
+    {
+        $foundSH = StudentHomework::where('homework_id', $homeworkId)->where('user_id', $studentId)->first();
+        if ($foundSH) {
+            $foundSH->status = 1;
+            $foundSH->save();
+        } else {
+            $studentHomework = StudentHomework::create([
+                'status' => 1,
+            ]);
+            $homework = Homework::findOrFail($homeworkId);
+            $homework->studentHomeworks()->save($studentHomework);
+    
+            $student = User::findOrFail($studentId);
+            $student->studentHomeworks()->save($studentHomework);  
+        }
+        $status = 'La tarea ha sido marcada como completada.';
+        return back()->with(compact('status'));
     }
 }
