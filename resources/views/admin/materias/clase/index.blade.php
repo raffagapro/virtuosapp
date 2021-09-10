@@ -66,7 +66,12 @@
           <input type="hidden" name='materiaId' value="{{ $materia->id }}">
           {{-- LABEL --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="label" placeholder="Etiqueta">
+            <input type="text" class="form-control @error('label') is-invalid @enderror" name="label" placeholder="Etiqueta">
+            @error('label')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{-- TEACHERS --}}
           <div class="form-group">
@@ -121,7 +126,12 @@
           <input type="hidden" name='materiaId' value="{{ $materia->id }}">
           {{-- LABEL --}}
           <div class="form-group">
-            <input type="text" class="form-control" id="modLabel" name="modLabel" placeholder="Etiqueta">
+            <input type="text" class="form-control @error('modLabel') is-invalid @enderror" id="modLabel" name="modLabel" placeholder="Etiqueta">
+            @error('modLabel')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{-- TEACHERS --}}
           <div class="form-group">
@@ -147,6 +157,18 @@
     </div>
   </div>
 </div>
+
+@if ($errors->has('label'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#addClassModal').modal('show'); });
+  </script>
+@endif
+
+@if ($errors->has('modLabel'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#modClassModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>

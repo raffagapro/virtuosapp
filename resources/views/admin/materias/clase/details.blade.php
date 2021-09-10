@@ -102,7 +102,7 @@
   </div>
 </div>
 
-<!-- Modal Modificar Materia -->
+<!-- Modal Modificar Class -->
 <div class="modal fade" id="modClassModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -119,7 +119,12 @@
           <input type="hidden" name='materiaId' value="{{ $clase->materia->id }}">
           {{-- LABEL --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="modLabel" placeholder="Etiqueta" value="{{ $clase->label }}">
+            <input type="text" class="form-control @error('modLabel') is-invalid @enderror" name="modLabel" placeholder="Etiqueta" value="{{ $clase->label }}">
+            @error('modLabel')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           {{-- TEACHERS --}}
           <div class="form-group">
@@ -185,6 +190,12 @@
     </div>
   </div>
 </div>
+
+@if ($errors->has('modLabel'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#modClassModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>
