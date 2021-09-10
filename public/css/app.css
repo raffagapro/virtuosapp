@@ -14725,6 +14725,7 @@ label{}
 input{} */
 .login-input-pill {
   background-color: white;
+  text-decoration: none !important;
 }
 
 /* textarea{}
