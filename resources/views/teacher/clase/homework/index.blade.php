@@ -34,10 +34,10 @@
                       <div class="ml-auto mr-3">
                         <a href="{{ $homework->vlink }}" class="btn btn-danger text-white" target="_blank">Ver Video</a>
                       </div>
-                      <div class="mr-3">
-                        <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Archivo</button>
-                      </div>
                     @endif
+                    <div class="mr-3">
+                        <button class="btn btn-info text-white" data-toggle="modal" data-target="#uploadHomework">Subir Archivo</button>
+                    </div>
                   </div>
               </div>
           </div>
