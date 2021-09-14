@@ -15,16 +15,16 @@
   <div class="row justify-content-center">
       {{-- MAIN PANEL --}}
       <div class="col-md-12">
-          <div class="card border-secondary text-center">
-              <div class="card-header">
+          <div class="card border-secondary">
+              <div class="card-header text-center">
                   <div class="my-3">
                       <h5>Instrucciones</h5>
                   </div>
               </div>
 
               <div class="card-body px-5">
-                  <p class="text-justify">
-                    {{ $homework->body }}
+                  <p class="">
+                    {!! $homework->body !!}
                   </p>
               </div>
 
@@ -214,6 +214,7 @@
           {{--  FILE  --}}
           <div class="form-group">
             <input type="file" class="form-control-file @error('hFile') is-invalid @enderror" name="hFile">
+            <small>Limite de 2MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx</small>
             @error('hFile')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>

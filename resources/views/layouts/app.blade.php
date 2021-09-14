@@ -19,6 +19,8 @@
     </script>
     <script src="{{ asset('js/ajax/globalConts.js') }}" ></script>
 
+    @yield('cdn')
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

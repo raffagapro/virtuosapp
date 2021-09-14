@@ -15,6 +15,8 @@ class AddStatusToStudentHomework extends Migration
     {
         Schema::table('student_homework', function (Blueprint $table) {
             $table->integer('status')->nullable();
+            $table->text('media')->nullable()->change();
+
         });
     }
 
@@ -27,7 +29,6 @@ class AddStatusToStudentHomework extends Migration
     {
         Schema::table('student_homework', function (Blueprint $table) {
             $table->dropColumn('status');
-            $table->text('media')->nullable()->change();
         });
     }
 }
