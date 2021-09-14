@@ -42,6 +42,10 @@ class ClaseController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'label' => 'required|max:255',
+        ]);
+
         // dd($request->all());
         $clase = Clase::create([
             'label' => $request->label,
@@ -92,6 +96,10 @@ class ClaseController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'modLabel' => 'required|max:255',
+        ]);
+
         $materia = Materia::findOrFail((int)$request->materiaId);
         $clase = Clase::findOrFail($id);
         $clase->label = $request->modLabel;

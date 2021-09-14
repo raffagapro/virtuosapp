@@ -12,11 +12,12 @@ $(function() {
             data: dataObj,
         })
         .done(data =>{
-            // console.log("success");
+            console.log("success");
             $('#hwTitleCont').empty().append(data[0].title)
             $('#homeworkId').val(data[0].id);
             $('#modTitulo').val(data[0].title);
-            $("textarea[name='modBody']").val(data[0].body);
+            //$("textarea[name='modBody']").val(data[0].body);
+            tinymce.get('modBody').setContent(data[0].body);
             $('#modVlink').val(data[0].vlink);
             $('#modEdate').val(data[0].edate);
             let pros = '';

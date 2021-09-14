@@ -45,6 +45,11 @@ class HomeworkController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required',
+            'body' => 'required',
+        ]);
+
         // dd($request->all());
         $homework = Homework::create([
             'title' => $request->titulo,
@@ -92,6 +97,11 @@ class HomeworkController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'modTitulo' => 'required',
+            'modBody' => 'required',
+        ]);
+
         // dd($request->all(), $id);
         $homework = Homework::findOrFail($id);
         $homework->title = $request->modTitulo;
