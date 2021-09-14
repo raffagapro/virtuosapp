@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\Media;
@@ -10,6 +11,7 @@ use App\Models\Retro;
 use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HomeworkController extends Controller

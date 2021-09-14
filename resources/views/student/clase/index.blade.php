@@ -112,11 +112,23 @@
                         </span>
                     </a>
                     {{--  MESSAGE BTN  --}}
-                    <a href="javascript:void(0);" type="button" class="btn btn-link p-0 @if ($clase->teacher === 0) disabled @endif chatModalBtn" data-toggle="modal" data-target="#chatModal">
+                    <a href="javascript:void(0);" type="button" id="{{ $foundChat->id }}" class="btn btn-link p-0 messageBtn @if ($clase->teacher === 0) disabled @endif" data-toggle="modal" data-target="#chatModal">
                         <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Contactar al Docente">
                             <i class="fas fa-circle fa-stack-2x"></i>
                             <i class="fas fa-comments fa-sm fa-stack-1x fa-inverse"></i>
                         </span>
+                        @php
+							$unreadMessages = 0;
+                            // dd($foundChat->chatMessages);
+                            foreach ($foundChat->chatMessages as $cmw) {
+								if ($cmw->user_id !== Auth::user()->id && $cmw->status === 0) {
+									$unreadMessages++;
+								}
+							}
+                        @endphp
+                        @if ($unreadMessages > 0)
+                            <span class="badge badge-danger float-right" style="margin-left:-150px">{{ $unreadMessages }}</span>
+                        @endif
                     </a>
                 </div>
             </div>
@@ -144,36 +156,44 @@
 		</div>
 		<div class="modal-body">
             <div id="messageCont">
-                {{--  OTHER CHAT  --}}
-                <div class="row ml-2">
-                    <div class="alert alert-info col-10" role="alert">
-                        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-                        <hr class="m-1">
-                        <div class="row justify-content-end">
-                            <small class="mb-0 mr-3">11:30am</small>
+                @forelse ($foundChat->chatMessages->sortBy('created_at', SORT_REGULAR, true) as $cm)
+                    @if ($cm->user_id === Auth::user()->id)
+                        <div class="row mr-2">
+                            <div class="col-2"></div>
+                            <div class="alert alert-light col" role="alert">
+                                <p>{{ $cm->body }}</p>
+                                <hr class="m-1">
+                                <small class="mb-0 text-right text-small">11:30am</small>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                {{--  ME CHAT  --}}
-                <div class="row mr-2">
-                    <div class="col-2"></div>
-                    <div class="alert alert-light col" role="alert">
-                        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-                        <hr class="m-1">
-                        <small class="mb-0 text-right">11:30am</small>
-                    </div>
-                </div>
+                    @else
+                        <div class="row ml-2">
+                            <div class="alert alert-info col-10" role="alert">
+                                <p>{{ $cm->body }}</p>
+                                <hr class="m-1">
+                                <div class="row justify-content-end">
+                                    <small class="mb-0 mr-3">11:30am</small>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @empty
+                    <p class="text-muted">Sin mensajes registrados...</p>
+                @endforelse
             </div>
-
+		</div>
+        <div class="modal-footer">
             {{--  SEND MESSAGE FORM  --}}
-            <hr>
-            <form>
+            <form action="{{ route('chatStudent.store') }}" method="POST" class="m-auto w-100">
+                @csrf
                 <input type="hidden" name="senderId" id="senderId" value="{{ Auth::user()->id }}">
                 <input type="hidden" name="recieverId" id="recieverId" value="{{ $clase->teacher()->id }}">
+                @if ($foundChat)
+                    <input type="hidden" name="chatId" id="chatId" value="{{ $foundChat->id }}"> 
+                @endif
                 <div class="form-row">
                     <div class="col-10">
-                        <input type="text" class="form-control" name="messageBody" id="messageBody" placeholder="Escribe tu mensaje...">
+                        <input type="text" autocomplete="off" class="form-control" name="messageBody" id="messageBody" placeholder="Escribe tu mensaje...">
                     </div>
                     <div class="col">
                         <button type="submit" class="btn btn-primary">
@@ -182,14 +202,24 @@
                     </div>
                 </div>
             </form>
-
-		</div>
+	    </div>
+        
 	  </div>
 	</div>
 </div>
+
+@if(session('chatGo'))
+	@if ((int)session('chatGo') !== 0)
+        <script type="text/javascript">
+            $( document ).ready(function() {
+            $('#chatModal').modal('show');
+        });
+        </script>
+	@endif
+@endif
 @endsection
 
 @section('scripts')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<script src="{{ asset('js/ajax/chatSwitcher.js') }}" ></script>
+<script src="{{ asset('js/ajax/studenDashMessageMarker.js') }}" ></script>
 @endsection
