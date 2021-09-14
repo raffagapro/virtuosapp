@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -22,11 +24,29 @@ class ChatController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $foundChat = Chat::where('user1', Auth::user()->id)->where(function ($q) use ($id){
+            $q->where('user2', $id);
+        })
+        ->orWhere('user2', Auth::user()->id)->where(function ($q) use ($id){
+            $q->where('user1', $id);
+        })
+        ->first();
+        if (!$foundChat) {
+            $foundChat = Chat::create([
+                'user1' => Auth::user()->id,
+                'user2' => $id,
+            ]);
+        }
+        $chatGo = $foundChat->id;
+        $reciver = $id;
+        return back()->with(compact('foundChat', 'chatGo', 'reciver'));
+
+        
     }
 
     /**
@@ -37,24 +57,37 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $foundChat = Chat::findOrFail($request->chatId);
+        $chatMessage = ChatMessage::create([
+            'body' => $request->messageBody,
+            'status' => 0,
+        ]);
+        $sender = User::findOrFail($request->senderId);
+        $sender->chatMessages()->save($chatMessage);
+        $foundChat->chatMessages()->save($chatMessage);
+        $chatGo = $foundChat->id;
+        if ($foundChat->user1 === $sender->id) {
+            $reciver = $foundChat->user2;
+        } else {
+            $reciver = $foundChat->user1;
+        }
+        
+        return back()->with(compact('chatGo', 'reciver'));
     }
 
     public function grabber(Request $request)
     {
-        $foundChat = Chat::where('user1', $request->senderId)->orWhere('user2', $request->senderId)->where(function ($q) use ($request){
-            $q->where('user1', $request->recieverId)->orWhere('user2', $request->recieverId);
-        })->first();
-        if ($foundChat) {
-            
-            return $foundChat->chatMessages;
-        } else {
-            $createdChat = Chat::create([
-                'user1' => $request->senderId,
-                'user2' => $request->recieverId,
-            ]);
-            return $createdChat->chatMessages;
+        $foundChat = Chat::findOrFail($request->chatId);
+        $reciever = User::findOrFail($request->recieverId);
+        $messages = $foundChat->chatMessages;
+        foreach ($messages as $m) {
+            if ($m->user->id !== Auth::user()->id) {
+                $m->status = 1;
+                $m->save();
+            }
         }
+        return [$messages, $reciever, $foundChat->id];
     }
 
     /**
@@ -71,12 +104,19 @@ class ChatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $foundChat = Chat::findOrFail($request->chatId);
+        foreach ($foundChat->chatMessages as $cmw) {
+            if ($cmw->user_id !== Auth::user()->id && $cmw->status === 0) {
+                $cmw->status = 1;
+                $cmw->save();
+            }
+        }
+        return $foundChat;
     }
 
     /**

@@ -13,13 +13,9 @@ class Chat extends Model
         'user2'
     ];
 
-    public function getUser1()
+    public function getUser($userId)
     {
-        return User::findOrFail($this->user1);
-    }
-    public function getUser2()
-    {
-        return User::findOrFail($this->user2);
+        return User::findOrFail($userId);
     }
     public function chatMessages()
     {

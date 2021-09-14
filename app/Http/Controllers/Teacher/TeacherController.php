@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
@@ -24,6 +26,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('teacher.index');
+        $chats = Chat::where('user1', Auth::user()->id)->orWhere('user2', Auth::user()->id)->get();
+        return view('teacher.index')->with(compact('chats'));
     }
 }

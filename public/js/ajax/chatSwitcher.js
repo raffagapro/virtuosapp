@@ -15,39 +15,31 @@ $(function() {
           .done(data =>{
             console.log("success");
             $('#messageCont').empty();
-            if (data.length === 0) {
+            if (data[0].length === 0) {
               $('#messageCont').append('<p class="text-muted">Sin mensajes registrados...</p>')
             } else {
+              let pros = '';
               data.forEach(i => {
-                
+                if (i.user_id === data[1].id) {
+                  pros += '<div class="row mr-2">';
+                  pros += '<div class="col-2"></div>';
+                  pros += '<div class="alert alert-light col" role="alert">';
+                  pros += `<p>`+i.body+`</p>`;
+                  pros += '<hr class="m-1">';
+                  pros += '<small class="mb-0 text-right">11:30am</small>';
+                  pros += '</div></div>';
+                } else {
+                  pros += '<div class="row ml-2">';
+                  pros += '<div class="alert alert-info col-10" role="alert">';
+                  pros += `<p>`+i.body+`</p>`;
+                  pros += '<hr class="m-1">';
+                  pros += '<div class="row justify-content-end">';
+                  pros += '<small class="mb-0 mr-3">11:30am</small>';
+                  pros += '</div></div></div>';
+                }
+                $('#messageCont').append(pros);
               });
             }
-            // console.log(data.length);
-            
-            // $('#modTitleCont').removeClass('text-danger');
-            // if (data[0].status === 0) {
-            //   $('#modTitleCont').addClass('text-danger');
-            // }
-            // $("#claseNameCont").empty().append(data[0].label);
-            // $("#claseModID").val(data[0].id);
-            // $("#materiaModID").val(data[0].materia_id);
-            // $("#modLabel").val(data[0].label);
-            // $("#modSdate").val(data[0].sdate);
-            // $("#modEdate").val(data[0].edate);
-            // teacherSelect = '<option value=0>Sin Maestro</option>';
-            // if (data[1].length > 0) {
-            //   data[1].forEach(t => {
-            //     if (t.id == data[0].teacher) {
-            //       teacherSelect += '<option value='+t.id+' selected>'+t.name+'</option>';
-            //     } else {
-            //       teacherSelect += '<option value='+t.id+'>'+t.name+'</option>';
-            //     }
-            //   });
-            // } else {
-            //   teacherSelect += '<option value=0 disabled>No hay maestros registrados</option>';
-            // }
-            // $("#teacherId").empty().append(teacherSelect);
-            // $("#modalForm").attr('action', webUrl+'/admin/clase/'+data[0].id);
           })
           .fail(e =>{
             console.log("error");

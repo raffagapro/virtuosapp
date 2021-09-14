@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HomeworkController extends Controller
@@ -30,7 +32,20 @@ class HomeworkController extends Controller
     public function index($id)
     {
         $clase = Clase::findOrFail($id);
-        return view('student.clase.index')->with(compact('clase'));
+        $foundChat = Chat::where('user1', Auth::user()->id)->where(function ($q) use ($clase){
+            $q->where('user2', $clase->teacher()->id);
+        })
+        ->orWhere('user2', Auth::user()->id)->where(function ($q) use ($clase){
+            $q->where('user1', $clase->teacher()->id);
+        })
+        ->first();
+        if (!$foundChat) {
+            $foundChat = Chat::create([
+                'user1' => Auth::user()->id,
+                'user2' => $clase->teacher()->id,
+            ]);
+        }
+        return view('student.clase.index')->with(compact('clase', 'foundChat'));
     }
 
     /**
