@@ -14665,6 +14665,12 @@ body {
   border-radius: 50%;
 }
 
+.mid-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
 .sub-bar {
   color: black;
   background-color: white;
