@@ -68,7 +68,16 @@ Route::prefix('admin')->group(function(){
         Route::get('clase/student/rm/{claseID}/{studentID}', [App\Http\Controllers\Admin\ClaseController::class, 'rmStudent'])->name('clase.rmStudent');
         Route::put('clase/indv/activate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'activate'])->name('clase.activate');
         Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
-   
+
+        Route::resource('coordinator', App\Http\Controllers\Admin\CoordinatorController::class);
+        
+        Route::resource('sa', App\Http\Controllers\Admin\SuperAdminController::class);
+        Route::prefix('sa')->group(function(){
+            Route::post('newRole', [App\Http\Controllers\Admin\SuperAdminController::class, 'newRole'])->name('sa.newRole');
+            Route::delete('delRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'destroyRole'])->name('sa.delRole');
+            Route::put('updateRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'updateRole'])->name('sa.updateRole');
+            Route::post('rGrabber', [App\Http\Controllers\Admin\SuperAdminController::class, 'roleGrabber']);
+        });
     });
 });
 
