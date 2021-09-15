@@ -8,6 +8,7 @@ use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\Media;
 use App\Models\Retro;
+use App\Models\Role;
 use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class HomeworkController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function index($id)
@@ -50,7 +52,6 @@ class HomeworkController extends Controller
             'body' => 'required',
         ]);
 
-        // dd($request->all());
         $homework = Homework::create([
             'title' => $request->titulo,
             'body' => $request->body,
@@ -61,8 +62,13 @@ class HomeworkController extends Controller
         $clase = Clase::findOrFail($request->claseId);
         $clase->homeworks()->save($homework);
         $status = 'La tarea ha sido creada exitosamente.';
-        return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
-
+        $role = Role::where('name', 'coordinador')->first();
+        if (Auth::user()->role->id !== $role->id) {
+            return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
+        } else {
+            return redirect()->route('monitor.clase', $clase->id)->with(compact('status'));
+        }
+        
     }
 
     /**

@@ -2,8 +2,8 @@
 
 @section('subBar')
   @php
-    // dd($homework->clase->label);
-    $crumbs = [$homework->clase->label=>['maestroDash.clase', $homework->clase->id], $homework->title=>['maestroDash.tarea', $homework->id]]
+    $teacher = $homework->clase->teacher();
+    $crumbs = [$teacher->name=>['coordinatorDash.monitor', $teacher->id], $homework->clase->label=>['monitor.clase', $homework->clase->id], $homework->title=>['monitor.tarea', $homework->id]]
   @endphp
 
   <x-sub-bar :crumbs="$crumbs"/>
@@ -83,7 +83,7 @@
                               <i class="far fa-trash-alt"></i>
                             </a>
                             <form id="{{ 'delFile'.$hm->id }}"
-                              action="{{ route('maestroDash.dfile', $hm->id) }}"
+                              action="{{ route('monitor.dfile', $hm->id) }}"
                               method="POST"
                               style="display: none;"
                             >
@@ -181,7 +181,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="retroFrom" action="{{ route('retro.update') }}" method="POST">
+        <form id="retroFrom" action="{{ route('monitor.retroUpdate') }}" method="POST">
           @csrf
           <input type="hidden" name="homeworkId" id="homeworkId" value="{{ $homework->id }}">
           <input type="hidden" name="studentId" id="studentId">
@@ -208,7 +208,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form id="retroFrom" action="{{ route('maestroDash.ufile') }}" method="POST" enctype="multipart/form-data">
+        <form id="retroFrom" action="{{ route('monitor.ufile') }}" method="POST" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="homeworkId" id="homeworkId" value="{{ $homework->id }}">
           {{--  FILE  --}}
@@ -238,5 +238,5 @@
 
 @section('scripts')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<script src="{{ asset('js/ajax/teacherDashHomeworkSwitcher.js') }}" ></script>
+<script src="{{ asset('js/ajax/teacherMonitorHomeworkIndvSwitcher.js') }}" ></script>
 @endsection
