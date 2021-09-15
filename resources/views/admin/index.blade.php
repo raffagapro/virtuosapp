@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <div class="col-6">
-                    <a class="btn d-block btn-light border-secondary btn-text-start disabled">
+                    <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('coordinator.index') }}">
                         <div class="card-body row px-5">
                             <h4 class="my-auto">Coordinadores</h4>
                             <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\staff_icon.png') }}" alt="">
@@ -90,6 +90,19 @@
                     </a>
                 </div>
             </div>
+          @if (Auth::user()->role->name === 'Super Admin')
+            <div class="row mb-4">
+              <div class="col-6">
+                  <a class="btn d-block btn-light border-secondary btn-text-start" href="{{ route('sa.index') }}">
+                      <div class="card-body row px-5">
+                          <h4 class="my-auto">Super Admin</h4>
+                          <img class="ml-auto panel-btn-icon" src="{{ asset('assets\images\secret_icon.png') }}" alt="">
+                      </div>
+                  </a>
+              </div>
+            </div>  
+          @endif
+          
         </div>
     </div>
 </div>

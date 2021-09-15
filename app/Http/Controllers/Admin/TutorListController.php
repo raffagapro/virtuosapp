@@ -145,24 +145,6 @@ class TutorListController extends Controller
         return redirect()->route('tutores.index')->with(compact('status'));
     }
 
-    public function activate($id)
-    {
-        $tutor = User::findOrFail($id);
-        $tutor->status = 1;
-        $tutor->save();
-        $status = 'El tutor ha sido activado exitosamente.';
-        return redirect()->route('tutores.index')->with(compact('status'));
-    }
-
-    public function deactivate($id)
-    {
-        $tutor = User::findOrFail($id);
-        $tutor->status = 0;
-        $tutor->save();
-        $status = 'El tutor ha sido desactivado exitosamente.';
-        return redirect()->route('tutores.index')->with(compact('status'));
-    }
-
     public function addtutor($classID, $tutorID){
         $clase = Clase::findOrFail($classID);
         $tutor = User::findOrFail($tutorID);
