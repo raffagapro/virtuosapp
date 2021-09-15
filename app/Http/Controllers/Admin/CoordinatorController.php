@@ -1,17 +1,27 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Area;
-use App\Models\Clase;
+
 use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Area;
+use App\Models\Coordinator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
-class TeacherListController extends Controller
+class CoordinatorController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +29,12 @@ class TeacherListController extends Controller
      */
     public function index()
     {
-        $teachers = User::whereHas(
+        $coords = User::whereHas(
             'role', function($q){
-                $q->where('name', 'maestro');
+                $q->where('name', 'coordinador');
             }
         )->orderBy('name')->paginate(50);
-        return view('admin.teacherList.index')->with(compact('teachers'));
+        return view('admin.coordinator.index')->with(compact('coords'));
     }
 
     /**
@@ -55,7 +65,7 @@ class TeacherListController extends Controller
         $workingPW = explode(' ', strtolower($request->nombre));
         $pw = 'VI'.ucfirst($workingPW[0]).'2022';
         // dd($pw, $request->all(), strtolower($request->nombre));
-        $teacher = User::create([
+        $coordinator = User::create([
             'name' => $request->nombre,
             'username' => $request->username,
             'email' => $request->email,
@@ -64,16 +74,16 @@ class TeacherListController extends Controller
             'password' => Hash::make($pw),
         ]);
 
-        $role = Role::where('name', 'maestro')->first();
-        $role->user()->save($teacher);
+        $role = Role::where('name', 'coordinador')->first();
+        $role->user()->save($coordinator);
 
         if ((int)$request->areaId > 0) {
             $area = Area::findOrFail((int)$request->areaId);
-            $area->user()->save($teacher);
+            $area->user()->save($coordinator);
         }
 
-        $status = 'El maestro ha sido creado exitosamente.';
-        return redirect()->route('maestros.index')->with(compact('status'));
+        $status = 'El coordinador ha sido creado exitosamente.';
+        return redirect()->route('coordinator.index')->with(compact('status'));
     }
 
     /**
@@ -95,8 +105,8 @@ class TeacherListController extends Controller
      */
     public function edit($id)
     {
-        $teacher = User::findOrFail($id);
-        return view('admin.teacherList.details')->with(compact('teacher'));
+        $coordinator = User::findOrFail($id);
+        return view('admin.coordinator.edit')->with(compact('coordinator'));
     }
 
     /**
@@ -108,9 +118,9 @@ class TeacherListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $teacher = User::findOrFail($id);
-        // dd($teacher);
-        if ($teacher->username === $request->modUserName) {
+        $coordinator = User::findOrFail($id);
+        // dd($coordinator);
+        if ($coordinator->username === $request->modUserName) {
             $request->validate([
                 'modNombre' => 'required|max:255',
                 'modUserName' => 'required|max:255',
@@ -126,20 +136,20 @@ class TeacherListController extends Controller
             ]);
         }
         
-        $teacher->name = $request->modNombre;
-        $teacher->username = $request->modUserName;
-        $teacher->email = $request->modEmail;
-        $teacher->curp = $request->modCurp;
+        $coordinator->name = $request->modNombre;
+        $coordinator->username = $request->modUserName;
+        $coordinator->email = $request->modEmail;
+        $coordinator->curp = $request->modCurp;
         // dd($request->modAreaId);
         if ($request->modAreaId !== null) {
             if ((int)$request->modAreaId > 0) {
                 $area = Area::findOrFail((int)$request->modAreaId);
-                $area->user()->save($teacher);
+                $area->user()->save($coordinator);
             }else {
-                $teacher->area()->dissociate();
+                $coordinator->area()->dissociate();
             }
         }
-        $teacher->save();
+        $coordinator->save();
         $status = 'La informacion ha sido actualizada exitosamente.';
         return back()->with(compact('status'));
     }
@@ -153,46 +163,47 @@ class TeacherListController extends Controller
     public function destroy($id)
     {
         // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
-        $teacher = User::findOrFail($id);
-        $teacher->delete();
-        $status = 'El maestro ha sido eliminado exitosamente.';
-        return redirect()->route('maestros.index')->with(compact('status'));
+        $coordinator = User::findOrFail($id);
+        $coordinator->delete();
+        $status = 'El coordinador ha sido eliminado exitosamente.';
+        return redirect()->route('coordinator.index')->with(compact('status'));
     }
 
-    public function activate($id)
-    {
-        $teacher = User::findOrFail($id);
-        $teacher->status = 1;
-        $teacher->save();
-        $status = 'El usuario ha sido activado exitosamente.';
-        return back()->with(compact('status'));
+    /**
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function teacherSearcher(Request $request){
+        $coordinator = User::findOrFail($request->coordId);
+        $teachers = User::where('name', 'LIKE', '%'.$request->value.'%')  
+                        ->whereHas(
+                            'role', function($q){
+                                $q->where('name', 'maestro');
+                            }
+                        )->get();
+        return [$teachers, $coordinator];
     }
 
-    public function deactivate($id)
-    {
-        $teacher = User::findOrFail($id);
-        $teacher->status = 0;
-        $teacher->save();
-        $status = 'El usuario ha sido desactivado exitosamente.';
-        return back()->with(compact('status'));
-    }
-
-    public function addTeacher($classID, $teacherID){
-        $clase = Clase::findOrFail($classID);
+    public function addTeacher($coordId, $teacherID){
+        $coordinator = User::findOrFail($coordId);
         $teacher = User::findOrFail($teacherID);
-        // dd($clase, $student);
-        $clase->teacher = $teacher->id;
-        $clase->save();
-        $status = 'La clase ha sido agregada exitosamente.';
+        $foundCoordObj = Coordinator::where('coordinator', $coordinator->id)->where('teacher', $teacher->id)->first();
+        // dd($coordinator, $teacher, $foundCoordObj);
+        if (!$foundCoordObj) {
+            $foundCoordObj = Coordinator::create([
+                'coordinator' => $coordinator->id,
+                'teacher' => $teacher->id,
+            ]);
+        }
+        $status = 'El maestro ha sido agregado exitosamente.';
         return back()->with(compact('status'));
     }
 
-    public function rmTeacher($classID, $teacherID){
-        $clase = Clase::findOrFail($classID);
-        // dd($clase);
-        $clase->teacher = 0;
-        $clase->save();
-        $status = 'La clase ha sido eliminada exitosamente.';
+    public function rmTeacher($coordObjID){
+        $coordOnj = Coordinator::findOrFail($coordObjID);
+        // dd($coordObjID, $coordOnj);
+        $coordOnj->delete();
+        $status = 'El maestro ha sido eliminado exitosamente.';
         return back()->with(compact('status'));
     }
 }
