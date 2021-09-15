@@ -101,7 +101,12 @@
         <form action="{{ route('materias.store') }}" method="POST">
           @csrf
           <div class="form-group">
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+            <input type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" placeholder="Nombre">
+            @error('nombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           <button type="submit" class="btn btn-primary float-right">Agregar</button>
       </form>
@@ -126,7 +131,12 @@
           @method('PUT')
           <input type="hidden" id='materiaModID'>
           <div class="form-group">
-            <input type="text" class="form-control" id="modNombre" name="modNombre" placeholder="Nombre">
+            <input type="text" class="form-control @error('modNombre') is-invalid @enderror" id="modNombre" name="modNombre" placeholder="Nombre">
+            @error('modNombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
           <button type="submit" class="btn btn-primary float-right">Modificar</button>
       </form>
@@ -134,6 +144,18 @@
     </div>
   </div>
 </div>
+
+@if ($errors->has('nombre'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#materiasModal').modal('show'); });
+  </script>
+@endif
+
+@if ($errors->has('modNombre'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#materiasModModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>

@@ -15,16 +15,16 @@
   <div class="row justify-content-center">
       {{-- MAIN PANEL --}}
       <div class="col-md-12">
-          <div class="card border-secondary text-center">
-              <div class="card-header">
+          <div class="card border-secondary">
+              <div class="card-header text-center">
                   <div class="my-3">
                       <h5>Instrucciones</h5>
                   </div>
               </div>
 
               <div class="card-body px-5">
-                  <p class="text-justify">
-                    {{ $homework->body }}
+                  <p class="">
+                    {!! $homework->body !!}
                   </p>
               </div>
 
@@ -129,8 +129,19 @@
                         {{--  <td class="align-middle"><a href="{{ route('maestroDash.clase', $s->id) }}">{{ $s->name }}</a></td>  --}}
                         <td class="align-middle">{{ $s->name }}</td>
                         <td class="align-middle text-right py-0">
-                          @if (App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first())
-                            <span class="badge badge-info">Completado</span>
+                          @php
+                              $foundHomework = App\Models\StudentHomework::where('homework_id', $homework->id)->where('user_id', $s->id)->first();
+                          @endphp
+                          @if ($foundHomework)
+                            @if ($foundHomework->status === 0 || $foundHomework->status === null)
+                              <span class="badge btn-danger text-white">Pendiente</span> 
+                            @endif
+                            @if ($foundHomework->status === 1)
+                              <span class="badge badge-info">Enviado</span>
+                            @endif
+                            @if ($foundHomework->status === 2)
+                              <span class="badge badge-info">Completado</span>
+                            @endif
                           @else
                             <span class="badge btn-danger text-white">Pendiente</span>
                           @endif
@@ -203,6 +214,7 @@
           {{--  FILE  --}}
           <div class="form-group">
             <input type="file" class="form-control-file @error('hFile') is-invalid @enderror" name="hFile">
+            <small>Limite de 2MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx</small>
             @error('hFile')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>

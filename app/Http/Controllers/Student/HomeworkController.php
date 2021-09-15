@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HomeworkController extends Controller
@@ -30,7 +32,20 @@ class HomeworkController extends Controller
     public function index($id)
     {
         $clase = Clase::findOrFail($id);
-        return view('student.clase.index')->with(compact('clase'));
+        $foundChat = Chat::where('user1', Auth::user()->id)->where(function ($q) use ($clase){
+            $q->where('user2', $clase->teacher()->id);
+        })
+        ->orWhere('user2', Auth::user()->id)->where(function ($q) use ($clase){
+            $q->where('user1', $clase->teacher()->id);
+        })
+        ->first();
+        if (!$foundChat) {
+            $foundChat = Chat::create([
+                'user1' => Auth::user()->id,
+                'user2' => $clase->teacher()->id,
+            ]);
+        }
+        return view('student.clase.index')->with(compact('clase', 'foundChat'));
     }
 
     /**
@@ -74,6 +89,7 @@ class HomeworkController extends Controller
                 } else {
                     $studentHomework = StudentHomework::create([
                         'media' => $url,
+                        'status' => 1,
                     ]);
                     $homework->studentHomeworks()->save($studentHomework);
                     $student->studentHomeworks()->save($studentHomework);
@@ -86,5 +102,25 @@ class HomeworkController extends Controller
             $status = 'No se adjunto archivo a la tarea.';
         }
         return back()->with(compact('status', 'eStatus'));
+    }
+
+    public function markComplete($homeworkId, $studentId)
+    {
+        $foundSH = StudentHomework::where('homework_id', $homeworkId)->where('user_id', $studentId)->first();
+        if ($foundSH) {
+            $foundSH->status = 1;
+            $foundSH->save();
+        } else {
+            $studentHomework = StudentHomework::create([
+                'status' => 1,
+            ]);
+            $homework = Homework::findOrFail($homeworkId);
+            $homework->studentHomeworks()->save($studentHomework);
+    
+            $student = User::findOrFail($studentId);
+            $student->studentHomeworks()->save($studentHomework);  
+        }
+        $status = 'La tarea ha sido marcada como completada.';
+        return back()->with(compact('status'));
     }
 }

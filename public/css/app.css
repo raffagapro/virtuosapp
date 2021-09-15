@@ -14665,6 +14665,12 @@ body {
   border-radius: 50%;
 }
 
+.mid-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+
 .sub-bar {
   color: black;
   background-color: white;
@@ -14725,6 +14731,7 @@ label{}
 input{} */
 .login-input-pill {
   background-color: white;
+  text-decoration: none !important;
 }
 
 /* textarea{}

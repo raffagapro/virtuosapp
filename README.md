@@ -16,6 +16,7 @@
 - php artisan db:seed
 - php artisan db:seed --class=UserDevOnlySeeder
 - php artisan storage:link
+- composer require doctrine/dbal (for changing colum type)
 
 ## About Laravel
 

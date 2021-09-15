@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\Media;
 use App\Models\Retro;
+use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class HomeworkController extends Controller
@@ -42,6 +45,11 @@ class HomeworkController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'titulo' => 'required',
+            'body' => 'required',
+        ]);
+
         // dd($request->all());
         $homework = Homework::create([
             'title' => $request->titulo,
@@ -89,6 +97,11 @@ class HomeworkController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'modTitulo' => 'required',
+            'modBody' => 'required',
+        ]);
+
         // dd($request->all(), $id);
         $homework = Homework::findOrFail($id);
         $homework->title = $request->modTitulo;
@@ -146,6 +159,17 @@ class HomeworkController extends Controller
         $student->retros()->save($retro);
         $homework = Homework::findOrFail($request->homeworkId);
         $homework->retros()->save($retro);
+        $foundSH = StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first();
+        if ($foundSH) {
+            $foundSH->status = 2;
+            $foundSH->save();
+        } else {
+            $studentHomework = StudentHomework::create([
+                'status' => 2,
+            ]);
+            $homework->studentHomeworks()->save($studentHomework);
+            $student->studentHomeworks()->save($studentHomework);  
+        }
         $status = 'La retroalimentacion ha sido guardada exitosamente.';
         return back()->with(compact('status'));
     }

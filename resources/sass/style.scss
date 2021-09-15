@@ -44,6 +44,7 @@
 		border-bottom-left-radius: 0.25rem;
 	}
 
+
 /* HEADER-------------------------------- */
  /* .site-header{} */
 
@@ -56,6 +57,12 @@
   .mini-img{
 	width: 40px;
 	height: 40px;
+	border-radius: 50%
+  }
+
+  .mid-img{
+	width: 55px;
+	height: 55px;
 	border-radius: 50%
   }
  
@@ -125,6 +132,7 @@
 		input{} */
 		.login-input-pill{
 			background-color: white;
+			text-decoration: none !important;
 		}
 	 /* textarea{}
 		select{} */

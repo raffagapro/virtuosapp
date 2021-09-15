@@ -27,7 +27,6 @@ class Clase extends Model
     {
         return $this->hasMany(Homework::class);
     }
-
     public function students()
     {
         return $this->belongsToMany(User::class);

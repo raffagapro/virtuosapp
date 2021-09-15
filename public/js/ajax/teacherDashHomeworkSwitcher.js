@@ -12,11 +12,12 @@ $(function() {
             data: dataObj,
         })
         .done(data =>{
-            // console.log("success");
+            console.log("success");
             $('#hwTitleCont').empty().append(data[0].title)
             $('#homeworkId').val(data[0].id);
             $('#modTitulo').val(data[0].title);
-            $("textarea[name='modBody']").val(data[0].body);
+            //$("textarea[name='modBody']").val(data[0].body);
+            tinymce.get('modBody').setContent(data[0].body);
             $('#modVlink').val(data[0].vlink);
             $('#modEdate').val(data[0].edate);
             let pros = '';
@@ -29,8 +30,7 @@ $(function() {
                 }
             });
             $('#modStudentId').empty().append(pros);
-            // $('#modHWForm').attr('action', '//localhost:3000/maestro/homework/'+data[0].id);
-            $('#modHWForm').attr('action', '//virtuousapp.herokuapp.com/maestro/homework/'+data[0].id);
+            $('#modHWForm').attr('action', webUrl+'/maestro/homework/'+data[0].id);
         })
         .fail(e =>{
             // console.log("error");
@@ -63,13 +63,11 @@ $(function() {
             $('#studentId').val(data[1].id);
             if (data[0] === 0) {
                 $("textarea[name='body']").val('');
-                // $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/newRetro');
-                $('#retroFrom').attr('action', '//virtuousapp.herokuapp.com/maestro/tarea/newRetro');
+                $('#retroFrom').attr('action', webUrl+'/maestro/tarea/newRetro');
             } else {
                 $('#retroId').val(data[0].id);
                 $("textarea[name='body']").val(data[0].body);
-                // $('#retroFrom').attr('action', '//localhost:3000/maestro/tarea/updateRetro');
-                $('#retroFrom').attr('action', '//virtuousapp.herokuapp.com/maestro/tarea/updateRetro');
+                $('#retroFrom').attr('action', webUrl+'/maestro/tarea/updateRetro');
             }
         })
         .fail(e =>{

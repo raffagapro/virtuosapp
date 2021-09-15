@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('cdn')
+<script src="https://cdn.tiny.cloud/1/84q4mouei8iu58z8bk07ks5vhfm5c8ibrp59g4b2crghq4y7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    menubar: false,
+  });
+</script>
+@endsection
+
 @section('subBar')
   @php
     $crumbs = [$clase->label=>['maestroDash.clase', $clase->id]]
@@ -69,22 +79,32 @@
           <input type="hidden" name="claseId" value="{{ $clase->id }}">
           {{--  TITULO  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="titulo" placeholder="Titulo">
+            <input type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" placeholder="Titulo" value="{{ old('titulo') }}">
+            @error('titulo')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
           {{--  BODY  --}}
           <div class="form-group">
-            <textarea class="form-control" id="body" name="body" placeholder="Instrucciones" rows="8"></textarea>
+            <textarea class="form-control @error('body') is-invalid @enderror" id="body" name="body" placeholder="Instrucciones" rows="8">{{ old('body') }}</textarea>
+            @error('body')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
           {{--  VLINK  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="vlink" placeholder="Video">
+            <input type="text" class="form-control" name="vlink" placeholder="Video" value="{{ old('vlink') }}">
           </div>
           {{-- STUDENTS --}}
           <div class="form-group">
             @php
                 $students = $clase->students;
             @endphp
-            <select class="form-control" name="studentId">
+            <select class="form-control" name="studentId" value="{{ old('student') }}">
                 <option value=0>Grupal</option>
                 @forelse ($students as $s)
                     <option value={{ $s->id }}>{{ $s->name }}</option>
@@ -95,8 +115,8 @@
           </div>
           {{-- FECHA DE ENTREGA --}}
           <div class="form-group">
-            <small id="emailHelp" class="form-text text-muted">Fecha de Entrega</small>
-              <input type="date" class="form-control" name="edate">
+            <small class="form-text text-muted">Fecha de Entrega</small>
+              <input type="date" class="form-control" name="edate" value="{{ old('edate') }}">
           </div>
           <button type="submit" class="btn btn-primary float-right">Agregar</button>
       </form>
@@ -122,15 +142,25 @@
           <input type="hidden" name="homeworkId" id="homeworkId">
           {{--  TITULO  --}}
           <div class="form-group">
-            <input type="text" class="form-control" id="modTitulo" name="modTitulo" placeholder="Titulo">
+            <input type="text" class="form-control @error('modTitulo') is-invalid @enderror" id="modTitulo" name="modTitulo" placeholder="Titulo" value="{{ old('modTitulo') }}">
+            @error('modTitulo')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
           {{--  BODY  --}}
           <div class="form-group">
-            <textarea class="form-control" id="body" id="modBody" name="modBody" placeholder="Instrucciones" rows="8"></textarea>
+            <textarea class="form-control @error('modBody') is-invalid @enderror" id="modBody" name="modBody" placeholder="Instrucciones" rows="8">{{ old('modBody') }}</textarea>
+            @error('modBody')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
           </div>
           {{--  VLINK  --}}
           <div class="form-group">
-            <input type="text" class="form-control" id="modVlink" name="modVlink" placeholder="Video">
+            <input type="text" class="form-control" id="modVlink" name="modVlink" placeholder="Video" value="{{ old('modVlink') }}">
           </div>
           {{-- STUDENTS --}}
           <div class="form-group">
@@ -140,7 +170,7 @@
           {{-- FECHA DE ENTREGA --}}
           <div class="form-group">
             <small id="emailHelp" class="form-text text-muted">Fecha de Entrega</small>
-            <input type="date" class="form-control" name="modEdate" id="modEdate">
+            <input type="date" class="form-control" name="modEdate" id="modEdate" value="{{ old('modEdate') }}">
           </div>
           <button type="submit" class="btn btn-primary float-right">Modificar</button>
       </form>
@@ -148,6 +178,30 @@
     </div>
   </div>
 </div>
+
+@if ($errors->has('titulo'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#addTareaModal').modal('show'); });
+  </script>
+@endif
+
+@if ($errors->has('body'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#addTareaModal').modal('show'); });
+  </script>
+@endif
+
+@if ($errors->has('modTitulo'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#modTareaModal').modal('show'); });
+  </script>
+@endif
+
+@if ($errors->has('modBody'))
+  <script type="text/javascript">
+    $( document ).ready(function() { $('#modTareaModal').modal('show'); });
+  </script>
+@endif
 
 @if(session('status'))
   <x-success-alert :message="session('status')"/>
@@ -159,6 +213,7 @@
 @endsection
 
 @section('scripts')
+
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <script src="{{ asset('js/ajax/teacherDashHomeworkSwitcher.js') }}" ></script>
 @endsection

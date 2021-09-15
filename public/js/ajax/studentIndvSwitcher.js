@@ -27,14 +27,12 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    // let url= '//localhost:3000';
-                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
                         pros += '<tr>';
                         pros += `<td class="text-left">`+i.name;
-                        pros += `<a href="`+ url +`/admin/estudiantes/tutor/`+ Number(i.id )+`/`+ Number(data[1].id )+`/`+Number(data[2])+`"`;
+                        pros += `<a href="`+ webUrl +`/admin/estudiantes/tutor/`+ Number(i.id )+`/`+ Number(data[1].id )+`/`+Number(data[2])+`"`;
                         pros += `class="btn btn-sm btn-primary text-white mr-2 float-right"`;
                         pros += `data-toggle="tooltip" data-placement="top" title="Agregar Tutor">`;
                         pros += `<i class="fas fa-plus"></i></a>`;
@@ -77,14 +75,12 @@ $(function() {
                 // console.log("success");
                 if (data[0].length !== 0) {
                     let pros = '';
-                    // let url= '//localhost:3000';
-                    let url= '//virtuousapp.herokuapp.com';
                     let token= $('#token').val();
                     let tCount = 0;
                     data[0].forEach(i => {
                         pros += '<tr>';
                         pros += `<td class="text-left">`+i.label;
-                        pros += `<a href="`+ url +`/admin/clase/student/`+ Number(i.id )+`/`+ Number(data[1].id )+`"`;
+                        pros += `<a href="`+ webUrl +`/admin/clase/student/`+ Number(i.id )+`/`+ Number(data[1].id )+`"`;
                         pros += `class="btn btn-sm btn-primary text-white mr-2 float-right"`;
                         pros += `data-toggle="tooltip" data-placement="top" title="Agregar Clase">`;
                         pros += `<i class="fas fa-plus"></i></a>`;
