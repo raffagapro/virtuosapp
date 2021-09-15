@@ -37,7 +37,7 @@
                       @forelse ($coords as $c)
                         <tr>
                           {{-- NOMBRE --}}
-                          <td><a href="{{ route('tutores.edit', $c->id) }}">{{ ucwords($c->name) }}</a></td>
+                          <td><a href="{{ route('coordinator.edit', $c->id) }}">{{ ucwords($c->name) }}</a></td>
                           {{-- ACTUALIZAR --}}
                           <td>
                             @if ($c->status === 0)
@@ -45,11 +45,11 @@
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-success text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Activar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'tutorActivate'.$c->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'coordActivate'.$c->id }}').submit();">
                                 <i class="fas fa-check"></i>
                               </a>
-                              <form id="{{ 'tutorActivate'.$c->id }}"
-                                action="{{ route('tutores.activate', $c->id) }}"
+                              <form id="{{ 'coordActivate'.$c->id }}"
+                                action="{{ route('coordinator.activate', $c->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -59,11 +59,11 @@
                                 href="javascript:void(0);"
                                 class="btn btn-sm btn-danger text-light mr-2"
                                 data-toggle="tooltip" data-placement="top" title="Desactivar"
-                                onclick="event.preventDefault(); document.getElementById('{{ 'tutorDeactivate'.$c->id }}').submit();">
+                                onclick="event.preventDefault(); document.getElementById('{{ 'coordDeactivate'.$c->id }}').submit();">
                                 <i class="fas fa-times"></i>
                               </a>
-                              <form id="{{ 'tutorDeactivate'.$c->id }}"
-                                action="{{ route('tutores.deactivate', $c->id) }}"
+                              <form id="{{ 'coordDeactivate'.$c->id }}"
+                                action="{{ route('coordinator.deactivate', $c->id) }}"
                                 method="POST"
                                 style="display: none;"
                                 >@method('PUT') @csrf
@@ -76,7 +76,7 @@
                             onclick="
                                 event.preventDefault();
                                 swal.fire({
-                                  text: '¿Deseas eliminar al tutor?',
+                                  text: '¿Deseas eliminar al coordinador?',
                                   showCancelButton: true,
                                   cancelButtonText: `Cancelar`,
                                   cancelButtonColor:'#62A4C0',
@@ -85,14 +85,14 @@
                                   icon:'error',
                                 }).then((result) => {
                                   if (result.isConfirmed) {
-                                    document.getElementById('{{ 'deltutor'.$c->id }}').submit();
+                                    document.getElementById('{{ 'delcoords'.$c->id }}').submit();
                                   }
                                 });
                               ">
                               <i class="far fa-trash-alt"></i>
                             </a>
-                            <form id="{{ 'deltutor'.$c->id }}"
-                            action="{{ route('tutores.destroy', $c->id) }}"
+                            <form id="{{ 'delcoords'.$c->id }}"
+                            action="{{ route('coordinator.destroy', $c->id) }}"
                             method="POST"
                             style="display: none;"
                             >@csrf
@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<!-- Modal Agregar Tutor -->
+<!-- Modal Coordinador Tutor -->
 <div class="modal fade" id="newCoordModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -126,7 +126,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('tutores.store') }}" method="POST">
+        <form action="{{ route('coordinator.store') }}" method="POST">
           @csrf
           {{--  NOMBRE  --}}
           <div class="form-group">
@@ -163,6 +163,18 @@
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+          </div>
+          {{--  Area  --}}
+          <div class="form-group">
+            <small id="emailHelp" class="form-text text-muted">Area</small>
+              <select class="form-control" name="areaId">
+                <option value=0>Sin Area</option>
+                @forelse (App\Models\Area::all() as $a)
+                    <option value={{ $a->id }}>{{ $a->name }}</option>
+                @empty
+                    <option value=0 disabled>No hay areas registradas</option>
+                @endforelse
+              </select>
           </div>
           
           <button type="submit" class="btn btn-primary float-right">Agregar</button>

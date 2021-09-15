@@ -164,8 +164,8 @@ class TeacherListController extends Controller
         $teacher = User::findOrFail($id);
         $teacher->status = 1;
         $teacher->save();
-        $status = 'El maestro ha sido activado exitosamente.';
-        return redirect()->route('maestros.index')->with(compact('status'));
+        $status = 'El usuario ha sido activado exitosamente.';
+        return back()->with(compact('status'));
     }
 
     public function deactivate($id)
@@ -173,8 +173,8 @@ class TeacherListController extends Controller
         $teacher = User::findOrFail($id);
         $teacher->status = 0;
         $teacher->save();
-        $status = 'El maestro ha sido desactivado exitosamente.';
-        return redirect()->route('maestros.index')->with(compact('status'));
+        $status = 'El usuario ha sido desactivado exitosamente.';
+        return back()->with(compact('status'));
     }
 
     public function addTeacher($classID, $teacherID){

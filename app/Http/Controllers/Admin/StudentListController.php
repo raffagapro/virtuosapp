@@ -172,24 +172,6 @@ class StudentListController extends Controller
         return redirect()->route('estudiantes.index')->with(compact('status'));
     }
 
-    public function activate($id)
-    {
-        $student = User::findOrFail($id);
-        $student->status = 1;
-        $student->save();
-        $status = 'El estudiante ha sido activado exitosamente.';
-        return redirect()->route('estudiantes.index')->with(compact('status'));
-    }
-
-    public function deactivate($id)
-    {
-        $student = User::findOrFail($id);
-        $student->status = 0;
-        $student->save();
-        $status = 'El estudiante ha sido desactivado exitosamente.';
-        return redirect()->route('estudiantes.index')->with(compact('status'));
-    }
-
     public function tutorSearcher(Request $request)
     {
         $student = User::findOrFail($request->studentId);

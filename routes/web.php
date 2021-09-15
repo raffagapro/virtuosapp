@@ -36,8 +36,8 @@ Route::prefix('admin')->group(function(){
         
 
         Route::resource('estudiantes', App\Http\Controllers\Admin\StudentListController::class);
-        Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'activate'])->name('estudiantes.activate');
-        Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'deactivate'])->name('estudiantes.deactivate');
+        Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('estudiantes.activate');
+        Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('estudiantes.deactivate');
         Route::post('estudiantes/indv/tutorSearcher', [App\Http\Controllers\Admin\StudentListController::class, 'tutorSearcher']);
         Route::post('estudiantes/indv/claseSearcher', [App\Http\Controllers\Admin\StudentListController::class, 'claseSearcher']);
         Route::get('estudiantes/tutor/{tutorID}/{studentID}/{tutorNUm}', [App\Http\Controllers\Admin\StudentListController::class, 'addTutor'])->name('estudiantes.addTutor');
@@ -50,8 +50,8 @@ Route::prefix('admin')->group(function(){
         Route::get('maestros/clase/rm/{claseID}/{teacherID}', [App\Http\Controllers\Admin\TeacherListController::class, 'rmTeacher'])->name('maestros.rmTeacher');
 
         Route::resource('tutores', App\Http\Controllers\Admin\TutorListController::class);
-        Route::put('tutores/indv/activate/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'activate'])->name('tutores.activate');
-        Route::put('tutores/indv/deactivate/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'deactivate'])->name('tutores.deactivate');
+        Route::put('tutores/indv/activate/{tutoresID}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('tutores.activate');
+        Route::put('tutores/indv/deactivate/{tutoresID}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('tutores.deactivate');
         Route::get('tutores/clase/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'addTeacher'])->name('tutores.addTeacher');
         Route::get('tutores/clase/rm/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'rmTeacher'])->name('tutores.rmTeacher');
         Route::get('tutores/student/{tutorID}/{studentID}', [App\Http\Controllers\Admin\TutorListController::class, 'addStudent'])->name('tutores.addStudent');
@@ -70,6 +70,13 @@ Route::prefix('admin')->group(function(){
         Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
 
         Route::resource('coordinator', App\Http\Controllers\Admin\CoordinatorController::class);
+        Route::prefix('coordinator')->group(function(){
+            Route::put('activate/{coordID}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('coordinator.activate');
+            Route::put('deactivate/{coordID}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('coordinator.deactivate');
+            Route::post('teacherSearcher', [App\Http\Controllers\Admin\CoordinatorController::class, 'teacherSearcher']);
+            Route::get('addTeacher/{coordID}/{teacherID}', [App\Http\Controllers\Admin\CoordinatorController::class, 'addTeacher'])->name('coordinator.addTeacher');
+            Route::get('rmTeacher/{coordObjID}', [App\Http\Controllers\Admin\CoordinatorController::class, 'rmTeacher'])->name('coordinator.rmTeacher');
+        });
         
         Route::resource('sa', App\Http\Controllers\Admin\SuperAdminController::class);
         Route::prefix('sa')->group(function(){
