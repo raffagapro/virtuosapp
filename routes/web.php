@@ -88,6 +88,13 @@ Route::prefix('admin')->group(function(){
     });
 });
 
+Route::prefix('coordinador')->group(function(){
+    Route::middleware(['CoordinatorRoleRedirect'])->group(function (){
+        Route::get('/index', [App\Http\Controllers\Coordinator\CoordinatorController::class, 'index'])->name('coordinator');
+
+    });
+});
+
 Route::prefix('maestro')->group(function(){
     Route::middleware(['TeacherRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Teacher\TeacherController::class, 'index'])->name('teacher');
