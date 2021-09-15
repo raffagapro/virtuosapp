@@ -14,8 +14,8 @@
     <div class="row justify-content-center">
         {{-- MAIN PANEL --}}
         <div class="col-md-12">
-            <div class="card border-secondary text-center">
-                <div class="card-header">
+            <div class="card border-secondary">
+                <div class="card-header text-center">
                     <div class="my-3">
                         <h5>Instrucciones</h5>
                         <p>Docente: {{ $homework->clase->teacher()->name }}</p>
@@ -23,7 +23,9 @@
                 </div>
 
                 <div class="card-body px-5">
-                    <p class="text-justify">{{ $homework->body }}</p>
+                  <p class="">
+                    {!! $homework->body !!}
+                  </p>
                 </div>
 
                 <div class="card-footer px-5">
