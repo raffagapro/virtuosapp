@@ -66,6 +66,7 @@
                               @php
                                   $hws = $c->homeworks->all();
                                   $pendingHomeworks = false;
+                                  $turnedHomeworks = false;
                                   foreach ($hws as $thw) {
                                     if ($thw->student === 0 || $thw->student === Auth::user()->id) {
                                       if (!App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()) {
@@ -73,6 +74,9 @@
                                       }else {
                                         if (App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()->status !== 2) {
                                           $pendingHomeworks = true;
+                                          if (App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()->status === 1) {
+                                            $turnedHomeworks = true;
+                                          }
                                         }
                                       }
                                     }
@@ -80,7 +84,11 @@
                               @endphp
                               <td>
                                 @if ($pendingHomeworks)
-                                  <span class="badge bg-danger tarea-status">Pendiente</span> 
+                                  @if ($turnedHomeworks)
+                                    <span class="badge bg-warning tarea-status">Entregado</span> 
+                                  @else
+                                    <span class="badge bg-danger tarea-status">Pendiente</span> 
+                                  @endif
                                 @else
                                   <span class="badge bg-info tarea-status">Complete</span>
                                 @endif
