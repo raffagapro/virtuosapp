@@ -85,6 +85,28 @@ Route::prefix('admin')->group(function(){
             Route::put('updateRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'updateRole'])->name('sa.updateRole');
             Route::post('rGrabber', [App\Http\Controllers\Admin\SuperAdminController::class, 'roleGrabber']);
         });
+
+        Route::prefix('monitor')->group(function(){
+            Route::get('teacher/{teacherID}', [App\Http\Controllers\Admin\AdminController::class, 'monitorIndex'])->name('admin.teacherMonitor');
+            Route::post('chatGrabber', [App\Http\Controllers\Admin\ChatController::class, 'grabber']);
+            Route::post('cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
+            Route::get('teacher/clase/{claseID}', [App\Http\Controllers\Admin\AdminController::class, 'claseIndex'])->name('admin.teacherClaseMonitor');
+            Route::post('teacher/newHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'store'])->name('admin.teacherNewHomeworkMonitor');
+            Route::delete('teacher/delHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'destroy'])->name('admin.teacherDelHomework');
+            Route::post('hGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'homeworkGrabber']);
+            Route::put('teacher/updateHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'update'])->name('admin.teacherUpdateHomework');
+            Route::get('teacher/tarea/{tareaID}', [App\Http\Controllers\Admin\AdminController::class, 'showHomework'])->name('admin.teacherMonitorTareaIndv');
+            Route::post('teacher/uHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadFile'])->name('admin.monitorTeacherUfile');
+            Route::delete('teacher/delFile/{fileId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'deleteFile'])->name('admin.monitorTeacherDfile');
+            Route::post('sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
+            Route::post('teacher/newRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'newRetro'])->name('admin.monitorTeacherRetroStore');
+            Route::post('teacher/updateRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'updateRetro'])->name('admin.monitorTeacherRetroUpdate');
+
+            Route::get('student/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sMonitorIndex'])->name('admin.studentMonitor');
+            Route::get('student/{claseID}/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sClaseIndex'])->name('admin.studentMonitorClase');
+            Route::get('mstudent/tarea/{tareaID}/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sShowHomework'])->name('admin.studentMonitorTarea');
+        });
+
     });
 });
 

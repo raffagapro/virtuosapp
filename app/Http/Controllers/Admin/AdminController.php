@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
+use App\Models\Clase;
+use App\Models\Homework;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -60,5 +64,90 @@ class AdminController extends Controller
           $status = 'La contraseña actual es incorrecta.';
         }
         return back()->with(compact('status', 'eStatus'));
-      }
+    }
+
+    /**
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function monitorIndex($id)
+    {
+        $teacher = User::findOrFail($id);
+        // dd(Auth::user()->role->name);
+        if (Auth::user()->role->name === "Admin" || Auth::user()->role->name === "Super Admin") {
+            $chats = Chat::where('user1', $teacher->id)->orWhere('user2', $teacher->id)->get();
+            return view('admin.monitor.teacher.index')->with(compact('teacher', 'chats'));
+        } else {
+            return redirect()->route('admin');
+        }
+    }
+
+    /**
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sMonitorIndex($id)
+    {
+        $student = User::findOrFail($id);
+        // dd(Auth::user()->role->name);
+        if (Auth::user()->role->name === "Admin" || Auth::user()->role->name === "Super Admin") {
+            $chats = Chat::where('user1', $student->id)->orWhere('user2', $student->id)->get();
+            return view('admin.monitor.student.index')->with(compact('student', 'chats'));
+        } else {
+            return redirect()->route('admin');
+        }
+    }
+
+    /**
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function claseIndex($id)
+    {
+        $clase = Clase::findOrFail($id);
+        // dd($clase);
+        return view('admin.monitor.teacher.clase.index')->with(compact('clase'));
+    }
+
+    public function sClaseIndex($id, $studentId)
+    {
+        $clase = Clase::findOrFail($id);
+        $student = User::findOrFail($studentId);
+        // dd($clase);
+        $foundChat = Chat::where('user1', $student->id)->where(function ($q) use ($clase){
+          $q->where('user2', $clase->teacher()->id);
+        })
+        ->orWhere('user2', $student->id)->where(function ($q) use ($clase){
+            $q->where('user1', $clase->teacher()->id);
+        })
+        ->first();
+        if (!$foundChat) {
+            $foundChat = Chat::create([
+                'user1' => $student->id,
+                'user2' => $clase->teacher()->id,
+            ]);
+        }
+        return view('admin.monitor.student.clase.index')->with(compact('clase', 'foundChat', 'student'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showHomework($id)
+    {
+        $homework = Homework::findOrFail($id);
+        return view('admin.monitor.teacher.clase.homework.index')->with(compact('homework'));
+    }
+
+    public function sShowHomework($id, $studentId)
+    {
+      // dd($id);
+      $homework = Homework::findOrFail($id);
+      $student = User::findOrFail($studentId);
+      // dd($homework);
+      return view('admin.monitor.student.clase.homework.index')->with(compact('homework', 'student'));
+    }
 }
