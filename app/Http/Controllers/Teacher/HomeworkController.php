@@ -62,11 +62,22 @@ class HomeworkController extends Controller
         $clase = Clase::findOrFail($request->claseId);
         $clase->homeworks()->save($homework);
         $status = 'La tarea ha sido creada exitosamente.';
-        $role = Role::where('name', 'coordinador')->first();
-        if (Auth::user()->role->id !== $role->id) {
-            return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
-        } else {
-            return redirect()->route('monitor.clase', $clase->id)->with(compact('status'));
+        $coordRole = Role::where('name', 'coordinador')->first();
+        $adminRole = Role::where('name', 'admin')->first();
+        $saRole = Role::where('name', 'super admin')->first();
+        switch (Auth::user()->role->id) {
+            case $coordRole->id:
+                return redirect()->route('monitor.clase', $clase->id)->with(compact('status'));
+                break;
+            case $adminRole->id:
+                return redirect()->route('admin.teacherClaseMonitor', $clase->id)->with(compact('status'));
+                break;
+            case $saRole->id:
+                return redirect()->route('admin.teacherClaseMonitor', $clase->id)->with(compact('status'));
+                break;
+            default:
+                return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
+                break;
         }
         
     }
@@ -209,9 +220,6 @@ class HomeworkController extends Controller
 
                 Storage::disk('s3')->put('tHomework/'.$saveName, fopen($request->file('hFile'), 'r+'));
                 $url = Storage::disk('s3')->url('tHomework/'.$saveName);
-
-                // $request->hFile->storeAs('/public/tHomework', $workingTitle.'_'.$originalName.".".$extension);
-                // $url = Storage::url('tHomework/'.$workingTitle.'_'.$originalName.".".$extension);
 
                 $media = Media::create([
                     'media' => $url,
