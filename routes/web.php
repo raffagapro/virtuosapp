@@ -36,8 +36,8 @@ Route::prefix('admin')->group(function(){
         
 
         Route::resource('estudiantes', App\Http\Controllers\Admin\StudentListController::class);
-        Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'activate'])->name('estudiantes.activate');
-        Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\StudentListController::class, 'deactivate'])->name('estudiantes.deactivate');
+        Route::put('estudiantes/indv/activate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('estudiantes.activate');
+        Route::put('estudiantes/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('estudiantes.deactivate');
         Route::post('estudiantes/indv/tutorSearcher', [App\Http\Controllers\Admin\StudentListController::class, 'tutorSearcher']);
         Route::post('estudiantes/indv/claseSearcher', [App\Http\Controllers\Admin\StudentListController::class, 'claseSearcher']);
         Route::get('estudiantes/tutor/{tutorID}/{studentID}/{tutorNUm}', [App\Http\Controllers\Admin\StudentListController::class, 'addTutor'])->name('estudiantes.addTutor');
@@ -50,8 +50,8 @@ Route::prefix('admin')->group(function(){
         Route::get('maestros/clase/rm/{claseID}/{teacherID}', [App\Http\Controllers\Admin\TeacherListController::class, 'rmTeacher'])->name('maestros.rmTeacher');
 
         Route::resource('tutores', App\Http\Controllers\Admin\TutorListController::class);
-        Route::put('tutores/indv/activate/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'activate'])->name('tutores.activate');
-        Route::put('tutores/indv/deactivate/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'deactivate'])->name('tutores.deactivate');
+        Route::put('tutores/indv/activate/{tutoresID}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('tutores.activate');
+        Route::put('tutores/indv/deactivate/{tutoresID}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('tutores.deactivate');
         Route::get('tutores/clase/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'addTeacher'])->name('tutores.addTeacher');
         Route::get('tutores/clase/rm/{claseID}/{tutoresID}', [App\Http\Controllers\Admin\TutorListController::class, 'rmTeacher'])->name('tutores.rmTeacher');
         Route::get('tutores/student/{tutorID}/{studentID}', [App\Http\Controllers\Admin\TutorListController::class, 'addStudent'])->name('tutores.addStudent');
@@ -68,7 +68,70 @@ Route::prefix('admin')->group(function(){
         Route::get('clase/student/rm/{claseID}/{studentID}', [App\Http\Controllers\Admin\ClaseController::class, 'rmStudent'])->name('clase.rmStudent');
         Route::put('clase/indv/activate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'activate'])->name('clase.activate');
         Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
-   
+
+        Route::resource('coordinator', App\Http\Controllers\Admin\CoordinatorController::class);
+        Route::prefix('coordinator')->group(function(){
+            Route::put('activate/{coordID}', [App\Http\Controllers\Admin\TeacherListController::class, 'activate'])->name('coordinator.activate');
+            Route::put('deactivate/{coordID}', [App\Http\Controllers\Admin\TeacherListController::class, 'deactivate'])->name('coordinator.deactivate');
+            Route::post('teacherSearcher', [App\Http\Controllers\Admin\CoordinatorController::class, 'teacherSearcher']);
+            Route::get('addTeacher/{coordID}/{teacherID}', [App\Http\Controllers\Admin\CoordinatorController::class, 'addTeacher'])->name('coordinator.addTeacher');
+            Route::get('rmTeacher/{coordObjID}', [App\Http\Controllers\Admin\CoordinatorController::class, 'rmTeacher'])->name('coordinator.rmTeacher');
+        });
+        
+        Route::resource('sa', App\Http\Controllers\Admin\SuperAdminController::class);
+        Route::prefix('sa')->group(function(){
+            Route::post('newRole', [App\Http\Controllers\Admin\SuperAdminController::class, 'newRole'])->name('sa.newRole');
+            Route::delete('delRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'destroyRole'])->name('sa.delRole');
+            Route::put('updateRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'updateRole'])->name('sa.updateRole');
+            Route::post('rGrabber', [App\Http\Controllers\Admin\SuperAdminController::class, 'roleGrabber']);
+        });
+
+        Route::prefix('monitor')->group(function(){
+            Route::get('teacher/{teacherID}', [App\Http\Controllers\Admin\AdminController::class, 'monitorIndex'])->name('admin.teacherMonitor');
+            Route::post('chatGrabber', [App\Http\Controllers\Admin\ChatController::class, 'grabber']);
+            Route::post('cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
+            Route::get('teacher/clase/{claseID}', [App\Http\Controllers\Admin\AdminController::class, 'claseIndex'])->name('admin.teacherClaseMonitor');
+            Route::post('teacher/newHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'store'])->name('admin.teacherNewHomeworkMonitor');
+            Route::delete('teacher/delHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'destroy'])->name('admin.teacherDelHomework');
+            Route::post('hGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'homeworkGrabber']);
+            Route::put('teacher/updateHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'update'])->name('admin.teacherUpdateHomework');
+            Route::get('teacher/tarea/{tareaID}', [App\Http\Controllers\Admin\AdminController::class, 'showHomework'])->name('admin.teacherMonitorTareaIndv');
+            Route::post('teacher/uHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadFile'])->name('admin.monitorTeacherUfile');
+            Route::delete('teacher/delFile/{fileId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'deleteFile'])->name('admin.monitorTeacherDfile');
+            Route::post('sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
+            Route::post('teacher/newRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'newRetro'])->name('admin.monitorTeacherRetroStore');
+            Route::post('teacher/updateRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'updateRetro'])->name('admin.monitorTeacherRetroUpdate');
+
+            Route::get('student/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sMonitorIndex'])->name('admin.studentMonitor');
+            Route::get('student/{claseID}/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sClaseIndex'])->name('admin.studentMonitorClase');
+            Route::get('mstudent/tarea/{tareaID}/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sShowHomework'])->name('admin.studentMonitorTarea');
+        });
+
+    });
+});
+
+Route::prefix('coordinador')->group(function(){
+    Route::middleware(['CoordinatorRoleRedirect'])->group(function (){
+        Route::get('index', [App\Http\Controllers\Coordinator\CoordinatorController::class, 'index'])->name('coordinator');
+        Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('coordinatorDash.updatePW');
+        Route::put('info/{userId}', [App\Http\Controllers\Admin\CoordinatorController::class, 'update'])->name('coordinatorDash.updateInfo');
+        Route::post('profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('coordinatorDash.profile');
+
+        Route::get('monitor/{teacherID}', [App\Http\Controllers\Coordinator\CoordinatorController::class, 'monitorIndex'])->name('coordinatorDash.monitor');
+        Route::post('monitor/cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
+        Route::post('monitor/zlink', [App\Http\Controllers\Admin\ClaseController::class, 'setZlink'])->name('monitor.setZlink');
+        Route::post('monitor/chatGrabber', [App\Http\Controllers\Admin\ChatController::class, 'grabber']);
+        Route::get('monitor/clase/{claseID}', [App\Http\Controllers\Coordinator\CoordinatorController::class, 'claseIndex'])->name('monitor.clase');
+        Route::post('monitor/newHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'store'])->name('monitor.newHomework');
+        Route::delete('monitor/delHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'destroy'])->name('monitor.delHomework');
+        Route::post('monitor/hGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'homeworkGrabber']);
+        Route::put('monitor/updateHomework/{hwId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'update'])->name('monitor.updateHomework');
+        Route::get('monitor/tarea/{tareaID}', [App\Http\Controllers\Coordinator\CoordinatorController::class, 'showHomework'])->name('monitor.tarea');
+        Route::post('monitor/uHomework', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadFile'])->name('monitor.ufile');
+        Route::delete('monitor/delFile/{fileId}', [App\Http\Controllers\Teacher\HomeworkController::class, 'deleteFile'])->name('monitor.dfile');
+        Route::post('monitor/sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
+        Route::post('monitor/newRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'newRetro'])->name('monitor.retroStore');
+        Route::post('monitor/updateRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'updateRetro'])->name('monitor.retroUpdate');
     });
 });
 

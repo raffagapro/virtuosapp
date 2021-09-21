@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\ChatMessage;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,10 +82,13 @@ class ChatController extends Controller
         $foundChat = Chat::findOrFail($request->chatId);
         $reciever = User::findOrFail($request->recieverId);
         $messages = $foundChat->chatMessages;
-        foreach ($messages as $m) {
-            if ($m->user->id !== Auth::user()->id) {
-                $m->status = 1;
-                $m->save();
+        $role = Role::where('name', 'coordinador')->first();
+        if (Auth::user()->role->id !== $role->id) {
+            foreach ($messages as $m) {
+                if ($m->user->id !== Auth::user()->id) {
+                    $m->status = 1;
+                    $m->save();
+                }
             }
         }
         return [$messages, $reciever, $foundChat->id];

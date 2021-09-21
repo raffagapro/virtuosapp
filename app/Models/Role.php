@@ -17,4 +17,13 @@ class Role extends Model
     {
       return $this->hasMany(User::class);
     }
+    
+    public function getNameAttribute($name)
+    {
+      return ucwords($name);
+    }
+    public function setNameAttribute($name)
+    {
+      $this->attributes['name'] = mb_strtolower($name);
+    }
 }

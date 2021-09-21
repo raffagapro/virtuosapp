@@ -30,6 +30,7 @@ class HomeController extends Controller
         $guest = Role::where('name', 'guest')->first();
         $admin = Role::where('name', 'admin')->first();
         $sAdmin = Role::where('name', 'super admin')->first();
+        $coordinator = Role::where('name', 'coordinador')->first();
         $teacher = Role::where('name', 'maestro')->first();
         $student = Role::where('name', 'estudiante')->first();
 
@@ -38,8 +39,12 @@ class HomeController extends Controller
         }
         elseif (Auth::user()->role_id == $admin->id) {
             return redirect()->route('admin');
-        }elseif (Auth::user()->role_id == $sAdmin->id) {
+        }
+        elseif (Auth::user()->role_id == $sAdmin->id) {
             return redirect()->route('admin');
+        }
+        elseif (Auth::user()->role_id == $coordinator->id) {
+            return redirect()->route('coordinator');
         }
         elseif (Auth::user()->role_id == $teacher->id) {
             return redirect()->route('teacher');

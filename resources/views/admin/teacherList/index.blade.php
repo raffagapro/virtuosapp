@@ -47,6 +47,11 @@
                           @endif
                           {{-- ACTUALIZAR --}}
                           <td>
+                            <a
+                                href="{{ route('admin.teacherMonitor', $t->id) }}" class="btn btn-sm btn-primary text-light mr-2"
+                                data-toggle="tooltip" data-placement="top" title="Monitorear">
+                                <i class="fas fa-eye"></i>
+                            </a>
                             @if ($t->status === 0)
                               <a
                                 href="javascript:void(0);"

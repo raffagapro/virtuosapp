@@ -92,6 +92,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Clase::class);
     }
 
+    public function coordinators()
+    {
+        return Coordinator::where('coordinator', $this->id)->get();
+    }
+
     public function hasClase($clase)
     {
       if ($this->clases()->where('clase_id', $clase->id)->first()) {

@@ -8,6 +8,7 @@ use App\Models\Clase;
 use App\Models\Homework;
 use App\Models\Media;
 use App\Models\Retro;
+use App\Models\Role;
 use App\Models\StudentHomework;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class HomeworkController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function index($id)
@@ -50,7 +52,6 @@ class HomeworkController extends Controller
             'body' => 'required',
         ]);
 
-        // dd($request->all());
         $homework = Homework::create([
             'title' => $request->titulo,
             'body' => $request->body,
@@ -61,8 +62,24 @@ class HomeworkController extends Controller
         $clase = Clase::findOrFail($request->claseId);
         $clase->homeworks()->save($homework);
         $status = 'La tarea ha sido creada exitosamente.';
-        return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
-
+        $coordRole = Role::where('name', 'coordinador')->first();
+        $adminRole = Role::where('name', 'admin')->first();
+        $saRole = Role::where('name', 'super admin')->first();
+        switch (Auth::user()->role->id) {
+            case $coordRole->id:
+                return redirect()->route('monitor.clase', $clase->id)->with(compact('status'));
+                break;
+            case $adminRole->id:
+                return redirect()->route('admin.teacherClaseMonitor', $clase->id)->with(compact('status'));
+                break;
+            case $saRole->id:
+                return redirect()->route('admin.teacherClaseMonitor', $clase->id)->with(compact('status'));
+                break;
+            default:
+                return redirect()->route('maestroDash.clase', $clase->id)->with(compact('status'));
+                break;
+        }
+        
     }
 
     /**
@@ -203,9 +220,6 @@ class HomeworkController extends Controller
 
                 Storage::disk('s3')->put('tHomework/'.$saveName, fopen($request->file('hFile'), 'r+'));
                 $url = Storage::disk('s3')->url('tHomework/'.$saveName);
-
-                // $request->hFile->storeAs('/public/tHomework', $workingTitle.'_'.$originalName.".".$extension);
-                // $url = Storage::url('tHomework/'.$workingTitle.'_'.$originalName.".".$extension);
 
                 $media = Media::create([
                     'media' => $url,
