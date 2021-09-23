@@ -208,7 +208,7 @@ class HomeworkController extends Controller
         if ($request->hasFile('hFile')) {
             if ($request->file('hFile')->isValid()) {
                 $validated = $request->validate([
-                    'hFile'=>'mimes:jpeg,png,pdf,doc,ppt,pptx,xlx,xlsx,docx|max:2000',
+                    'hFile'=>'mimes:jpeg,png,pdf,doc,ppt,pptx,xlx,xlsx,docx,zip|max:2000',
                 ]);
                 $homework = Homework::findOrFail($request->homeworkId);
                 $workingTitle = str_replace(' ', '_', $homework->title);

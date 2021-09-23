@@ -33,13 +33,13 @@
                   icon:'error',
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    document.getElementById('{{ 'rmClase'.$student->id }}').submit();
+                    document.getElementById('{{ 'rmClase'.$c->id }}').submit();
                   }
                 });"
             >
               <i class="far fa-trash-alt"></i>
             </a>
-            <form id="{{ 'rmClase'.$student->id }}"
+            <form id="{{ 'rmClase'.$c->id }}"
               action="{{ route('clase.rmStudent', [$c->id, $student->id]) }}"
               method="POST"
               style="display: none;"

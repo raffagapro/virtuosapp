@@ -59,7 +59,7 @@
 
                       @if ($homework->vlink !== null && $homework->vlink !== '')
                         <div class="mr-3">
-                          <a href="{{ $homework->vlink }}" class="btn btn-danger text-white" target="_blank">Ver Video</a>
+                          <a href="{{ $homework->vlink }}" class="btn btn-danger text-white" target="_blank">Ver Enlace</a>
                         </div>
                       @endif
                     </div>
@@ -134,7 +134,7 @@
           {{--  FILE  --}}
           <div class="form-group">
             <input type="file" class="form-control-file @error('sFile') is-invalid @enderror" name="sFile">
-            <small>Limite de 2MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx</small>
+            <small>Limite de 2MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx, zip</small>
             @error('sFile')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
