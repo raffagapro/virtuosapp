@@ -97,7 +97,7 @@
           </div>
           {{--  VLINK  --}}
           <div class="form-group">
-            <input type="text" class="form-control" name="vlink" placeholder="Video" value="{{ old('vlink') }}">
+            <input type="text" class="form-control" name="vlink" placeholder="Enlance" value="{{ old('vlink') }}">
           </div>
           {{-- STUDENTS --}}
           <div class="form-group">
@@ -160,7 +160,7 @@
           </div>
           {{--  VLINK  --}}
           <div class="form-group">
-            <input type="text" class="form-control" id="modVlink" name="modVlink" placeholder="Video" value="{{ old('modVlink') }}">
+            <input type="text" class="form-control" id="modVlink" name="modVlink" placeholder="Enlace" value="{{ old('modVlink') }}">
           </div>
           {{-- STUDENTS --}}
           <div class="form-group">
