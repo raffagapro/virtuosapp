@@ -108,7 +108,7 @@
 								}
 							}
 						@endphp
-						@if ($unreadgo)
+						@if ($unreadgo && count($chat->chatMessages) > 0)
 							<div class="row align-items-center mb-4">
 								{{--  PROFILE PIC  --}}
 								<div class="col-2">
@@ -159,8 +159,9 @@
 									$unreadgo = 0;
 								}
 							}
+							// dd(count($chat->chatMessages));
 						@endphp
-						@if (!$unreadgo)
+						@if (!$unreadgo && count($chat->chatMessages) > 0)
 							<div class="row align-items-center mb-4">
 								{{--  PROFILE PIC  --}}
 								<div class="col-2">
