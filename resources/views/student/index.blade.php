@@ -41,66 +41,7 @@
         </div>
 
         <div class="col-md-9">
-            <div class="card border-secondary px-3">
-                <div class="card-body">
-                    <table class="table text-center">
-                        <thead>
-                          <tr>
-                            <th class="col-9 text-left"><h5>Clases</h4></th>
-                            <th class="col-3"><h5>Status</h4></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @forelse (Auth::user()->clases as $c)
-                            <tr>
-                              <td class="text-left">
-                                <a href="{{ route('studentDash.clase', $c->id) }}">{{ $c->label }}</a>
-                                {{--  ZOOM BTN  --}}
-                                {{--  <a href="{{ $c->zlink }}" type="button" class="btn btn-link p-0 @if ($c->zlink === null) disabled @endif" target="_blank" data-toggle="tooltip" data-placement="top" title="Clase Zoom">
-                                  <span class="fa-stack fa-lg">
-                                    <i class="fas fa-circle fa-stack-2x"></i>
-                                    <i class="fas fa-video fa-sm fa-stack-1x fa-inverse"></i>
-                                  </span>
-                                </a>  --}}
-                              </td>
-                              @php
-                                  $hws = $c->homeworks->all();
-                                  $pendingHomeworks = false;
-                                  $turnedHomeworks = false;
-                                  foreach ($hws as $thw) {
-                                    if ($thw->student === 0 || $thw->student === Auth::user()->id) {
-                                      if (!App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()) {
-                                        $pendingHomeworks = true;
-                                      }else {
-                                        if (App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()->status !== 2) {
-                                          $pendingHomeworks = true;
-                                          if (App\Models\StudentHomework::where('homework_id', $thw->id)->where('user_id', Auth::user()->id)->first()->status === 1) {
-                                            $turnedHomeworks = true;
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                              @endphp
-                              <td>
-                                @if ($pendingHomeworks)
-                                  @if ($turnedHomeworks)
-                                    <span class="badge bg-warning tarea-status">Entregado</span> 
-                                  @else
-                                    <span class="badge bg-danger tarea-status">Pendiente</span> 
-                                  @endif
-                                @else
-                                  <span class="badge bg-info tarea-status">Complete</span>
-                                @endif
-                              </td>
-                            </tr>
-                          @empty
-                              
-                          @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <x-student-class-panel :user="Auth::user()"/>
         </div>
     </div>
 </div>
