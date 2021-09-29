@@ -55,7 +55,7 @@
                                                     <td class="pr-4"><span class="badge bg-danger tarea-status">Pendiente</span></td>
                                                 @endif
                                                 @if ($foundHomework->status === 1)
-                                                    <td class="pr-4"><span class="badge bg-info tarea-status">Enviada</span></td>
+                                                    <td class="pr-4"><span class="badge bg-warning tarea-status">Enviada</span></td>
                                                 @endif
                                                 @if ($foundHomework->status === 2)
                                                     <td class="pr-4"><span class="badge bg-info tarea-status">Complete</span></td>
@@ -64,7 +64,7 @@
                                                 @if ($h->edate < $date)
                                                     <td class="pr-4"><span class="badge bg-danger tarea-status">Pendiente</span></td>
                                                 @else
-                                                    <td class="pr-4"><span class="badge bg-warning tarea-status">Nueva</span></td>
+                                                    <td class="pr-4"><span class="badge bg-success tarea-status">Nueva</span></td>
                                                 @endif
                                             @endif                                            
                                         </tr>   
