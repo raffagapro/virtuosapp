@@ -214,7 +214,7 @@
           {{--  FILE  --}}
           <div class="form-group">
             <input type="file" class="form-control-file @error('hFile') is-invalid @enderror" name="hFile">
-            <small>Limite de 2MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx, zip</small>
+            <small>Limite de 4MB. Extensiones: jpeg, png, pdf, doc, ppt, pptx, xlx, xlsx, docx, zip</small>
             @error('hFile')
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
