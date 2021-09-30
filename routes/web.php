@@ -84,6 +84,7 @@ Route::prefix('admin')->group(function(){
             Route::delete('delRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'destroyRole'])->name('sa.delRole');
             Route::put('updateRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'updateRole'])->name('sa.updateRole');
             Route::post('rGrabber', [App\Http\Controllers\Admin\SuperAdminController::class, 'roleGrabber']);
+            Route::get('purge/chatMessages', [App\Http\Controllers\Admin\SuperAdminController::class, 'purgeChats'])->name('sa.purgeChats');
         });
 
         Route::prefix('monitor')->group(function(){

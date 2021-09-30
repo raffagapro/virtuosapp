@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Grado;
 use App\Models\Modalidad;
+use App\Services\PurgeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -167,6 +168,8 @@ class StudentListController extends Controller
     {
         // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
         $student = User::findOrFail($id);
+        $purge = new PurgeService();
+        $purge->purge($student);
         $student->delete();
         $status = 'El estudiante ha sido eliminado exitosamente.';
         return redirect()->route('estudiantes.index')->with(compact('status'));

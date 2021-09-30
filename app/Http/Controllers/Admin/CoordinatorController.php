@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Area;
 use App\Models\Coordinator;
+use App\Services\PurgeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -164,6 +165,8 @@ class CoordinatorController extends Controller
     {
         // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
         $coordinator = User::findOrFail($id);
+        $purge = new PurgeService();
+        $purge->purge($coordinator);
         $coordinator->delete();
         $status = 'El coordinador ha sido eliminado exitosamente.';
         return redirect()->route('coordinator.index')->with(compact('status'));

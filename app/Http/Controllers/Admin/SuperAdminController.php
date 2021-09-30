@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Chat;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SuperAdminController extends Controller
@@ -142,5 +144,22 @@ class SuperAdminController extends Controller
         $role = Role::findOrFail($id);
         $role->delete();
         return back();
+    }
+
+    public function purgeChats()
+    {
+        $chats = Chat::all();
+        foreach ($chats as $c) {
+            $user1 = User::where('id', $c->user1)->first();
+            $user2 = User::where('id', $c->user2)->first();
+            if (!$user1 || !$user2) {
+                foreach ($c->chatMessages() as $cm) {
+                    $cm->delete();
+                }
+                $c->delete();
+            }
+        }
+        $status = 'Los chats han sido purgados.';
+        return back()->with(compact('status'));
     }
 }
