@@ -100,4 +100,27 @@
     </div>
 </body>
 </html>
+{{--  ALERTS  --}}
+@if(session('status'))
+	@if (session('eStatus') === null)
+		<x-success-alert :message="session('status')"/>
+	@else
+		@if (session('eStatus') === 1)
+			<x-success-alert :message="session('status')"/>
+		@else
+			<x-error-alert :message="session('status')"/>	
+		@endif
+	@endif
+@endif
+@isset($status)
+	@if ($eStatus === null)
+		<x-success-alert :message="$status"/>
+	@else
+		@if ($eStatus)
+			<x-success-alert :message="$status"/>
+		@else
+			<x-error-alert :message="$status"/>
+		@endif
+	@endif
+@endisset
 @yield('scripts')

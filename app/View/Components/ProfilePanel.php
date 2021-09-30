@@ -4,13 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class StudentClassPanel extends Component
+class ProfilePanel extends Component
 {
-    /**
-     * The user.
-     *
-     * 
-     */
     public $user;
     public $monitor;
 
@@ -32,6 +27,6 @@ class StudentClassPanel extends Component
      */
     public function render()
     {
-        return view('components.student-class-panel');
+        return view('components.profile-panel');
     }
 }
