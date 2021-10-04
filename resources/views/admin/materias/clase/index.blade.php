@@ -16,7 +16,7 @@
       <div class="card border-secondary text-center">
         <div class="card-body">
           <h3>{{ $materia->name }}</h3>
-          <div class="row mb-3">
+          <div class="row">
             {{--  TABS  --}}
             <div class="col">
               <ul class="nav nav-tabs">
@@ -170,12 +170,6 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')

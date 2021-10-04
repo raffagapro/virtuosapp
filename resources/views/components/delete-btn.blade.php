@@ -1,0 +1,31 @@
+<a
+    href="javascript:void(0);"
+    class="btn btn-sm btn-danger text-white mr-2"
+    data-toggle="tooltip" data-placement="top" title="{{ $tooltip }}"
+    onclick="
+        event.preventDefault();
+        swal.fire({
+        text: '{{ $text }}',
+        showCancelButton: true,
+        cancelButtonText: `Cancelar`,
+        cancelButtonColor:'#62A4C0',
+        confirmButtonColor:'red',
+        confirmButtonText:'Eliminar',
+        icon:'error',
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('{{ $elemID }}').submit();
+            }
+        });"
+>
+    <i class="far fa-trash-alt"></i>
+</a>
+<form id="{{ $elemID }}"
+    action="{{ route($routeName, $id) }}"
+    method="POST"
+    style="display: none;"
+>
+    @csrf
+    @method('DELETE')
+</form>

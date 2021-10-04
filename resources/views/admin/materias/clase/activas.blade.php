@@ -1,5 +1,4 @@
 @php
-    // dd(count($materia->clases()->where('status', '1')->get()));
     $aClases = $materia->clases()->where('status', '1')->paginate(50);
 @endphp
 <table class="table table-bordered">
@@ -53,35 +52,13 @@
                 >@method('PUT') @csrf
               </form>
             @endif
-            <a
-              href="javascript:void(0);"
-              data-toggle="tooltip" data-placement="top" title="Borrar"
-              class="btn btn-sm btn-danger text-light"
-              onclick="
-                event.preventDefault();
-                swal.fire({
-                  text: '¿Deseas eliminar la clase?',
-                  showCancelButton: true,
-                  cancelButtonText: `Cancelar`,
-                  cancelButtonColor:'#62A4C0',
-                  confirmButtonColor:'red',
-                  confirmButtonText:'Eliminar',
-                  icon:'error',
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    document.getElementById('{{ 'delClase'.$c->id }}').submit();
-                  }
-                });"
-            >
-              <i class="far fa-trash-alt"></i>
-            </a>
-            <form id="{{ 'delClase'.$c->id }}"
-              action="{{ route('clase.destroy', $c->id) }}"
-              method="POST"
-              style="display: none;"
-            >@csrf
-            @method('DELETE')
-            </form>
+            <x-delete-btn
+              :tooltip="'Borrar'"
+              :id="[$c->id]"
+              :text="'¿Deseas eliminar la clase?'"
+              :elemName="'delClase'"
+              :routeName="'clase.destroy'"
+            />
           </td>
         </tr>
       @empty

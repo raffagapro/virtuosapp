@@ -11,23 +11,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+  <div class="row justify-content-center">
 
-		{{--  LEFT PROFILE PANEL  --}}
-        <div class="col-md-3">
-			<x-profile-panel :user="Auth::user()"/>
-        </div>
-
-		{{--  CLASS PANEL   --}}
-        <div class="col-md-4">
-			<x-teacher.class-panel :user="Auth::user()"/>
-        </div>
-
-		{{--  MESSAGE PANEL  --}}
-		<div class="col-md-4">
-			<x-messages-panel :user="Auth::user()"/>
-        </div>
+    {{--  LEFT PROFILE PANEL  --}}
+    <div class="col-md-3">
+      <x-profile-panel :user="Auth::user()"/>
     </div>
+
+    {{--  CLASS PANEL   --}}
+    <div class="col-md-4">
+      <x-teacher.class-panel :user="Auth::user()"/>
+    </div>
+
+    {{--  MESSAGE PANEL  --}}
+    <div class="col-md-4">
+      <x-messages-panel :user="Auth::user()"/>
+    </div>
+         
+  </div>
 </div>
 @endsection
 

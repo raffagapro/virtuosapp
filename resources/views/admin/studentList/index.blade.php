@@ -81,35 +81,13 @@
                                 >@method('PUT') @csrf
                               </form>
                             @endif
-                            <a
-                            href="javascript:void(0);"
-                            class="btn btn-danger btn-sm text-light"
-                            data-toggle="tooltip" data-placement="top" title="Borrar"
-                            onclick="
-                                event.preventDefault();
-                                swal.fire({
-                                  text: '¿Deseas eliminar el estudiante?',
-                                  showCancelButton: true,
-                                  cancelButtonText: `Cancelar`,
-                                  cancelButtonColor:'#62A4C0',
-                                  confirmButtonColor:'red',
-                                  confirmButtonText:'Eliminar',
-                                  icon:'error',
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    document.getElementById('{{ 'delStudent'.$s->id }}').submit();
-                                  }
-                                });
-                              ">
-                              <i class="far fa-trash-alt"></i>
-                            </a>
-                            <form id="{{ 'delStudent'.$s->id }}"
-                            action="{{ route('estudiantes.destroy', $s->id) }}"
-                            method="POST"
-                            style="display: none;"
-                            >@csrf
-                            @method('DELETE')
-                            </form>
+                            <x-delete-btn
+                                    :tooltip="'Borrar'"
+                                    :id="[$s->id]"
+                                    :text="'¿Deseas eliminar el estudiante?'"
+                                    :elemName="'delStudent'"
+                                    :routeName="'estudiantes.destroy'"
+                            />
                           </td>
                         </tr>
                       @empty
@@ -224,11 +202,4 @@
     $( document ).ready(function() { $('#newStudentModal').modal('show'); });
   </script>
 @endif
-
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection

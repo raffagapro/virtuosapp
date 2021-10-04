@@ -98,7 +98,6 @@ class AdminController extends Controller
     public function sMonitorIndex($id)
     {
         $student = User::findOrFail($id);
-        // dd(Auth::user()->role->name);
         if (Auth::user()->role->name === "Admin" || Auth::user()->role->name === "Super Admin") {
             $chats = Chat::where('user1', $student->id)->orWhere('user2', $student->id)->get();
             return view('admin.monitor.student.index')->with(compact('student', 'chats'));

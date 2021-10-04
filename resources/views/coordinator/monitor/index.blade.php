@@ -12,23 +12,24 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+  <div class="row justify-content-center">
 
 		{{--  LEFT PROFILE PANEL  --}}
-        <div class="col-md-3">
-			<x-profile-panel :user="$teacher" :monitor="true"/>
-        </div>
+    <div class="col-md-3">
+      <x-profile-panel :user="$teacher" :monitor="true"/>
+    </div>
 
 		{{--  CLASS PANEL   --}}
-        <div class="col-md-4">
-			<x-teacher.class-panel :user="$teacher" :monitor="true"/>
-        </div>
-
-		{{--  MESSAGE PANEL  --}}
-		<div class="col-md-4">
-			<x-messages-panel :user="$teacher" :monitor="true"/>
-        </div>
+    <div class="col-md-4">
+      <x-teacher.class-panel :user="$teacher" :monitor="true"/>
     </div>
+
+    {{--  MESSAGE PANEL  --}}
+    <div class="col-md-4">
+      <x-messages-panel :user="$teacher" :monitor="true"/>
+    </div>
+    
+  </div>
 </div>
 @endsection
 

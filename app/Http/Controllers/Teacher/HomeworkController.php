@@ -169,12 +169,12 @@ class HomeworkController extends Controller
     public function newRetro(Request $request)
     {
         // dd($request->all());
+        $student = User::findOrFail($request->studentId);
+        $homework = Homework::findOrFail($request->homeworkId);
         $retro = Retro::create([
             'body' => $request->body
         ]);
-        $student = User::findOrFail($request->studentId);
         $student->retros()->save($retro);
-        $homework = Homework::findOrFail($request->homeworkId);
         $homework->retros()->save($retro);
         $foundSH = StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first();
         if ($foundSH) {

@@ -15,7 +15,7 @@
           @if (!$monitor)</a>@endif
       </div>
       {{--  PROFILE NAME  --}}
-      @if (($user->role->name === "Maestro" || $user->role->name === "Coordinador") && !$monitor)
+      @if (($user->role->name !== "Estudiante") && !$monitor)
           <h3 class="mb-0" data-toggle="modal" data-target="#modTeacherModal"><a class="text-white-50" href="javascript:void(0);">{{ $user->name }}</a></h3>
       @else
           <h3 class="mb-0">{{ $user->name }}</h3>
@@ -69,7 +69,9 @@
             @if ($user->role->name === "Maestro")
               <form action="{{ route('maestro.updatePW', $user->id) }}" method="POST">
             @elseif ($user->role->name === "Coordinador")
-              <form action="{{ route('coordinatorDash.updatePW', $user->id) }}" method="POST">          
+              <form action="{{ route('coordinatorDash.updatePW', $user->id) }}" method="POST">
+            @elseif ($user->role->name === "Admin" || $user->role->name === "Super Admin")
+              <form action="{{ route('admin.updatePW', $user->id) }}" method="POST">     
             @else    
 		          <form action="{{ route('student.updatePW', $user->id) }}" method="POST">
             @endif
@@ -114,6 +116,8 @@
           <form id="retroFrom" action="{{ route('maestroDash.profile') }}" method="POST" enctype="multipart/form-data">
         @elseif ($user->role->name === "Coordinador")
           <form id="retroFrom" action="{{ route('coordinatorDash.profile') }}" method="POST" enctype="multipart/form-data">              
+        @elseif ($user->role->name === "Admin" || "Super Admin")
+          <form id="retroFrom" action="{{ route('admin.profile') }}" method="POST" enctype="multipart/form-data">
         @else    
           <form id="retroFrom" action="{{ route('studentDash.profile') }}" method="POST" enctype="multipart/form-data">
         @endif
@@ -147,7 +151,9 @@
 		</div>
 		<div class="modal-body">
       @if ($user->role->name === "Maestro")
-        <form action="{{ route('maestro.updateInfo', $user->id) }}" method="POST">     
+        <form action="{{ route('maestro.updateInfo', $user->id) }}" method="POST">  
+      @elseif ($user->role->name === "Admin" || $user->role->name === "Super Admin")
+        <form action="{{ route('admin.updateInfo', $user->id) }}" method="POST">
       @else
         <form action="{{ route('coordinatorDash.updateInfo', $user->id) }}" method="POST">    
       @endif

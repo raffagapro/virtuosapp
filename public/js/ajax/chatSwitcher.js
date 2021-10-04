@@ -26,7 +26,7 @@ $(function() {
                   pros += '<div class="alert alert-light col" role="alert">';
                   pros += `<p>`+i.body+`</p>`;
                   pros += '<hr class="m-1">';
-                  pros += '<small class="mb-0 text-right">11:30am</small>';
+                  pros += '<small class="mb-0 text-right">'+dateParser(i.created_at)+'</small>';
                   pros += '</div></div>';
                 } else {
                   pros += '<div class="row ml-2">';
@@ -34,7 +34,7 @@ $(function() {
                   pros += `<p>`+i.body+`</p>`;
                   pros += '<hr class="m-1">';
                   pros += '<div class="row justify-content-end">';
-                  pros += '<small class="mb-0 mr-3">11:30am</small>';
+                  pros += '<small class="mb-0 mr-3">'+dateParser(i.created_at)+'</small>';
                   pros += '</div></div></div>';
                 }
                 $('#messageCont').append(pros);
