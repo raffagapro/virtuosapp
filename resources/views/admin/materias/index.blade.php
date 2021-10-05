@@ -39,35 +39,13 @@
                   <td class="text-left"><a href="{{ route('clase.index', $m->id) }}">{{ ucwords($m->name) }}</a></td>
                   <td>
                     <span class="btn btn-sm btn-primary text-light mr-2 materiaBtn" data-toggle="tooltip" data-placement="top" title="Modificar" id="{{ $m->id }}"><i class="fas fa-pen" data-toggle="modal" data-target="#materiasModModal"></i></span>
-                    <a
-                    href="javascript:void(0);"
-                    class="btn btn-sm btn-danger text-light"
-                    data-toggle="tooltip" data-placement="top" title="Borrar"
-                    onclick="
-                        event.preventDefault();
-                        swal.fire({
-                          text: '¿Deseas eliminar la materia?',
-                          showCancelButton: true,
-                          cancelButtonText: `Cancelar`,
-                          cancelButtonColor:'#62A4C0',
-                          confirmButtonColor:'red',
-                          confirmButtonText:'Eliminar',
-                          icon:'error',
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            document.getElementById('{{ 'delMateria'.$m->id }}').submit();
-                          }
-                        });
-                      ">
-                      <i class="far fa-trash-alt"></i>
-                    </a>
-                    <form id="{{ 'delMateria'.$m->id }}"
-                    action="{{ route('materias.destroy', $m->id) }}"
-                    method="POST"
-                    style="display: none;"
-                    >@csrf
-                    @method('DELETE')
-                    </form>
+                    <x-delete-btn
+                      :tooltip="'Borrar'"
+                      :id="[$m->id]"
+                      :text="'¿Deseas eliminar la materia?'"
+                      :elemName="'delMateria'"
+                      :routeName="'materias.destroy'"
+                    />
                   </td>
                 </tr>
               @empty
@@ -157,12 +135,6 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')

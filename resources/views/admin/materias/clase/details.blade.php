@@ -57,35 +57,13 @@
                   @if ($clase->status === 1)
                     {{-- ACTUALIZA --}}
                     <td>
-                      <a
-                        href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar"
-                        class="btn btn-sm btn-danger text-light"
-                        onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar el estudiante de la clase?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delStudent'.$s->id }}').submit();
-                            }
-                          });"
-                      >
-                        <i class="far fa-trash-alt"></i>
-                      </a>
-                      <form id="{{ 'delStudent'.$s->id }}"
-                        action="{{ route('clase.rmStudent', [$clase->id, $s->id]) }}"
-                        method="POST"
-                        style="display: none;"
-                      >@csrf
-                      @method('GET')
-                      </form>
+                      <x-delete-btn
+                        :tooltip="'Eliminar'"
+                        :id="[$clase->id, $s->id]"
+                        :text="'¿Deseas eliminar el estudiante de la clase?'"
+                        :elemName="'delStudent'"
+                        :routeName="'clase.rmStudent'"
+                      />
                     </td>
                   @endif
                 </tr>
@@ -197,12 +175,6 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')

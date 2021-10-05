@@ -102,34 +102,13 @@
                         <i class="fas fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Agregar Clase"></i>
                       </button>
                       {{--  DELETE STUDENT BTN  --}}
-                      <a
-                        href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar Estudiante"
-                        class="btn btn-danger"
-                        onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar al estudiante?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delStudent'.$student->id }}').submit();
-                            }
-                          });"
-                      >
-                        <i class="fas fa-trash-alt fa-fw"></i>
-                      </a>
-                      <form id="{{ 'delStudent'.$student->id }}"
-                        action="{{ route('estudiantes.destroy', $student->id) }}"
-                        method="POST"
-                        style="display: none;"
-                      >@csrf @method('DELETE')
-                      </form>
+                      <x-delete-btn
+                        :tooltip="'Eliminar Estudiante'"
+                        :id="[$student->id]"
+                        :text="'¿Deseas eliminar al estudiante?'"
+                        :elemName="'delStudent'"
+                        :routeName="'estudiantes.destroy'"
+                      />
                     </div>
                   </div>
                 </div>
@@ -331,12 +310,6 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')
