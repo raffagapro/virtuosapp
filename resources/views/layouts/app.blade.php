@@ -18,8 +18,14 @@
         })
     </script>
     <script src="{{ asset('js/ajax/globalConts.js') }}" ></script>
-
-    @yield('cdn')
+    <script src="{{ asset('js/ajax/globalFunctions.js') }}" ></script>
+    <script src="https://cdn.tiny.cloud/1/yrrwmnza6l21wuyjkfllwx258hgx71f80q8hlf6sd4cto6yt/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '.tinyEditor',
+            menubar: false,
+        });
+    </script>
 
 
     <!-- Fonts -->
@@ -100,4 +106,27 @@
     </div>
 </body>
 </html>
+{{--  ALERTS  --}}
+@if(session('status'))
+	@if (session('eStatus') === null)
+		<x-success-alert :message="session('status')"/>
+	@else
+		@if (session('eStatus') === 1)
+			<x-success-alert :message="session('status')"/>
+		@else
+			<x-error-alert :message="session('status')"/>	
+		@endif
+	@endif
+@endif
+@isset($status)
+	@if ($eStatus === null)
+		<x-success-alert :message="$status"/>
+	@else
+		@if ($eStatus)
+			<x-success-alert :message="$status"/>
+		@else
+			<x-error-alert :message="$status"/>
+		@endif
+	@endif
+@endisset
 @yield('scripts')

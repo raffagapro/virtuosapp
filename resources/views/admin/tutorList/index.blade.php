@@ -69,35 +69,13 @@
                                 >@method('PUT') @csrf
                               </form>
                             @endif
-                            <a
-                            href="javascript:void(0);"
-                            class="btn btn-danger btn-sm text-light"
-                            data-toggle="tooltip" data-placement="top" title="Borrar"
-                            onclick="
-                                event.preventDefault();
-                                swal.fire({
-                                  text: '¿Deseas eliminar al tutor?',
-                                  showCancelButton: true,
-                                  cancelButtonText: `Cancelar`,
-                                  cancelButtonColor:'#62A4C0',
-                                  confirmButtonColor:'red',
-                                  confirmButtonText:'Eliminar',
-                                  icon:'error',
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    document.getElementById('{{ 'deltutor'.$t->id }}').submit();
-                                  }
-                                });
-                              ">
-                              <i class="far fa-trash-alt"></i>
-                            </a>
-                            <form id="{{ 'deltutor'.$t->id }}"
-                            action="{{ route('tutores.destroy', $t->id) }}"
-                            method="POST"
-                            style="display: none;"
-                            >@csrf
-                            @method('DELETE')
-                            </form>
+                            <x-delete-btn
+                              :tooltip="'Borrar'"
+                              :id="[$t->id]"
+                              :text="'¿Deseas eliminar al tutor?'"
+                              :elemName="'deltutor'"
+                              :routeName="'tutores.destroy'"
+                            />
                           </td>
                         </tr>
                       @empty
@@ -178,10 +156,4 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection

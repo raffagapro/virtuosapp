@@ -60,35 +60,13 @@
                 >@method('PUT') @csrf
               </form>
             @endif
-            <a
-              href="javascript:void(0);"
-              class="btn btn-sm btn-danger text-light"
-              data-toggle="tooltip" data-placement="top" title="Borrar"
-              onclick="
-                event.preventDefault();
-                swal.fire({
-                  text: '¿Deseas eliminar la clase?',
-                  showCancelButton: true,
-                  cancelButtonText: `Cancelar`,
-                  cancelButtonColor:'#62A4C0',
-                  confirmButtonColor:'red',
-                  confirmButtonText:'Eliminar',
-                  icon:'error',
-                }).then((result) => {
-                  if (result.isConfirmed) {
-                    document.getElementById('{{ 'delClase'.$cc->id }}').submit();
-                  }
-                });"
-            >
-              <i class="far fa-trash-alt"></i>
-            </a>
-            <form id="{{ 'delClase'.$cc->id }}"
-              action="{{ route('clase.destroy', $cc->id) }}"
-              method="POST"
-              style="display: none;"
-            >@csrf
-            @method('DELETE')
-            </form>
+            <x-delete-btn
+              :tooltip="'Borrar'"
+              :id="[$cc->id]"
+              :text="'¿Deseas eliminar la clase?'"
+              :elemName="'delClase'"
+              :routeName="'clase.destroy'"
+            />
           </td>
         </tr>
       @empty

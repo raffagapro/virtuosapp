@@ -72,35 +72,14 @@
                       <button class="btn btn-info" data-toggle="modal" data-target="#addTeacherModal">
                         <i class="fas fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Agregar Maestro"></i>
                       </button>
-                      {{--  DELETE STUDENT BTN  --}}
-                      <a
-                        href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar Coordinador"
-                        class="btn btn-danger"
-                        onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar al coordinador?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delCoord'.$coordinator->id }}').submit();
-                            }
-                          });"
-                      >
-                        <i class="fas fa-trash-alt fa-fw"></i>
-                      </a>
-                      <form id="{{ 'delCoord'.$coordinator->id }}"
-                        action="{{ route('coordinator.destroy', $coordinator->id) }}"
-                        method="POST"
-                        style="display: none;"
-                      >@csrf @method('DELETE')
-                      </form>
+                      {{--  DELETE COORD BTN  --}}
+                      <x-delete-btn
+                        :tooltip="'Eliminar Coordinador'"
+                        :id="[$coordinator->id]"
+                        :text="'¿Deseas eliminar al coordinador?'"
+                        :elemName="'delCoord'"
+                        :routeName="'coordinator.destroy'"
+                      />
                     </div>
                   </div>
                 </div>
@@ -109,9 +88,6 @@
           </div>
           
           <table class="table table-bordered">
-            @php
-                // dd($coordinator->coordinators());
-            @endphp
             @if (count($coordinator->coordinators()) > 0)
               <thead>
                 <tr>
@@ -133,35 +109,13 @@
                   @if ($coordinator->status === 1)
                     {{-- ACTUALIZA --}}
                     <td>
-                      <a
-                        href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar"
-                        class="btn btn-sm btn-danger text-light"
-                        onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar al maestro?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delTeacher'.$t->id }}').submit();
-                            }
-                          });"
-                      >
-                        <i class="far fa-trash-alt"></i>
-                      </a>
-                      <form id="{{ 'delTeacher'.$t->id }}"
-                        action="{{ route('coordinator.rmTeacher', $c->id) }}"
-                        method="POST"
-                        style="display: none;"
-                      >@csrf
-                      @method('GET')
-                      </form>
+                      <x-delete-btn
+                        :tooltip="'Eliminar'"
+                        :id="[$c->id]"
+                        :text="'¿Deseas eliminar al maestro?'"
+                        :elemName="'delTeacher'"
+                        :routeName="'coordinator.rmTeacher'"
+                      />
                     </td>
                   @endif
                 </tr>
@@ -287,12 +241,6 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')

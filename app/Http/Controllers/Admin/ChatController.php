@@ -58,22 +58,22 @@ class ChatController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $foundChat = Chat::findOrFail($request->chatId);
-        $chatMessage = ChatMessage::create([
-            'body' => $request->messageBody,
-            'status' => 0,
-        ]);
         $sender = User::findOrFail($request->senderId);
-        $sender->chatMessages()->save($chatMessage);
-        $foundChat->chatMessages()->save($chatMessage);
+        if ($request->messageBody !== null) {
+            $chatMessage = ChatMessage::create([
+                'body' => $request->messageBody,
+                'status' => 0,
+            ]);
+            $sender->chatMessages()->save($chatMessage);
+            $foundChat->chatMessages()->save($chatMessage);
+        }
         $chatGo = $foundChat->id;
         if ($foundChat->user1 === $sender->id) {
             $reciver = $foundChat->user2;
         } else {
             $reciver = $foundChat->user1;
         }
-        
         return back()->with(compact('chatGo', 'reciver'));
     }
 
