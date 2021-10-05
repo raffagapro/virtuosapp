@@ -9,6 +9,24 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadImagesController extends Controller
 {
+    public function uploadHWFile($request, $params, $directory, $fieldName){
+        $uploadImageService = new UploadImageService();
+        if ($request->has($fieldName)) {
+            $file = $request->file($fieldName);
+            // dd($request->homeworkId);
+            $imageResponse = $uploadImageService->createHWFile($file, $directory, $request->homeworkId);
+            if ($imageResponse['success']) {
+                //if file already exists, deletes it
+                if ($params[$fieldName] != "") {
+                    Storage::disk('local')->delete($params[$fieldName]);
+                }
+                $params[$fieldName] = $imageResponse["path"];
+            }else {
+                throw new Exception("Error al guardar la imagen");
+            }
+        }
+        return $params;
+    }
     public function uploadImage($request, $params, $directory, $fieldName){
         $uploadImageService = new UploadImageService();
         if ($request->has($fieldName)) {
