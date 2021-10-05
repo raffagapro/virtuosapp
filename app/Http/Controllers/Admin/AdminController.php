@@ -37,13 +37,23 @@ class AdminController extends Controller
     public function resetPW($id)
     {
         $user = User::findOrFail($id);
-        $workingPW = explode(' ', strtolower($user->name));
-        $pw = 'VI'.ucfirst($workingPW[0]).'2022';
-        // dd($pw);
-        $user->password = Hash::make($pw);
-        $user->save();
-        $status = 'El password ha sido reestablecido.';
-        return back()->with(compact('status'));
+        if (
+            Auth::user()->role->name === "admin" || 
+            Auth::user()->role->name === "super admin" || 
+            Auth::user()->id === $user->id
+            ) {
+            dd("procede");
+            $workingPW = explode(' ', strtolower($user->name));
+            $pw = 'VI'.ucfirst($workingPW[0]).'2022';
+            // dd($pw);
+            $user->password = Hash::make($pw);
+            $user->save();
+            $status = 'El password ha sido reestablecido.';
+            return back()->with(compact('status'));
+        } else {
+            $status = 'Sin autorizacion.';
+            return back()->with(compact('status'));
+        }
     }
 
     public function updatePW(Request $request, $id){
@@ -75,8 +85,7 @@ class AdminController extends Controller
         $teacher = User::findOrFail($id);
         // dd(Auth::user()->role->name);
         if (Auth::user()->role->name === "Admin" || Auth::user()->role->name === "Super Admin") {
-            $chats = Chat::where('user1', $teacher->id)->orWhere('user2', $teacher->id)->get();
-            return view('admin.monitor.teacher.index')->with(compact('teacher', 'chats'));
+            return view('admin.monitor.teacher.index')->with(compact('teacher'));
         } else {
             return redirect()->route('admin');
         }
@@ -89,7 +98,6 @@ class AdminController extends Controller
     public function sMonitorIndex($id)
     {
         $student = User::findOrFail($id);
-        // dd(Auth::user()->role->name);
         if (Auth::user()->role->name === "Admin" || Auth::user()->role->name === "Super Admin") {
             $chats = Chat::where('user1', $student->id)->orWhere('user2', $student->id)->get();
             return view('admin.monitor.student.index')->with(compact('student', 'chats'));

@@ -32,20 +32,7 @@ class HomeworkController extends Controller
     public function index($id)
     {
         $clase = Clase::findOrFail($id);
-        $foundChat = Chat::where('user1', Auth::user()->id)->where(function ($q) use ($clase){
-            $q->where('user2', $clase->teacher()->id);
-        })
-        ->orWhere('user2', Auth::user()->id)->where(function ($q) use ($clase){
-            $q->where('user1', $clase->teacher()->id);
-        })
-        ->first();
-        if (!$foundChat) {
-            $foundChat = Chat::create([
-                'user1' => Auth::user()->id,
-                'user2' => $clase->teacher()->id,
-            ]);
-        }
-        return view('student.clase.index')->with(compact('clase', 'foundChat'));
+        return view('student.clase.index')->with(compact('clase'));
     }
 
     /**
@@ -62,24 +49,19 @@ class HomeworkController extends Controller
 
     public function uploadFile(Request $request)
     {
-        // $homework = Homework::findOrFail($request->homeworkId);
-        // $student = User::findOrFail($request->studentId);
-        // $foundSH = StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first();
-        // dd($request->all(), StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first());
-
-        if ($request->hasFile('sFile')) {
-            if ($request->file('sFile')->isValid()) {
+        if ($request->hasFile('hFile')) {
+            if ($request->file('hFile')->isValid()) {
                 $validated = $request->validate([
-                    'sFile'=>'mimes:jpeg,png,pdf,doc,ppt,pptx,xlx,xlsx,docx,zip|max:4000',
+                    'hFile'=>'mimes:jpeg,png,pdf,doc,ppt,pptx,xlx,xlsx,docx,zip|max:4000',
                 ]);
                 $homework = Homework::findOrFail($request->homeworkId);
                 $workingTitle = str_replace(' ', '_', $homework->title);
                 $student = User::findOrFail($request->studentId);
                 $workingName = str_replace(' ', '_', $student->name);
-                $extension = $request->sFile->extension();
+                $extension = $request->hFile->extension();
                 $saveName = $workingTitle.'_'.$workingName.".".$extension;
 
-                Storage::disk('s3')->put('sHomework/'.$saveName, fopen($request->file('sFile'), 'r+'));
+                Storage::disk('s3')->put('sHomework/'.$saveName, fopen($request->file('hFile'), 'r+'));
                 $url = Storage::disk('s3')->url('sHomework/'.$saveName);
 
                 $foundSH = StudentHomework::where('homework_id', $homework->id)->where('user_id', $student->id)->first();

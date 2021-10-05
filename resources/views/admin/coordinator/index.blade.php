@@ -69,35 +69,13 @@
                                 >@method('PUT') @csrf
                               </form>
                             @endif
-                            <a
-                            href="javascript:void(0);"
-                            class="btn btn-danger btn-sm text-light"
-                            data-toggle="tooltip" data-placement="top" title="Borrar"
-                            onclick="
-                                event.preventDefault();
-                                swal.fire({
-                                  text: '¿Deseas eliminar al coordinador?',
-                                  showCancelButton: true,
-                                  cancelButtonText: `Cancelar`,
-                                  cancelButtonColor:'#62A4C0',
-                                  confirmButtonColor:'red',
-                                  confirmButtonText:'Eliminar',
-                                  icon:'error',
-                                }).then((result) => {
-                                  if (result.isConfirmed) {
-                                    document.getElementById('{{ 'delcoords'.$c->id }}').submit();
-                                  }
-                                });
-                              ">
-                              <i class="far fa-trash-alt"></i>
-                            </a>
-                            <form id="{{ 'delcoords'.$c->id }}"
-                            action="{{ route('coordinator.destroy', $c->id) }}"
-                            method="POST"
-                            style="display: none;"
-                            >@csrf
-                            @method('DELETE')
-                            </form>
+                            <x-delete-btn
+                              :tooltip="'Borrar'"
+                              :id="[$c->id]"
+                              :text="'¿Deseas eliminar al coordinador?'"
+                              :elemName="'delcoords'"
+                              :routeName="'coordinator.destroy'"
+                            />
                           </td>
                         </tr>
                       @empty
@@ -190,10 +168,4 @@
   </script>
 @endif
 
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection

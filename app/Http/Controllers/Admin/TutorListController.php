@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Area;
 use App\Models\Clase;
 use App\Http\Controllers\Controller;
+use App\Services\PurgeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -140,6 +141,8 @@ class TutorListController extends Controller
     {
         // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
         $tutor = User::findOrFail($id);
+        $purge = new PurgeService();
+        $purge->purge($tutor);
         $tutor->delete();
         $status = 'El tutor ha sido eliminado exitosamente.';
         return redirect()->route('tutores.index')->with(compact('status'));

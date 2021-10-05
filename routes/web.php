@@ -26,10 +26,11 @@ Route::middleware(['GuestRoleRedirect'])->group(function (){
     Route::get('/guest', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
 });
 
+Route::get('/resetClave/{userID}', [App\Http\Controllers\Admin\AdminController::class, 'resetPW'])->name('user.resetPW');
+
 Route::prefix('admin')->group(function(){
     Route::middleware(['AdminRoleRedirect'])->group(function (){
         Route::get('/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
-        Route::get('/resetClave/{userID}', [App\Http\Controllers\Admin\AdminController::class, 'resetPW'])->name('user.resetPW');
         Route::post('/profileUpload', [App\Http\Controllers\Teacher\HomeworkController::class, 'uploadProfile'])->name('admin.profile');
         Route::put('info/{userId}', [App\Http\Controllers\Admin\TeacherListController::class, 'update'])->name('admin.updateInfo');
         Route::put('pw/{userId}', [App\Http\Controllers\Admin\AdminController::class, 'updatePW'])->name('admin.updatePW');
@@ -84,6 +85,9 @@ Route::prefix('admin')->group(function(){
             Route::delete('delRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'destroyRole'])->name('sa.delRole');
             Route::put('updateRole/{roleId}', [App\Http\Controllers\Admin\SuperAdminController::class, 'updateRole'])->name('sa.updateRole');
             Route::post('rGrabber', [App\Http\Controllers\Admin\SuperAdminController::class, 'roleGrabber']);
+            Route::get('purge/chatMessages', [App\Http\Controllers\Admin\SuperAdminController::class, 'purgeChats'])->name('sa.purgeChats');
+            Route::get('test/loadImg', [App\Http\Controllers\Admin\SuperAdminController::class, 'testIndex'])->name('sa.test');
+            Route::post('test/upload', [App\Http\Controllers\Admin\SuperAdminController::class, 'testUpload'])->name('sa.testFile');
         });
 
         Route::prefix('monitor')->group(function(){
@@ -101,6 +105,7 @@ Route::prefix('admin')->group(function(){
             Route::post('sGrabber', [App\Http\Controllers\Teacher\HomeworkController::class, 'studentGrabber']);
             Route::post('teacher/newRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'newRetro'])->name('admin.monitorTeacherRetroStore');
             Route::post('teacher/updateRetro', [App\Http\Controllers\Teacher\HomeworkController::class, 'updateRetro'])->name('admin.monitorTeacherRetroUpdate');
+            Route::post('teacher/zlink', [App\Http\Controllers\Admin\ClaseController::class, 'setZlink'])->name('admin.monitorSetZlink');
 
             Route::get('student/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sMonitorIndex'])->name('admin.studentMonitor');
             Route::get('student/{claseID}/{studentID}', [App\Http\Controllers\Admin\AdminController::class, 'sClaseIndex'])->name('admin.studentMonitorClase');

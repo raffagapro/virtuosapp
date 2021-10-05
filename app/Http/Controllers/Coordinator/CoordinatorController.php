@@ -43,8 +43,7 @@ class CoordinatorController extends Controller
         $foundCoord = Coordinator::where('coordinator', Auth::user()->id)->where('teacher', $teacher->id)->first();
         // dd($foundCoord);
         if ($foundCoord) {
-            $chats = Chat::where('user1', $teacher->id)->orWhere('user2', $teacher->id)->get();
-            return view('coordinator.monitor.index')->with(compact('teacher', 'chats'));
+            return view('coordinator.monitor.index')->with(compact('teacher'));
         } else {
             return redirect()->route('coordinator');
         }

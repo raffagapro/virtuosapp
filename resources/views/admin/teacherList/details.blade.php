@@ -73,34 +73,13 @@
                         <i class="fas fa-plus fa-fw" data-toggle="tooltip" data-placement="top" title="Agregar Clase"></i>
                       </button>
                       {{--  DELETE STUDENT BTN  --}}
-                      <a
-                        href="javascript:void(0);"
-                        data-toggle="tooltip" data-placement="top" title="Eliminar Maestro"
-                        class="btn btn-danger"
-                        onclick="
-                          event.preventDefault();
-                          swal.fire({
-                            text: '¿Deseas eliminar al maestro?',
-                            showCancelButton: true,
-                            cancelButtonText: `Cancelar`,
-                            cancelButtonColor:'#62A4C0',
-                            confirmButtonColor:'red',
-                            confirmButtonText:'Eliminar',
-                            icon:'error',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                              document.getElementById('{{ 'delTeacher'.$teacher->id }}').submit();
-                            }
-                          });"
-                      >
-                        <i class="fas fa-trash-alt fa-fw"></i>
-                      </a>
-                      <form id="{{ 'delTeacher'.$teacher->id }}"
-                        action="{{ route('maestros.destroy', $teacher->id) }}"
-                        method="POST"
-                        style="display: none;"
-                      >@csrf @method('DELETE')
-                      </form>
+                      <x-delete-btn
+                        :tooltip="'Eliminar Maestro'"
+                        :id="[$teacher->id]"
+                        :text="'¿Deseas eliminar al maestro?'"
+                        :elemName="'delTeacher'"
+                        :routeName="'maestros.destroy'"
+                      />
                     </div>
                   </div>
                 </div>
@@ -245,13 +224,6 @@
     $( document ).ready(function() { $('#modTeacherModal').modal('show'); });
   </script>
 @endif
-
-@if(session('status'))
-  <x-success-alert :message="session('status')"/>
-@endif
-@isset($status)
-  <x-success-alert :message="$status"/>
-@endisset
 @endsection
 
 @section('scripts')

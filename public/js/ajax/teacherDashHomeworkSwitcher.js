@@ -63,11 +63,11 @@ $(function() {
             $('#studentId').val(data[1].id);
             if (data[0] === 0) {
                 $("textarea[name='body']").val('');
-                $('#retroFrom').attr('action', webUrl+'/maestro/tarea/newRetro');
+                $('#retroForm').attr('action', webUrl+'/maestro/tarea/newRetro');
             } else {
                 $('#retroId').val(data[0].id);
                 $("textarea[name='body']").val(data[0].body);
-                $('#retroFrom').attr('action', webUrl+'/maestro/tarea/updateRetro');
+                $('#retroForm').attr('action', webUrl+'/maestro/tarea/updateRetro');
             }
         })
         .fail(e =>{
@@ -78,7 +78,7 @@ $(function() {
         .always(data =>{
             // console.log("always");
             // console.log(dataObj);
-            // console.log(data);
+            console.log(data);
         }); 
     });
 });

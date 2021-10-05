@@ -14,27 +14,27 @@ $(function() {
             data: dataObj,
         })
         .done(data =>{
-            console.log("success");
+            // console.log("success");
             $('#studentNameCont').empty().append(data[1].name)
             $('#studentId').val(data[1].id);
             if (data[0] === 0) {
                 $("textarea[name='body']").val('');
-                $('#retroFrom').attr('action', webUrl+'/coordinador/monitor/newRetro');
+                $('#retroForm').attr('action', webUrl+'/coordinador/monitor/newRetro');
             } else {
                 $('#retroId').val(data[0].id);
                 $("textarea[name='body']").val(data[0].body);
-                $('#retroFrom').attr('action', webUrl+'/coordinador/monitor/updateRetro');
+                $('#retroForm').attr('action', webUrl+'/coordinador/monitor/updateRetro');
             }
         })
         .fail(e =>{
-            console.log("error");
-            console.log(e);
-            console.log(e.responseText);
+            // console.log("error");
+            // console.log(e);
+            // console.log(e.responseText);
         })
         .always(data =>{
-            console.log("always");
-            console.log(dataObj);
-            console.log(data);
+            // console.log("always");
+            // console.log(dataObj);
+            // console.log(data);
         }); 
     });
 });

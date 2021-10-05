@@ -26,7 +26,6 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $chats = Chat::where('user1', Auth::user()->id)->orWhere('user2', Auth::user()->id)->get();
-        return view('teacher.index')->with(compact('chats'));
+        return view('teacher.index');
     }
 }
