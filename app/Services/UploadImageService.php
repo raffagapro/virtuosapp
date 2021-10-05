@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Homework;
 use Image;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -56,5 +57,24 @@ class UploadImageService
            $arrayResult[] = $this->create($file,$id,$type);
         }
         return $arrayResult;
+    }
+
+    public function createHWFile($file, $type, $homeworkID){
+        $homework = Homework::findOrFail($homeworkID);
+        $workingTitle = str_replace(' ', '_', $homework->title);
+        $originalName = substr($file->getClientOriginalName(), 0, strrpos($file->getClientOriginalName(), "."));
+        $originalName = str_replace(' ', '_', $originalName);
+        // GET ORIGINAL IMG EXTENSION
+        $extension = $file->getClientOriginalExtension();
+        // CREATE UNIQUE FILE NAME
+        $fileNameToStore = "{$type}/".$workingTitle.'_'.$originalName.'.'.$extension;
+        //PUT IMG TO STORAGE
+        $save = Storage::disk('local')->put($fileNameToStore, fopen($file, 'r+'));
+        // $url = Storage::disk('s3')->url($fileNameToStore);
+
+        if ($save) {
+            return ["success" => true, "path" => $fileNameToStore];
+        }
+        return ["success" => false, "path" => ""];
     }
 }
