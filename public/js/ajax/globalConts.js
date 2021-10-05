@@ -1,2 +1,2 @@
-// const webUrl = '//virtuousapp.herokuapp.com';
-const webUrl = '//localhost:3000';
+const webUrl = '//virtuousapp.herokuapp.com';
+// const webUrl = '//localhost:3000';

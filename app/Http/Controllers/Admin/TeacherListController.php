@@ -5,6 +5,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Area;
 use App\Models\Clase;
+use App\Services\PurgeService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -154,6 +155,8 @@ class TeacherListController extends Controller
     {
         // EXPANDER EN EL FUTURO PARA INCLUIR RELATED DB INFO
         $teacher = User::findOrFail($id);
+        $purge = new PurgeService();
+        $purge->purge($teacher);
         $teacher->delete();
         $status = 'El maestro ha sido eliminado exitosamente.';
         return redirect()->route('maestros.index')->with(compact('status'));
