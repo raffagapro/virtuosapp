@@ -37,7 +37,7 @@
                       @forelse (App\Models\Role::all() as $r)
                         <tr>
                           {{-- NOMBRE --}}
-                          <td><a href="{{ route('estudiantes.edit', $r->id) }}">{{ ucwords($r->name) }}</a></td>
+                          <td>{{ ucwords($r->name) }}</td>
                           {{-- ACTUALIZAR --}}
                           <td>
                             <a href="javascript:void(0);" class="btn btn-sm btn-primary text-light mr-2 modBtn" id="{{ $r->id }}" data-toggle="modal" data-target="#modRole">
@@ -83,6 +83,15 @@
                   </table>
                 </div>
             </div>
+        </div>
+
+        {{-- TEST --}}
+        <div class="col-md-10 mt-5">
+          <div class="card border-secondary text-center">
+            <div class="card-body">
+              <a href="{{ route('sa.test') }}">test</a>
+            </div>
+          </div>
         </div>
     </div>
 </div>

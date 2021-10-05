@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\UploadImagesController;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class SuperAdminController extends Controller
+class SuperAdminController extends UploadImagesController
 {
     /**
      * Create a new controller instance.
@@ -26,6 +28,32 @@ class SuperAdminController extends Controller
     public function index()
     {
         return view('sa.index');
+    }
+
+    public function testIndex()
+    {
+        return view('sa.test');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function testUpload(Request $request)
+    {
+        $validated = $request->validate([
+            'testfile'=>'required|mimes:jpeg,png,pdf,doc,ppt,pptx,xlx,xlsx,docx,zip|max:4000',
+        ]);
+        $params = [
+            "testfile" => "",
+            "homeworkId" => $request->homeworkId,
+        ];
+        $params = $this->uploadHWFile($request, $params, "testFiles", "testfile");
+        $url = Storage::disk('local')->url($params["testfile"]);
+        // dd($url);
+        return back()->with(compact('url'));
     }
 
     /**
