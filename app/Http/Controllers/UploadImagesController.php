@@ -18,7 +18,7 @@ class UploadImagesController extends Controller
             if ($imageResponse['success']) {
                 //if file already exists, deletes it
                 if ($params[$fieldName] != "") {
-                    Storage::disk('local')->delete($params[$fieldName]);
+                    Storage::disk('s3')->delete($params[$fieldName]);
                 }
                 $params[$fieldName] = $imageResponse["path"];
             }else {

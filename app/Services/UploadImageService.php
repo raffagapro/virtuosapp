@@ -69,8 +69,7 @@ class UploadImageService
         // CREATE UNIQUE FILE NAME
         $fileNameToStore = "{$type}/".$workingTitle.'_'.$originalName.'.'.$extension;
         //PUT IMG TO STORAGE
-        $save = Storage::disk('local')->put($fileNameToStore, fopen($file, 'r+'));
-        // $url = Storage::disk('s3')->url($fileNameToStore);
+        $save = Storage::disk('s3')->put($fileNameToStore, fopen($file, 'r+'));
 
         if ($save) {
             return ["success" => true, "path" => $fileNameToStore];

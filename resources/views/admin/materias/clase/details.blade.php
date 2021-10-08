@@ -61,8 +61,9 @@
                         :tooltip="'Eliminar'"
                         :id="[$clase->id, $s->id]"
                         :text="'¿Deseas eliminar el estudiante de la clase?'"
-                        :elemName="'delStudent'"
+                        :elemName="'delStudent'.$s->id"
                         :routeName="'clase.rmStudent'"
+                        :formMethod="'GET'"
                       />
                     </td>
                   @endif

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Clase;
 use App\Models\Materia;
 use App\Models\User;
+use App\Services\PurgeService;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
@@ -193,7 +194,8 @@ class ClaseController extends Controller
     public function rmStudent($classID, $studentID){
         $clase = Clase::findOrFail($classID);
         $student = User::findOrFail($studentID);
-        // dd($clase, $student);
+        $purge = new PurgeService();
+        $purge->purgeStudentClass($student, $clase);
         $student->clases()->detach($clase);
         $status = 'El estudiante ha sido eliminado exitosamente.';
         return back()->with(compact('status'));

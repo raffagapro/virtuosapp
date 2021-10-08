@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UploadImagesController;
 use App\Models\Chat;
+use App\Models\Homework;
 use App\Models\Role;
+use App\Models\StudentHomework;
 use App\Models\User;
+use App\Services\PurgeService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -52,9 +55,15 @@ class SuperAdminController extends UploadImagesController
             "testfile" => "",
             "homeworkId" => $request->homeworkId,
         ];
-        $params = $this->uploadHWFile($request, $params, "testFiles", "testfile");
-        $url = Storage::disk('local')->url($params["testfile"]);
+        $params = $this->uploadHWFile($request, $params, "tHomework", "testfile");
+        $url = Storage::disk('s3')->url($params["testfile"]);
         // dd($url);
+        return back()->with(compact('url'));
+    }
+    public function delImage(){
+        // Storage::disk('s3')->delete('tHomework/El_Post_De_Test_IIHAgosto2021_-_29_Aug.pdf');
+        Storage::disk('s3')->delete(parse_url('https://virtuousapp.s3.us-east-2.amazonaws.com/tHomework/El_Post_De_Test_camiplant.JPEG'));
+        $url = 'https://virtuousapp.s3.us-east-2.amazonaws.com/tHomework/El_Post_De_Test_camiplant.JPEG';
         return back()->with(compact('url'));
     }
 
@@ -188,6 +197,22 @@ class SuperAdminController extends UploadImagesController
             }
         }
         $status = 'Los chats han sido purgados.';
+        return back()->with(compact('status'));
+    }
+
+    public function purgeHomeworks()
+    {
+        $homeworks = Homework::all();
+        foreach ($homeworks as $hw) {
+            if ($hw->student > 0) {
+                $student = User::where('id', $hw->student)->first();
+                if (!$student) {
+                    $purge = new PurgeService();
+                    $purge->purgeIndvHomework($hw);
+                }
+            }
+        }
+        $status = 'Las tareas han sido han sido purgadas.';
         return back()->with(compact('status'));
     }
 }
