@@ -63,7 +63,7 @@
                         :text="'¿Deseas eliminar el estudiante de la clase?'"
                         :elemName="'delStudent'.$s->id"
                         :routeName="'clase.rmStudent'"
-                        :formMethod="'GET'"
+                        :formMethod="'DELETE'"
                       />
                     </td>
                   @endif
