@@ -69,7 +69,7 @@ class PurgeService
 
     public function purgeIndvHomework($hw){
         // TEACHER HOMEWORK FILES
-        foreach ($hw->medias() as $m) {
+        foreach ($hw->medias as $m) {
             Storage::disk('s3')->delete(parse_url($m->media));
             $m->delete();
         }
