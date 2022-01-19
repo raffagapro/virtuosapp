@@ -18,9 +18,9 @@
                                 @if ($foundHomework->status === 0 || $foundHomework->status === null)
                                     <span class="badge btn-danger text-white">Pendiente</span>
                                 @elseif ($foundHomework->status === 1)
-                                    <span class="badge badge-info">Enviado</span>
+                                    <span class="badge badge-info">{{ '('. $foundHomework->dateParser() . ') Enviado' }}</span>
                                 @elseif ($foundHomework->status === 2)
-                                    <span class="badge badge-info">Completado</span>
+                                    <span class="badge badge-info">{{ '('. $foundHomework->dateParser() . ') Completado' }}</span>
                                 @endif
                             @else
                                 <span class="badge btn-danger text-white">Pendiente</span>

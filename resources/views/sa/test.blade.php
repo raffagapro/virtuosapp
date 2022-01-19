@@ -21,5 +21,7 @@
         <h1>{{ session('url') }}</h1>
         <img src="{{ asset( session('url') ) }}" alt="">
 	@endif
+
+    <a href="{{ route('sa.testFileDel') }}">delete Image</a>
 </div>
 @endsection

@@ -28,5 +28,9 @@
     style="display: none;"
 >
     @csrf
-    @method('DELETE')
+    @if ($formMethod === "GET")
+        @method('GET')
+    @else
+        @method('DELETE')
+    @endif
 </form>

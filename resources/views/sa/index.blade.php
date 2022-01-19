@@ -91,22 +91,11 @@
         <div class="col-md-10 mt-4">
           <div class="card border-secondary text-center">
             <div class="card-body">
-              <div class="row mb-3">
-                <div class="col-4"></div>
-                <h3 class="col-4">Chat</h3>
-                <div class="col-4">
-                  <a href="{{ route('sa.purgeChats')  }}" class="btn btn-primary float-right">Purge<i class="fas fa-diagnoses ml-2"></i></a>
-                </div>
+              <div class="col">
+                <a href="{{ route('sa.purgeChats')  }}" class="btn btn-primary">Purge Chats</a>
+                <a href="{{ route('sa.purgeHomework')  }}" class="btn btn-primary">Purge Homeworks</a>
+                <a href="{{ route('sa.test')  }}" class="btn btn-success">Test</a>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {{-- TEST --}}
-        <div class="col-md-10 mt-5">
-          <div class="card border-secondary text-center">
-            <div class="card-body">
-              <a href="{{ route('sa.test') }}">test</a>
             </div>
           </div>
         </div>

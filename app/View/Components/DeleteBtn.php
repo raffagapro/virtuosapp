@@ -12,12 +12,13 @@ class DeleteBtn extends Component
     public $elemID;
     public $elemName;
     public $routeName;
+    public $formMethod;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($tooltip, $id, $text, $elemName, $routeName)
+    public function __construct($tooltip, $id, $text, $elemName, $routeName, $formMethod = "DELETE")
     {
         $this->tooltip = $tooltip;
         $this->id = $id;
@@ -25,6 +26,7 @@ class DeleteBtn extends Component
         $this->elemName = $elemName;
         $this->elemID = $elemName.$id[0];
         $this->routeName = $routeName;
+        $this->formMethod = $formMethod;
     }
 
     /**

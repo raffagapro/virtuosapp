@@ -21,7 +21,7 @@
               :tooltip="'Eliminar'"
               :id="[$c->id, $student->id]"
               :text="'¿Deseas eliminar la clase?'"
-              :elemName="'rmClase'"
+              :elemName="'rmClase'.$student->id"
               :routeName="'clase.rmStudent'"
             />
           </td>

@@ -266,7 +266,6 @@ class HomeworkController extends Controller
     public function deleteFile($fileId)
     {
         $foundMedia = Media::findOrFail($fileId);
-        // $delMedia = str_replace('/storage/', "",$foundMedia->media);
         Storage::disk('s3')->delete(parse_url($foundMedia->media));
         $foundMedia->delete();
         $status = 'El archivo se ha eliminado exitosamente.';
