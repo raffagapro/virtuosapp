@@ -63,7 +63,7 @@ class PurgeService
         // GET HOMEWORKS FOR THE ERASED STUDENT
         $homeworks = Homework::where('clase_id', $class->id)->where('student', $student->id)->get();
         foreach ($homeworks as $hw) {
-            $this->purgeIndvHomework($student, $hw);
+            $this->purgeIndvHomework($hw);
         }
     }
 
