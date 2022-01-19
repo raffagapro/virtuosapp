@@ -8,7 +8,7 @@
               </tr>
             </thead>
             <tbody>
-              @forelse ($user->clases as $c)
+              @forelse ($user->clases->where('status', 1) as $c)
                 <tr>
                   <td class="text-left">
                       @if ($monitor)
@@ -49,7 +49,7 @@
                   </td>
                 </tr>
               @empty
-                  
+                <td class="text-left">Sin clases Activas</td>
               @endforelse
             </tbody>
         </table>
