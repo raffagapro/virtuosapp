@@ -66,7 +66,7 @@ Route::prefix('admin')->group(function(){
         Route::post('clase/indv/cGrabber', [App\Http\Controllers\Admin\ClaseController::class, 'claseGrabber']);
         Route::post('clase/indv/studentSearcher', [App\Http\Controllers\Admin\ClaseController::class, 'studentSearcher']);
         Route::get('clase/student/{claseID}/{studentID}', [App\Http\Controllers\Admin\ClaseController::class, 'addStudent'])->name('clase.addStudent');
-        Route::get('clase/student/rm/{claseID}/{studentID}', [App\Http\Controllers\Admin\ClaseController::class, 'rmStudent'])->name('clase.rmStudent');
+        Route::delete('clase/student/rm/{claseID}/{studentID}', [App\Http\Controllers\Admin\ClaseController::class, 'rmStudent'])->name('clase.rmStudent');
         Route::put('clase/indv/activate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'activate'])->name('clase.activate');
         Route::put('clase/indv/deactivate/{clase_id}', [App\Http\Controllers\Admin\ClaseController::class, 'deactivate'])->name('clase.deactivate');
 
