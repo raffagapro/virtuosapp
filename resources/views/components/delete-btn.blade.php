@@ -1,7 +1,8 @@
 <a
     href="javascript:void(0);"
     class="btn btn-sm btn-danger text-white mr-2"
-    data-toggle="tooltip" data-placement="top" title="{{ $tooltip }}"
+    {{--  data-toggle="tooltip" data-placement="top" title="{{ $tooltip }}"  --}}
+    data-toggle="tooltip" data-placement="top" title="{{ $routeName }}"
     onclick="
         event.preventDefault();
         swal.fire({
